@@ -46,8 +46,8 @@ class Database:
     #param: Card Object with data all data.
     #returns: boolean true if upload successful boolean false if not successful.
     def uploadCardTimeline(self, card):
-        assert isinstance(card, Card), "Expected instance of card, got " + card
-        
+        # assert isinstance(card, Card), "Expected instance of card, got " + card
+
         cursor = self.cnx.cursor()
         insert_timeline = ("INSERT INTO card_series"
                         """(rowid, title,date,price,tot_occ,event_,deck_nums,

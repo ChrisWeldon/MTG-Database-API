@@ -92,7 +92,7 @@ class DataCollector():
     ## return probably needs to be more usable.
 
     def get_historical_prices_by_card(self, card, foil=False, cutoff_date=None):
-        assert isinstance(card, Card)
+        # assert isinstance(card, Card)
         if not foil:
             url='https://www.echomtg.com/cache/'+str(card.echo_id)+'.r.json'
         else:

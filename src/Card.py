@@ -49,8 +49,8 @@ class Card:
     def __init__(self, id=-1, title="", occ_data_path="",price_data_path="",
                 occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=price_data_columns),
                 set=None,echo_id=-1, manifest_path="", rarity=None, timeline=pd.DataFrame()):
-        assert isinstance(occ, pd.DataFrame), "non dataframe passed through occ"
-        assert isinstance(price, pd.DataFrame), "non dataframe passed through price"
+        # assert isinstance(occ, pd.DataFrame), "non dataframe passed through occ"
+        # assert isinstance(price, pd.DataFrame), "non dataframe passed through price"
         self.id = id
         self.title = title
         self.occ = occ
@@ -77,7 +77,8 @@ class Card:
 
     # Equality is based solely off id.
     def __eq__(self, o):
-        return isinstance(o, Card) and o.id == self.id
+        # return isinstance(o, Card) and o.id == self.id
+        return o.id == self.id
 
     def __str__(self):
         if self.isEmpty():
@@ -86,13 +87,13 @@ class Card:
             return str(self.echo_id) + "-" + str(self.title)
 
     def setPrice(self, price):
-        assert isinstance(price, pd.DataFrame), "price must be instance of Dataframe"
+        # assert isinstance(price, pd.DataFrame), "price must be instance of Dataframe"
         self.price = price
         if not self.occ.empty:
             self.assembleTimeline()
 
     def setOcc(self, occ):
-        assert isinstance(occ, pd.DataFrame)
+        # assert isinstance(occ, pd.DataFrame)
         self.occ = occ
         if not self.price.empty:
             self.assembleTimeline()
