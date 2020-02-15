@@ -46,7 +46,7 @@ class Database:
     #param: Card Object with data all data.
     #returns: boolean true if upload successful boolean false if not successful.
     def uploadCardTimeline(self, card):
-        # assert isinstance(card, Card), "Expected instance of card, got " + card
+        assert isinstance(card, Card), "Expected instance of card, got " + card
 
         cursor = self.cnx.cursor()
         insert_timeline = ("INSERT INTO card_series"
@@ -88,21 +88,21 @@ class Database:
                                     row['15th Place'], row['16th Place'],row['(9-0)'],row['(8-0)'],row['(7-0)'],row['(6-0)'],row['(5-0)'],
                                     row['(6-1)'],row['(5-2)'],row['(8-1)'],row['(7-2)'],row['(7-1)'],row['(6-2)'],card.echo_id)
 
-            try:
-                check = ("SELECT * WHERE rowid = " + str(card.echo_id)+"-"+str(row['datetime']))
-                cursor.execute(check)
+            # try:
+            check = ("SELECT * FROM card_series WHERE rowid = '" + str(card.echo_id)+"-"+str(row['datetime']) + "'")
+            cursor.execute(check)
 
-                if cursor.fetchone()[0]:
-                    delete = ("DELETE FROM card_series WHERE rowid = " + str(card.echo_id)+"-"+str(row['datetime']))
-                    print("EXISTS, DELETING " + str(card.echo_id)+"-"+str(row['datetime']))
-                    cursor.execute(delete)
-                    self.cnx.commit()
-
-                cursor.execute(insert_timeline, insert_timeline_data)
+            if cursor.fetchone() != None:
+                delete = ("DELETE FROM card_series WHERE rowid = '" + str(card.echo_id)+"-"+str(row['datetime']) + "'")
+                print("EXISTS, DELETING " + str(card.echo_id)+"-"+str(row['datetime']))
+                cursor.execute(delete)
                 self.cnx.commit()
-            except Exception as e:
-                print(e)
-                continue
+
+            cursor.execute(insert_timeline, insert_timeline_data)
+            self.cnx.commit()
+            # except Exception as e:
+            #     print(e)
+            #     continue
         sys.stdout.write("]\n")
 
     def addCardToCollecton(self, card):

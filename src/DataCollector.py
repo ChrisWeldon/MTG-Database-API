@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import json, csv
 from datetime import date
+import time
 
 class DataCollector():
 
@@ -41,10 +42,10 @@ class DataCollector():
     # @param to_date: tuple of (month, day, year)
     # @return dictionary of {tournament urls : date}
     # collects the tournaments and writes them to a file as well as returning them.
-    def downloadTournamentDates(self, from_date = ('10', '04', '2017'), to_date = ('10', '24', '2019')):
+    def downloadTournamentDates(self, from_date = ('10', '04', '2017'), to_date = ('10', '24', '2019'), write_to_file=False):
         url = 'https://www.mtggoldfish.com/deck_searches/create?utf8=✓&deck_search%5Bname%5D=&deck_search%5Bformat%5D=standard&deck_search%5Btypes%5D%5B%5D=&deck_search%5Btypes%5D%5B%5D=tournament&deck_search%5Bplayer%5D=&deck_search%5Bdate_range%5D='+str(from_date[0])+'%2F'+str(from_date[1])+'%2F'+str(from_date[2])+'+-+'+str(to_date[0])+'%2F'+str(to_date[1])+'%2F'+str(to_date[2])+'&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Btype%5D=maindeck&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Btype%5D=maindeck&counter=2&commit=Search'
 
-        index = "https://www.mtggoldfish.com/deck_searches/create?commit=Search&counter=2&deck_search%5Bdate_range%5D=10%2F01%2F2017+-+08%2F31%2F2019&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Btype%5D=maindeck&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Btype%5D=maindeck&deck_search%5Bformat%5D=standard&deck_search%5Bname%5D=&deck_search%5Bplayer%5D=&deck_search%5Btypes%5D%5B%5D=&deck_search%5Btypes%5D%5B%5D=tournament&page=" + str(1)+ "&utf8=✓"
+        #index = "https://www.mtggoldfish.com/deck_searches/create?commit=Search&counter=2&deck_search%5Bdate_range%5D=10%2F01%2F2017+-+08%2F31%2F2019&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Btype%5D=maindeck&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Btype%5D=maindeck&deck_search%5Bformat%5D=standard&deck_search%5Bname%5D=&deck_search%5Bplayer%5D=&deck_search%5Btypes%5D%5B%5D=&deck_search%5Btypes%5D%5B%5D=tournament&page=" + str(1)+ "&utf8=✓"
 
         headers = requests.utils.default_headers()
         headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
@@ -79,10 +80,14 @@ class DataCollector():
             page=requests.get(url,headers=headers)
             soup=BeautifulSoup(page.content,'html.parser')
             page_num = page_num + 1
-        with open('tournies.json', 'w') as outfile:
-            json.dump(tourns, outfile)
+
+        if write_to_file:
+            with open('tournies.json', 'w') as outfile:
+                json.dump(tourns, outfile)
+
         print(tourns)
         return tourns
+
 
 
     ##
@@ -92,7 +97,7 @@ class DataCollector():
     ## return probably needs to be more usable.
 
     def get_historical_prices_by_card(self, card, foil=False, cutoff_date=None):
-        # assert isinstance(card, Card)
+        assert isinstance(card, Card)
         if not foil:
             url='https://www.echomtg.com/cache/'+str(card.echo_id)+'.r.json'
         else:
@@ -143,6 +148,7 @@ class DataCollector():
                 except AttributeError as err:
                     print(page)
                     print(deck_id, " : " ,err)
+                    time.sleep(30)
                     continue
                 break
             for tr in table.findAll('tr'):
@@ -152,7 +158,7 @@ class DataCollector():
                     name = name.text.strip()
                     qty = int(qty.text.strip())
                     if name not in cards.keys():
-                        cards[name] = {'raw':0}
+                        cards[name] = {'raw': 0}
                         cards[name]['raw'] =qty #creating quantity for raw occurances
                         cards[name][place] = qty #creating quantity for occurances at that placement
                     else:
@@ -190,6 +196,7 @@ class DataCollector():
                         if field not in write_data.keys():
                             write_data[field] = 0
                     writer.writerow(write_data)
+
 
     def downloadEventData(self, event_url, agressive=False):
         url='https://www.mtggoldfish.com' + event_url

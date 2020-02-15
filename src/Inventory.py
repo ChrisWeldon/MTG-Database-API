@@ -18,21 +18,19 @@ class Inventory:
         return self.name + "<Inventory>-" + str(len(self))
 
     def add(self, card):
-        # assert isinstance(card, Card), "Expected instance of card, got " + type(card)
+        assert isinstance(card, Card), "Expected instance of card, got " + type(card)
         self.cards.append(card)
 
     def remove(self, card):
-        # TODO fix is instance bug
-        # if isinstance(card, Card):
-        #     for i in range(len(self.cards)):
-        #         if(card==self.cards[i]):
-        #             return self.cards.pop(i)
-        #
-        # elif isinstance(card, int):
-        #     return self.cards.pop(card)
-        # else:
-        #     assert isinstance(card, Card), "Expected instance of card, got " + type(card)
-        pass
+        if isinstance(card, Card):
+            for i in range(len(self.cards)):
+                if(card==self.cards[i]):
+                    return self.cards.pop(i)
+
+        elif isinstance(card, int):
+            return self.cards.pop(card)
+        else:
+            assert isinstance(card, Card), "Expected instance of card, got " + type(card)
 
 
     def setCards(self, cards):
