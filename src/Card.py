@@ -1,7 +1,6 @@
 import os, csv, json
 import pandas as pd
 import numpy as np
-#Pretty Scheptical of the system
 
 
 #Datatype object to represent a Card,
@@ -88,14 +87,10 @@ class Card:
     def setPrice(self, price):
         assert isinstance(price, pd.DataFrame), "price must be instance of Dataframe"
         self.price = price
-        if not self.occ.empty:
-            self.assembleTimeline()
 
     def setOcc(self, occ):
         assert isinstance(occ, pd.DataFrame)
         self.occ = occ
-        if not self.price.empty:
-            self.assembleTimeline()
 
     def isEmpty(self):
         # return self.occ.empty or self.price.empty # Missing either Occurence data or pricing data.
