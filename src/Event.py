@@ -18,6 +18,9 @@ class Event:
     def getDecks(self):
         return self.decks
 
+    def isEmpty(self):
+        return len(self.decks) == 0;
+
     def getDate(self):
         return self.date
 

@@ -104,39 +104,37 @@ def getHistoricPricesByCard(card, foil=False, cutoff_date=None):
         print(e)
         return False
 
+# @param event - is object of type Event
+# @return - dict of cards with occurance data, False if failed,
+# VERIFIED ON TOOLS BRANCH
+def getOccDataByEvent(event):
+    if not isinstance(event, Event):
+        return False
+    if(event.isEmpty()):
+        print("Warning: Event is empty" )
+    headers = requests.utils.default_headers()
+    headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
 
-## Not any particular integration with card system
-# @param array of deck id's
-# @returns 2d array of occurance data for those decks
-def downloadOccData(deck_ids):
-    # deck_ids = [['12343', '1st'], ['12343', '2nd'], [], []]
     cards = {}
-    for deck_id in deck_ids:
-        url='https://www.mtggoldfish.com/deck/'+deck_id+'#paper'
-        headers = requests.utils.default_headers()
-        headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
-        page=requests.get(url,headers=headers)
-        soup=BeautifulSoup(page.content,'html.parser')
+    # get occurance data per deck in event
+    for id in event.getDecks():
+        url='https://www.mtggoldfish.com/deck/'+id+'#paper'
+        page=requests.get(url, headers=headers)
+        soup = BeautifulSoup(page.content, 'html.parser')
+
+        # deck is private. Not collecting data for private decks
         if 'private' in str(soup.find('div', class_='alert alert-warning')):
-            print(deck_id, " is private")
             continue
 
-        while True:
-            try:
 
-                headers = requests.utils.default_headers()
-                headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
-                page=requests.get(url,headers=headers)
-                soup=BeautifulSoup(page.content,'html.parser')
-                table = soup.find('table', class_='deck-view-deck-table')
-                description = soup.find('div', class_='deck-view-description')
-                place = description.findChildren()[0].nextSibling.strip()[2:]
-            except AttributeError as err:
-                print(page)
-                print(deck_id, " : " ,err)
-                time.sleep(30)
-                continue
-            break
+        try:
+            table = soup.find('table', class_='deck-view-deck-table')
+            description = soup.find('div', class_='deck-view-description')
+            place = description.findChildren()[0].nextSibling.strip()[2:]
+        except AttributeError as err:
+            print(deck_id ," : ", err)
+            return False
+
         for tr in table.findAll('tr'):
             name = tr.find('td', class_='deck-col-card')
             qty = tr.find('td', class_='deck-col-qty')
