@@ -75,12 +75,11 @@ def getEvents(from_date = ('10', '16', '2019'), to_date = ('10', '24', '2019'),)
     events = [Event(key, date=tourns[key]) for key in tourns.keys()]
     return events
 
-##
-## @param card - must be of type Card.
-## @return bool - True if successful, False if not
-## @description - Scrapes pricing data for echo_id and formats correctly. calls Card.setPrice() with scraped data.
-## return probably needs to be more usable.
 
+# @param card - must be of type Card.
+# @return bool - True if successful, False if not
+# @description - Scrapes pricing data for echo_id and formats correctly. calls Card.setPrice() with scraped data.
+# return probably needs to be more usable.
 # VERIFIED ON TOOLS BRANCH
 def getHistoricPricesByCard(card, foil=False, cutoff_date=None):
     assert isinstance(card, Card)
@@ -208,13 +207,20 @@ def getEventData(event, agressive=False):
     event.setDecks(deck_ids)
     return deck_ids
 
-if __name__ == "__main__":
-    print("Database.py Main Called")
-    from Card import Card
-    from Event import Event
-    ## Add QA Testing here
 
-else:
+try:
     from src.Card import Card
     from src.Event import Event
     from src.Database import Database
+except ModuleNotFoundError as err:
+    from Card import Card
+    from Event import Event
+    from Database import Database
+
+if __name__ == "__main__":
+    print("DataCollectionTools.py main called")
+    db = Database()
+    from Card import Card
+    from Event import Event
+
+    ## Add QA Testing here
