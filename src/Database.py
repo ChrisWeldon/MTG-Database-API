@@ -37,15 +37,15 @@ class Database:
     def __del__(self):
         self.cnx.close()
 
-    def isConnected():
+    def isConnected(self):
         if(self.cnx != None):
             return True
         else:
             return False
 
-    #param: Card Object with data all data.
-    #returns: boolean true if upload successful boolean false if not successful.
-    def uploadCardTimeline(self, card):
+    # @param: Card Object with data all data.
+    # @returns: boolean true if upload successful boolean false if not successful.
+    def addCardTimeline(self, card):
         assert isinstance(card, Card), "Expected instance of card, got " + card
 
         cursor = self.cnx.cursor()
@@ -105,7 +105,7 @@ class Database:
             #     continue
         sys.stdout.write("]\n")
 
-    def addCardToCollecton(self, card):
+    def addCard(self, card):
         cursor = self.cnx.cursor()
         insert_card = ("INSERT INTO cards"
                         """(title,set_mtg, echo_id, rarity)"""
@@ -116,15 +116,16 @@ class Database:
             self.cnx.commit()
         except Exception as err:
             print(err)
+            return False
         id = cursor.lastrowid
         return id
 
-    def addCardsToCollection(self, cards):
+    def addCards(self, cards):
         for card in cards:
-            self.addCardToCollecton(card)
+            self.addCard(card)
             print(str(card.echo_id) + " - " + card.title)
 
-    def getCardsInCollection(self):
+    def getCards(self):
         cursor = self.cnx.cursor()
         query = ("SELECT * FROM cards")
         cursor.execute(query)
@@ -133,20 +134,33 @@ class Database:
             cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4]))
         return cards
 
-    def addTournament(self, url, date):
+    def addEvent(self, event):
         cursor = self.cnx.cursor()
-        t_id = int(url.split('/')[-1])
         insert_tournament = ("INSERT INTO tournaments"
                             """(date, url, id)"""
                             "VALUES (%s, %s, %s)")
-        insert_values = (date, url, t_id)
+        insert_values = (event.getDate(), event.getEventURL(), event.getID())
         try:
             cursor.execute(insert_tournament, insert_values)
             self.cnx.commit()
         except Exception as err:
             print(err)
-        return t_id
+            return False
+        return True
 
+    def addEvents(self, events):
+        for event in events:
+            self.addEvent(event)
+        return True
+
+    def getEvents(self):
+        cursor = self.cnx.cursor()
+        query = ("SELECT * FROM tournaments")
+        cursor.execute(query)
+        events = []
+        for row in cursor.fetchall():
+            events.append(Event(row[1], id=row[2], date=row[0]))
+        return events
 
     def getLastCollectedDate(self):
         cursor = self.cnx.cursor()
@@ -164,5 +178,11 @@ if __name__ == "__main__":
     from Card import Card
     db = Database()
     print(db.getLastCollectedDate())
-else:
+
+
+try:
     from src.Card import Card
+    from src.Event import Event
+except ModuleNotFoundError as err:
+    from Card import Card
+    from Event import Event
