@@ -12,7 +12,7 @@ import math
 # there will be a table of all cards, ids, sets they belong to
 
 
-#Database interaction Object
+# Database interaction Object
 
 class Database:
 
@@ -162,15 +162,35 @@ class Database:
             events.append(Event(row[1], id=row[2], date=row[0]))
         return events
 
-    def getLastCollectedDate(self):
+    def getLastTimelineDate(self):
         cursor = self.cnx.cursor()
         query = ("""SELECT MAX(date) FROM `card_series`;""")
         try:
             cursor.execute(query)
         except Exception as err:
             print(err)
+            return False
+
         for row in cursor.fetchall():
+            if row[0]==None:
+                return False
             return row[0]
+        return False
+
+    def getLastEventDate(self):
+        cursor = self.cnx.cursor()
+        query = ("""SELECT MAX(date) FROM `tournaments`;""")
+        try:
+            cursor.execute(query)
+        except Exception as err:
+            print(err)
+            return False
+
+        for row in cursor.fetchall():
+            if row[0]==None:
+                return False
+            return row[0]
+        return False
 
 
 

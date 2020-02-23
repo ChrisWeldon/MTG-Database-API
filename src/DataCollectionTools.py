@@ -183,7 +183,7 @@ def recordOccData(events):
 
 # VERIFIED ON TOOLS BRANCH
 # TODO rework collection with better error handling
-def getEventData(event, agressive=False):
+def getEventDataAggressive(event):
     assert isinstance(event, Event)
     url='https://www.mtggoldfish.com' + event.getEventURL()
     headers = requests.utils.default_headers()
@@ -203,6 +203,24 @@ def getEventData(event, agressive=False):
             print(page)
             continue
         break
+
+    event.setDecks(deck_ids)
+    return deck_ids
+
+def getEventData(event):
+    assert isinstance(event, Event)
+    url='https://www.mtggoldfish.com' + event.getEventURL()
+    headers = requests.utils.default_headers()
+    headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
+    page=requests.get(url,headers=headers)
+    soup=BeautifulSoup(page.content,'html.parser')
+
+
+    try:
+        deck_ids = [deck['data-deckid'] for deck in soup.find('table', class_='table table-condensed table-bordered table-tournament').findAll('tr', class_='tournament-decklist')]
+    except AttributeError as err:
+        print(page)
+        return False
 
     event.setDecks(deck_ids)
     return deck_ids
