@@ -197,7 +197,7 @@ class Database:
 if __name__ == "__main__":
     from Card import Card
     db = Database()
-    print(db.getLastCollectedDate())
+    print(db.getLastEventDate())
 
 
 try:
