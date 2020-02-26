@@ -96,6 +96,9 @@ class Card:
         # return self.occ.empty or self.price.empty # Missing either Occurence data or pricing data.
         return self.timeline.empty
 
+    def getID(self):
+        return self.echo_id
+
     # Loads price from data collected file and overwrites price_data with loaded data
     # THIS CAME FROM THE NOTEBOOK
     def loadPriceFromFile(self, file=None):

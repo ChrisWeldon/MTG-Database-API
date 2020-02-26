@@ -84,9 +84,11 @@ def getEventsDay(date = date.today()):
     soup=BeautifulSoup(page.content,'html.parser')
 
     if(page.status_code == 500):
+        print("Status Code: 500")
         raise ServerError(page.status_code, "Server Error")
 
-    if(str(page)==str('Throttled\n')):
+    if(str(soup)==str('Throttled\n')):
+        print("Throttled")
         raise ThrottleError("Throttled on MTG Goldfish")
 
     tourns = {}
@@ -147,6 +149,12 @@ def getOccDataByEvent(event):
         page=requests.get(url, headers=headers)
         soup = BeautifulSoup(page.content, 'html.parser')
 
+        if(page.status_code == 500):
+            raise ServerError(page.status_code, "Server Error")
+
+        if(str(soup)==str('Throttled\n')):
+            raise ThrottleError("Throttled on MTG Goldfish")
+
         # deck is private. Not collecting data for private decks
         if 'private' in str(soup.find('div', class_='alert alert-warning')):
             continue
@@ -157,7 +165,8 @@ def getOccDataByEvent(event):
             description = soup.find('div', class_='deck-view-description')
             place = description.findChildren()[0].nextSibling.strip()[2:]
         except AttributeError as err:
-            print(deck_id ," : ", err)
+            print(page)
+            print(id ," : ", err)
             return False
 
         for tr in table.findAll('tr'):
@@ -216,7 +225,7 @@ def getEventData(event):
     if(page.status_code == 500):
         raise ServerError(page.status_code, "Server Error: getEventData")
 
-    if(str(page)==str('Throttled\n')):
+    if(str(soup)==str('Throttled\n')):
         raise ThrottleError("Throttled on MTG Goldfish")
 
     # try:

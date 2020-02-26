@@ -134,6 +134,22 @@ class Database:
             cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4]))
         return cards
 
+    def getCardByTitle(self, title):
+        cursor = self.cnx.cursor()
+        query = ('SELECT * FROM cards WHERE `title` = "' + title +'"')
+        try:
+            cursor.execute(query, (title))
+        except Exception as err:
+            print(err)
+            return False
+
+        try:
+            data = cursor.fetchall()[0]
+        except IndexError:
+            return False
+
+        return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4])
+
     def addEvent(self, event):
         cursor = self.cnx.cursor()
         insert_tournament = ("INSERT INTO tournaments"
@@ -192,7 +208,29 @@ class Database:
             return row[0]
         return False
 
+    def addCardOccurance(self, play):
+        assert isinstance(play, CardOccurance), "Expected instance of CardOccurance, got " + play
 
+        cursor = self.cnx.cursor()
+        insert = ("INSERT INTO card_series"
+                        """(rowid, title,date,price,tot_occ,event_,deck_nums,
+                        first_place,secon_place,third_place,fourt_place,
+                        fifth_place,sixth_place,seven_place,eigth_place,
+                        ninet_place,tenth_place,twelt_place,thtee_place,
+                        fotee_place,fitee_place,sitee_place,nineo,eighto,
+                        seveno,sixo,fiveo,sixone,fivetwo,eightone,seventwo,
+                        sevenone,sixtwo,echo_id)"""
+                        "VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)")
+
+        occ = play.getOcc()
+        insert_data = (str(play.getCard().getID())+":"+str(play.getEvent().getID())+":"+str(play.getDate()), play.getCard().title, play.getDate(), 0.00, occ['raw'], str(play.getEvent().getEventURL()), len(play.getEvent().getDecks()), occ['1st Place'],
+                                occ['2nd Place'], occ['3rd Place'], occ['5th Place'], occ['6th Place'], occ['7th Place'], occ['8th Place'],
+                                occ['9th Place'], occ['10th Place'], occ['11th Place'], occ['12th Place'], occ['13th Place'], occ['14th Place'],
+                                occ['15th Place'], occ['16th Place'],occ['(9-0)'],occ['(8-0)'],occ['(7-0)'],occ['(6-0)'],occ['(5-0)'],
+                                occ['(6-1)'],occ['(5-2)'],occ['(8-1)'],occ['(7-2)'],occ['(7-1)'],occ['(6-2)'],play.getCard().getID())
+
+        cursor.execute(insert, insert_data)
+        self.cnx.commit()
 
 if __name__ == "__main__":
     from Card import Card
@@ -203,6 +241,7 @@ if __name__ == "__main__":
 try:
     from src.Card import Card
     from src.Event import Event
+    from src.CardOccurance import CardOccurance
 except ModuleNotFoundError as err:
     from Card import Card
     from Event import Event

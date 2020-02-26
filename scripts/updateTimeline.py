@@ -5,7 +5,7 @@ from src import *
 from datetime import date, timedelta
 import time
 
-def throttleWait(wait=10):
+def throttleWait(wait=15):
     print("Throttle Wait")
     time.sleep(wait)
 
@@ -20,15 +20,18 @@ def concat(list1, list2):
         if e not in list1:
             list1.append(e)
 
+
+
 if __name__ == "__main__":
     db = Database()
     if(not db.getLastEventDate()):
-        dates_tocheck = daterange(date(2019, 10, 1), date.today())
+        dates_tocheck = daterange(date(2020, 2, 24), date.today())
     else:
         dates_tocheck = daterange(db.getLastEventDate(), date.today())
     # Oldest set release date 10/05/2018
 
     events = []
+    print("GETTING TOURNAMENTS")
     while len(dates_tocheck) > 0:
         print(dates_tocheck[0])
         try:
@@ -39,21 +42,44 @@ if __name__ == "__main__":
         else:
             dates_tocheck.pop(0)
 
-    occ_q =[]
 
+    print("GETTING EVENT DATA")
+    occurances = []
     while len(events)>0:
+        event = events[0]
+        print(event)
+
+        if(event.getDecks()==None):
+            try:
+                decks = getEventData(event)
+            except ThrottleError as err:
+                print(err)
+                throttleWait()
+                continue
+            except ServerError as err:
+                print(err, " : ", events.pop(0))
+                continue
+            else:
+                event.setDecks(decks);
+
         try:
-            decks = getEventData(events[0])
-        except ThrottleError as err:
-            print(err)
+            occ = getOccDataByEvent(event)
+        except(ThrottleError, ServerError) as err:
+            print(err,   ": When Collecting Occ Data for ", event)
             throttleWait()
-        except ServerError as err:
-            print(err, " : ", events.pop(0))
-        else:
-            event = events.pop(0)
-            event.setDecks(decks);
-            occ_q.append(event)
+            continue
 
-    db.addEvents(events)
+        for title in occ.keys():
 
-    
+            card = db.getCardByTitle(title)
+
+
+            if card!=False:
+                # TODO: Error handle this scraping on echomgt
+                # FIXME: Making a lot of redundant calls to EchoMTG
+                getHistoricPricesByCard(card)
+
+                occurances.append(CardOccurance(card, event, occ[title],date=event.getDate()));
+
+
+        del events[0]
