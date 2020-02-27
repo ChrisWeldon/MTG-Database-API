@@ -123,14 +123,16 @@ def getHistoricPricesByCard(card, foil=False, cutoff_date=None):
     price_array = page.json()
     for row in price_array:
         row[0] = datetime.datetime.fromtimestamp(int(row[0])/1000)
+
     df = pd.DataFrame(columns=['datetime', 'price'], data=np.array(price_array))
-    df.set_index('datetime')
-    try:
-        card.setPrice(df)
-        return True
-    except Exception as err:
-        print(e)
-        return False
+    dates = pd.date_range(df['datetime'].min(), date.today())
+    dates = dates.to_frame(name='datetime')
+    df = df.set_index('datetime')
+
+    df = dates.join(df, on='datetime')
+    df = df.set_index('datetime')
+    df = df.ffill()
+    return df
 
 # @param event - is object of type Event
 # @return - dict of cards with occurance data, False if failed,
@@ -238,11 +240,13 @@ def getEventData(event):
 
 try:
     from src.Card import Card
+    from src.CardOccurance import CardOccurance
     from src.Event import Event
     from src.Database import Database
     from src.ScraperExceptions import *
 except ModuleNotFoundError as err:
     from Card import Card
+    from CardOccurance import CardOccurance
     from Event import Event
     from Database import Database
     from ScraperExceptions import *
@@ -250,5 +254,20 @@ except ModuleNotFoundError as err:
 if __name__ == "__main__":
     print("DataCollectionTools.py main called")
     db = Database()
+
+    events = getEventsDay(date(2019, 2, 24))
+    event = events[1]
+    event.setDecks(getEventData(event))
+    occ = getOccDataByEvent(event)
+
+    occurances = []
+
+    for title in occ.keys():
+        card = db.getCardByTitle(title)
+        if card!=False:
+            # TODO: Error handle this scraping on echomgt
+            # FIXME: Making a lot of redundant calls to EchoMTG
+            card.setPrice(getHistoricPricesByCard(card))
+            occurances.append(CardOccurance(card, event, occ[title],date=event.getDate()));
 
     ## Add QA Testing here

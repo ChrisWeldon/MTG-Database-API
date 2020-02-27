@@ -71,8 +71,6 @@ class Card:
         if price.empty and price_data_path != "": # Allows for Initialization from only paths
             self.loadPriceFromFile()
 
-        if not price.empty and not occ.empty:
-            self.assembleTimeline()
 
     # Equality is based solely off id.
     def __eq__(self, o):
@@ -87,6 +85,9 @@ class Card:
     def setPrice(self, price):
         assert isinstance(price, pd.DataFrame), "price must be instance of Dataframe"
         self.price = price
+
+    def getPrice(self):
+        return self.price
 
     def setOcc(self, occ):
         assert isinstance(occ, pd.DataFrame)

@@ -1,3 +1,5 @@
+from datetime import date
+from datetime import datetime
 """A module containing the Event datatype definition.
 
 The Event class/model representation of an mtg tournement.
@@ -48,7 +50,8 @@ class Event:
         return len(self.decks) == 0;
 
     def getDate(self):
-        return self.date
+        return datetime.strptime(self.date, "%Y-%m-%d").date()
+        #return self.date
 
     def setDecks(self, decks):
         self.decks = decks

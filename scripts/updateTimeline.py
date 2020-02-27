@@ -25,11 +25,12 @@ def concat(list1, list2):
 if __name__ == "__main__":
     db = Database()
     if(not db.getLastEventDate()):
-        dates_tocheck = daterange(date(2020, 2, 24), date.today())
+        dates_tocheck = daterange(date(2018, 10, 5), date.today())
     else:
         dates_tocheck = daterange(db.getLastEventDate(), date.today())
     # Oldest set release date 10/05/2018
 
+    del db
     events = []
     print("GETTING TOURNAMENTS")
     while len(dates_tocheck) > 0:
@@ -44,8 +45,9 @@ if __name__ == "__main__":
 
 
     print("GETTING EVENT DATA")
-    occurances = []
+    db = Database()
     while len(events)>0:
+        occurances = []
         event = events[0]
         print(event)
 
@@ -77,9 +79,11 @@ if __name__ == "__main__":
             if card!=False:
                 # TODO: Error handle this scraping on echomgt
                 # FIXME: Making a lot of redundant calls to EchoMTG
-                getHistoricPricesByCard(card)
+                card.setPrice(getHistoricPricesByCard(card))
 
                 occurances.append(CardOccurance(card, event, occ[title],date=event.getDate()));
 
-
+        for c in occurances:
+            db.addCardOccurance(c)
+        db.addEvent(event[0])
         del events[0]

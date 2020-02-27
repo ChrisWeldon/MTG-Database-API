@@ -209,7 +209,7 @@ class Database:
         return False
 
     def addCardOccurance(self, play):
-        assert isinstance(play, CardOccurance), "Expected instance of CardOccurance, got " + play
+        assert isinstance(play, CardOccurance), "Expected instance of CardOccurance, got " + str(play)
 
         cursor = self.cnx.cursor()
         insert = ("INSERT INTO card_series"
@@ -222,8 +222,39 @@ class Database:
                         sevenone,sixtwo,echo_id)"""
                         "VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)")
 
-        occ = play.getOcc()
-        insert_data = (str(play.getCard().getID())+":"+str(play.getEvent().getID())+":"+str(play.getDate()), play.getCard().title, play.getDate(), 0.00, occ['raw'], str(play.getEvent().getEventURL()), len(play.getEvent().getDecks()), occ['1st Place'],
+        occ = {
+            'raw':0,
+            '1st Place':0,
+            '2nd Place':0,
+            '3rd Place':0,
+            '4th Place':0,
+            '5th Place':0,
+            '6th Place':0,
+            '7th Place':0,
+            '8th Place':0,
+            '9th Place':0,
+            '10th Place':0,
+            '11th Place':0,
+            '12th Place':0,
+            '13th Place':0,
+            '14th Place':0,
+            '15th Place':0,
+            '16th Place':0,
+            '(9-0)': 0,
+            '(8-0)': 0,
+            '(7-0)': 0,
+            '(6-0)': 0,
+            '(5-0)': 0,
+            '(6-1)': 0,
+            '(5-2)': 0,
+            '(8-1)': 0,
+            '(7-2)': 0,
+            '(7-1)': 0,
+            '(6-2)': 0
+        }
+        data = play.getOcc()
+        occ.update(data)
+        insert_data = (str(play.getCard().getID())+":"+str(play.getEvent().getID())+":"+str(play.getDate()), play.getCard().title, play.getDate(), float(play.getPrice()), occ['raw'], str(play.getEvent().getEventURL()), len(play.getEvent().getDecks()), occ['1st Place'],
                                 occ['2nd Place'], occ['3rd Place'], occ['5th Place'], occ['6th Place'], occ['7th Place'], occ['8th Place'],
                                 occ['9th Place'], occ['10th Place'], occ['11th Place'], occ['12th Place'], occ['13th Place'], occ['14th Place'],
                                 occ['15th Place'], occ['16th Place'],occ['(9-0)'],occ['(8-0)'],occ['(7-0)'],occ['(6-0)'],occ['(5-0)'],
@@ -245,3 +276,4 @@ try:
 except ModuleNotFoundError as err:
     from Card import Card
     from Event import Event
+    from CardOccurance import CardOccurance

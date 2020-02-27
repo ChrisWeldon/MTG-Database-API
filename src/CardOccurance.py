@@ -3,7 +3,7 @@ from datetime import date
 
 
 class CardOccurance:
-
+    # TODO add field for ROW ID
     def __init__(self, card, event, occ, date=None):
         self.card = card
         self.event = event
@@ -21,6 +21,9 @@ class CardOccurance:
 
     def getOcc(self):
         return self.occ
+
+    def getPrice(self):
+        return self.card.getPrice().loc[self.getDate()]['price']
 
     def getDate(self):
         if self.date == None:
