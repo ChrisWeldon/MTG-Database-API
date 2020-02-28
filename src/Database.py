@@ -1,4 +1,5 @@
 import mysql.connector
+from mysql.connector.errors import *
 import datetime
 import sys, json
 import numpy as np
@@ -134,6 +135,8 @@ class Database:
             cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4]))
         return cards
 
+    # FIXME: Manage when cards have same title but in standard from different sets
+    # BUG: What happens when there is no card by this name?
     def getCardByTitle(self, title):
         cursor = self.cnx.cursor()
         query = ('SELECT * FROM cards WHERE `title` = "' + title +'"')
@@ -208,6 +211,7 @@ class Database:
             return row[0]
         return False
 
+    # BUG: Duplicate Entry Handling
     def addCardOccurance(self, play):
         assert isinstance(play, CardOccurance), "Expected instance of CardOccurance, got " + str(play)
 
@@ -260,7 +264,11 @@ class Database:
                                 occ['15th Place'], occ['16th Place'],occ['(9-0)'],occ['(8-0)'],occ['(7-0)'],occ['(6-0)'],occ['(5-0)'],
                                 occ['(6-1)'],occ['(5-2)'],occ['(8-1)'],occ['(7-2)'],occ['(7-1)'],occ['(6-2)'],play.getCard().getID())
 
-        cursor.execute(insert, insert_data)
+        try:
+            cursor.execute(insert, insert_data)
+        except IntegrityError as err:
+            print(err):
+            return False
         self.cnx.commit()
 
 if __name__ == "__main__":

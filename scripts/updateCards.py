@@ -14,6 +14,7 @@ WAR = getCardsBySet(set_url="/set/WAR/war-of-the-spark/")
 RNA = getCardsBySet(set_url="/set/RNA/ravnica-allegiance/")
 GRN = getCardsBySet(set_url="/set/GRN/guilds-of-ravnica/")
 
+# FIXME: Add a lot more cards from older sets that were in standard for a while
 db = Database()
 db.addCards(THB)
 db.addCards(ELD)
