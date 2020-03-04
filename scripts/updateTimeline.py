@@ -25,7 +25,7 @@ def concat(list1, list2):
 if __name__ == "__main__":
     db = Database()
     if(not db.getLastEventDate()):
-        dates_tocheck = daterange(date(2019, 10, 4), date.today())
+        dates_tocheck = daterange(date(2018, 10, 4), date.today())
     else:
         dates_tocheck = daterange(db.getLastEventDate(), date.today())
     # Oldest set release date 10/05/2018
