@@ -136,7 +136,7 @@ def getHistoricPricesByCard(card, foil=False, cutoff_date=None):
 
 # @param event - is object of type Event
 # @return - dict of cards with occurance data, False if failed,
-def getOccDataByEvent(event):
+def getOccDataByEvent(event, deck_max = 16):
     if not isinstance(event, Event):
         return False
     if(event.isEmpty()):
@@ -146,13 +146,21 @@ def getOccDataByEvent(event):
 
     cards = {}
     # get occurance data per deck in event
-    for id in event.decks:
+    decks = event.decks
+
+    if(deck_max != -1):
+        decks = decks[:deck_max]
+    for id in decks:
         url='https://www.mtggoldfish.com/deck/'+id+'#paper'
         page=requests.get(url, headers=headers)
         soup = BeautifulSoup(page.content, 'html.parser')
 
-        if(page.status_code == 500):
-            raise ServerError(page.status_code, "Server Error")
+        try: # No Errors pass Silently PEP 8
+            if(page.status_code == 500):
+                raise ServerError(page.status_code, "Server Error")
+        except ServerError as e:
+            print(e)
+            continue
 
         if(str(soup)==str('Throttled\n')):
             raise ThrottleError("Throttled on MTG Goldfish")
@@ -187,6 +195,7 @@ def getOccDataByEvent(event):
                         cards[name][place] = qty
                     else:
                         cards[name][place] = cards[name][place] + qty
+
     return cards
 
 def recordOccData(events):

@@ -26,10 +26,17 @@ class Database:
 
     Database is used as an object which interacts with a MySQL database. Check GITHUB page for schema details on MySQL database.
 
+    Attributes:
+        config: a dictionary object read from the config file containing database connection information
+        cnx: a mysql-connector connection.
+
     """
 
     def __init__(self, path = '../config.json'):
-        """Inits Database with specified config file.
+        """Inits Database with specified config file. On reading of config
+
+        Args:
+            path: a string '/path/to/config.json'
 
         """
         try:
@@ -37,30 +44,31 @@ class Database:
                 text = json_file.read()
                 json_data = json.loads(text)
                 self.config = json_data
-            self.check_time_hours = 1
             self.cnx = mysql.connector.connect(user=self.config["database"]["user"], password=self.config["database"]["password"],
                                           host=self.config["database"]["host"],
                                           database= (self.config["database"]["dev_database_name"] if self.config["dev"]=="True" else self.config["database"]["database_name"]))
 
         except Exception as e:
+            # TODO: throw custom exception for error on initiali
             print(e)
             self.cnx = None
-            self.check_time_hours = 0
             self.config = None
         #li.log("DatabaseInterface Initialized")
 
     def __del__(self):
+        """Closes cnx connection"""
         self.cnx.close()
 
     def isConnected(self):
+        """Returns if connection is connected"""
         if(self.cnx != None):
             return True
         else:
             return False
 
-    # @param: Card Object with data all data.
-    # @returns: boolean true if upload successful boolean false if not successful.
+
     def addCardTimeline(self, card):
+        """Deprecated: method adds card's timeline object to database"""
         assert isinstance(card, Card), "Expected instance of card, got " + card
 
         cursor = self.cnx.cursor()
@@ -272,7 +280,7 @@ class Database:
         }
         data = play.occ
         occ.update(data)
-        insert_data = (play.id, play.card.title, play.date, float(play.price), occ['raw'], str(play.event.event_url), len(play.event.decks), occ['1st Place'],
+        insert_data = (play.id, play.card.title, play.date, float(play.price), occ['raw'], str(play.event.event_url), len(play.event.decks) : , occ['1st Place'],
                                 occ['2nd Place'], occ['3rd Place'], occ['5th Place'], occ['6th Place'], occ['7th Place'], occ['8th Place'],
                                 occ['9th Place'], occ['10th Place'], occ['11th Place'], occ['12th Place'], occ['13th Place'], occ['14th Place'],
                                 occ['15th Place'], occ['16th Place'],occ['(9-0)'],occ['(8-0)'],occ['(7-0)'],occ['(6-0)'],occ['(5-0)'],
