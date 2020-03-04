@@ -67,6 +67,7 @@ class Database:
             return False
 
 
+
     def addCardTimeline(self, card):
         """Deprecated: method adds card's timeline object to database"""
         assert isinstance(card, Card), "Expected instance of card, got " + card
@@ -280,7 +281,7 @@ class Database:
         }
         data = play.occ
         occ.update(data)
-        insert_data = (play.id, play.card.title, play.date, float(play.price), occ['raw'], str(play.event.event_url), len(play.event.decks) : , occ['1st Place'],
+        insert_data = (play.id, play.card.title, play.date, float(play.price), occ['raw'], str(play.event.event_url), len(play.event.decks) , occ['1st Place'],
                                 occ['2nd Place'], occ['3rd Place'], occ['5th Place'], occ['6th Place'], occ['7th Place'], occ['8th Place'],
                                 occ['9th Place'], occ['10th Place'], occ['11th Place'], occ['12th Place'], occ['13th Place'], occ['14th Place'],
                                 occ['15th Place'], occ['16th Place'],occ['(9-0)'],occ['(8-0)'],occ['(7-0)'],occ['(6-0)'],occ['(5-0)'],
