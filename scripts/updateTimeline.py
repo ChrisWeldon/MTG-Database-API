@@ -51,7 +51,7 @@ if __name__ == "__main__":
         event = events[0]
         print(event)
 
-        if(event.getDecks()==None):
+        if(event.decks==None):
             try:
                 decks = getEventData(event)
             except ThrottleError as err:
@@ -62,7 +62,7 @@ if __name__ == "__main__":
                 print(err, " : ", events.pop(0))
                 continue
             else:
-                event.setDecks(decks);
+                event.decks = decks;
 
         try:
             occ = getOccDataByEvent(event)
@@ -74,7 +74,6 @@ if __name__ == "__main__":
         for title in occ.keys():
 
             card = db.getCardByTitle(title)
-
 
             if card!=False:
                 # TODO: Error handle this scraping on echomgt

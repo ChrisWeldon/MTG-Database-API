@@ -5,19 +5,33 @@ import sys, json
 import numpy as np
 import pandas as pd
 import math
+"""A Module containing the Database Class
 
+The Databse Object used to interact with a MySQL database.
 
+    Typical usage example:
 
-## Important database notes
-# there will be a row per card/day table
-# there will be a table of all cards, ids, sets they belong to
+    from Data import Database #or if outside package
+    from src import Database
 
+    db = Database()
+    card = db.getCardByTitle("Blue Eyes White Dragon")
+    db.addCard(card)
 
-# Database interaction Object
+"""
+
 
 class Database:
+    """A Class for the Database object
+
+    Database is used as an object which interacts with a MySQL database. Check GITHUB page for schema details on MySQL database.
+
+    """
 
     def __init__(self, path = '../config.json'):
+        """Inits Database with specified config file.
+
+        """
         try:
             with open(path, 'r') as json_file:
                 text = json_file.read()
@@ -28,7 +42,7 @@ class Database:
                                           host=self.config["database"]["host"],
                                           database= (self.config["database"]["dev_database_name"] if self.config["dev"]=="True" else self.config["database"]["database_name"]))
 
-        except Exception as e: # TODO need to handle if config file fails and if internet fails
+        except Exception as e:
             print(e)
             self.cnx = None
             self.check_time_hours = 0
@@ -256,18 +270,18 @@ class Database:
             '(7-1)': 0,
             '(6-2)': 0
         }
-        data = play.getOcc()
+        data = play.occ
         occ.update(data)
-        insert_data = (str(play.getCard().getID())+":"+str(play.getEvent().getID())+":"+str(play.getDate()), play.getCard().title, play.getDate(), float(play.getPrice()), occ['raw'], str(play.getEvent().getEventURL()), len(play.getEvent().getDecks()), occ['1st Place'],
+        insert_data = (play.id, play.card.title, play.date, float(play.price), occ['raw'], str(play.event.event_url), len(play.event.decks), occ['1st Place'],
                                 occ['2nd Place'], occ['3rd Place'], occ['5th Place'], occ['6th Place'], occ['7th Place'], occ['8th Place'],
                                 occ['9th Place'], occ['10th Place'], occ['11th Place'], occ['12th Place'], occ['13th Place'], occ['14th Place'],
                                 occ['15th Place'], occ['16th Place'],occ['(9-0)'],occ['(8-0)'],occ['(7-0)'],occ['(6-0)'],occ['(5-0)'],
-                                occ['(6-1)'],occ['(5-2)'],occ['(8-1)'],occ['(7-2)'],occ['(7-1)'],occ['(6-2)'],play.getCard().getID())
+                                occ['(6-1)'],occ['(5-2)'],occ['(8-1)'],occ['(7-2)'],occ['(7-1)'],occ['(6-2)'],play.card.echo_id)
 
         try:
             cursor.execute(insert, insert_data)
         except IntegrityError as err:
-            print(err):
+            print(err)
             return False
         self.cnx.commit()
 

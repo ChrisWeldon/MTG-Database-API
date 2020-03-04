@@ -1,14 +1,41 @@
+#!/usr/bin/env python3
 import os, csv, json
 import pandas as pd
 import numpy as np
 
+"""A module containing the Event datatype definition.
 
-#Datatype object to represent a Card,
-#Card.timeline contains complete timeline of occurances and price (tournement dates not included)
-#Card.occ contains dataframe of occurances
-#Card.price contains dataframe of pricing history
+The Card class/model representation of an mtg card.
 
+    Typical usage example:
+
+    from Card import Card #or if outside package
+    from src import Card
+
+    c = Card(title='Blue Eyes White Dragon',set = '/url/to/set', echo_id = '1234', rarity='rare')
+    c.id #1234
+    Database().addCard(c)
+"""
 class Card:
+    """Card Datatype
+
+    The Card Class is used to represent one card in MTG. The class is also used as a Database model for one card.
+    This card does not represent any particular moment in time. A card class, should represent the full extend of the card's life
+    in the MTG Game given.
+
+    This Card Class is chock full of deprecated methods and attributes. Documentation is on hold for this class
+    because it needs to be completely overhauled.
+
+    Deprecated Attributes are not incuded in Documentation.
+
+    Attributes:
+        title: A string of title of the card.
+        price: A Pandas Dataframe of the pricing history.
+        set: A string of the URL of the set.
+        echo_id: An int of the echomtg unique identifier.
+        rarity: A string of the rarity of the card "rare", "mythic", "uncommon", ...
+
+    """
     price_data_columns =["date_unix", "datetime", "price_dollars"]
     occ_data_columns = [
         'card',
@@ -48,6 +75,8 @@ class Card:
     def __init__(self, id=-1, title="", occ_data_path="",price_data_path="",
                 occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=price_data_columns),
                 set=None,echo_id=-1, manifest_path="", rarity=None, timeline=pd.DataFrame()):
+
+        """Init of a card object."""
         assert isinstance(occ, pd.DataFrame), "non dataframe passed through occ"
         assert isinstance(price, pd.DataFrame), "non dataframe passed through price"
         self.id = id

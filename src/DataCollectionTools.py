@@ -146,7 +146,7 @@ def getOccDataByEvent(event):
 
     cards = {}
     # get occurance data per deck in event
-    for id in event.getDecks():
+    for id in event.decks:
         url='https://www.mtggoldfish.com/deck/'+id+'#paper'
         page=requests.get(url, headers=headers)
         soup = BeautifulSoup(page.content, 'html.parser')
@@ -218,7 +218,7 @@ def recordOccData(events):
 
 def getEventData(event):
     assert isinstance(event, Event)
-    url='https://www.mtggoldfish.com' + event.getEventURL()
+    url='https://www.mtggoldfish.com' + event.event_url
     headers = requests.utils.default_headers()
     headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
     page=requests.get(url,headers=headers)

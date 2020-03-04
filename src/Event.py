@@ -17,7 +17,7 @@ The Event class/model representation of an mtg tournement.
 class Event:
     """Event Datatype
 
-    Event class is used to represent one event from MTG Goldfish.
+    Event class is used to represent one event from MTG Goldfish. The Events class acts as a model for one row in a MySQL database.
 
     Attributes:
         event_url: A string of format "/tournament/<int number>". This is a relative url on www.mtggoldfish.com.
@@ -27,6 +27,7 @@ class Event:
     """
 
     def __init__(self, event_url, decks=None, id=-1, date=""):
+        """Inits Event with an event url"""
         self.event_url = event_url
         self.decks = decks
         self.date = date
@@ -35,48 +36,62 @@ class Event:
             self.id = int(event_url.split('/')[-1])
 
     def __str__(self):
+        """Converts to printable string"""
         return self.event_url +" : "+self.date
 
     def __eq__(self, o):
-        return isinstance(o, Event) and self.id == o.getID()
+        """Overides == operator : compares based on Event.id"""
+        return isinstance(o, Event) and self.id == o.id
 
     def getEventURL(self):
+        """Deprecated: Getter for event_url"""
         return self.event_url
 
     def getDecks(self):
+        """Deprecated: Getter for decks"""
         return self.decks
 
     def isEmpty(self):
+        """Returns Status of empty"""
         return len(self.decks) == 0;
 
     def getDate(self):
+        """Gives string representation of date"""
         return datetime.strptime(self.date, "%Y-%m-%d").date()
         #return self.date
 
     def setDecks(self, decks):
+        """Deprecated: Setter of decks"""
         self.decks = decks
 
     def addDeck(self, deck):
+        """Adds deck to decks"""
         self.decks.append(deck);
         return deck
 
     def getID(self):
+        """Deprecated: Getter of id"""
         return self.id
 
     def setOcc(self, occ):
+        """Deprecated: setter of occ"""
         self.occ = occ
 
     def getOcc(self):
+        """Deprecated: getter of occ"""
         return self.occ
 
     def setCardOccurances(self, cards):
+        """Deprecated: setter of occurance objects"""
         self.card_occurances = cards
 
     def addCardOccurance(self, card_occurance):
+        """Deprecated: adds one occurance to occurance objects"""
         if(card_occurance not in self.card_occurances):
             self.card_occurances.append(card_occurance)
             return True
         return False
 
     def getCardOccurances(self):
+        """Deprecated: getter of card_occurances"""
         return self.card_occurances
