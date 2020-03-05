@@ -24,14 +24,16 @@ class Event:
         decks: An array if deck id's from mtggoldfish.com. Represntative of the decks that placed in the event.
         date: A date object at the day the event occured.
         id: An int pulled from event_url as a unique id for the event.
+        format: A str representation of format. 'standard','pioneer','modern'
     """
 
-    def __init__(self, event_url, decks=None, id=-1, date=""):
+    def __init__(self, event_url, decks=None, id=-1, date="", format=""):
         """Inits Event with an event url"""
         self.event_url = event_url
         self.decks = decks
         self.date = date
         self.id = id
+        self.format = format
         if id==-1 and event_url:
             self.id = int(event_url.split('/')[-1])
 

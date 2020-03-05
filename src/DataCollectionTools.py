@@ -110,7 +110,7 @@ def getEventsDay(date = date.today()):
 # @return bool - True if successful, False if not
 # @description - Scrapes pricing data for echo_id and formats correctly. calls Card.setPrice() with scraped data.
 # return probably needs to be more usable.
-def getHistoricPricesByCard(card, foil=False, cutoff_date=None):
+def getPaperPriceByCard(card, foil=False, cutoff_date=None):
     assert isinstance(card, Card)
     if not foil:
         url='https://www.echomtg.com/cache/'+str(card.echo_id)+'.r.json'
@@ -125,6 +125,35 @@ def getHistoricPricesByCard(card, foil=False, cutoff_date=None):
         row[0] = datetime.datetime.fromtimestamp(int(row[0])/1000)
 
     df = pd.DataFrame(columns=['datetime', 'price'], data=np.array(price_array))
+    dates = pd.date_range(df['datetime'].min(), date.today())
+    dates = dates.to_frame(name='datetime')
+    df = df.set_index('datetime')
+
+    df = dates.join(df, on='datetime')
+    df = df.set_index('datetime')
+    df = df.ffill()
+    return df
+
+def getMTGOPriceByCard(card, foil=False):
+    assert isinstance(card, Card)
+    title = card.title
+    formatted_title = title.replace(" ", "-").replace(",", "").replace("'", "").replace("//","-").lower()
+    url = 'https://www.goatbots.com/card/ajax_card?search_name=' + formatted_title
+    page=requests.get(url)
+    versions = page.json()[1]
+
+    #v[0] is the first entry a card versions pricing array, v[i][0] is the date in str
+    version = versions[0]
+
+    for v in versions:
+        version_date = datetime.datetime.strptime(v[0][0], "%m/%d/%Y").date()
+        if(version_date <= card.release_date):
+            version = v
+            break
+
+    df = pd.DataFrame(columns=['datetime', 'price'], data=np.array(version))
+    df['datetime']  = pd.to_datetime(df['datetime'])
+
     dates = pd.date_range(df['datetime'].min(), date.today())
     dates = dates.to_frame(name='datetime')
     df = df.set_index('datetime')
@@ -162,6 +191,7 @@ def getOccDataByEvent(event, deck_max = 16):
             print(e)
             continue
 
+        # TODO: Handle Bad Gateway 502
         if(str(soup)==str('Throttled\n')):
             raise ThrottleError("Throttled on MTG Goldfish")
 
@@ -263,20 +293,7 @@ except ModuleNotFoundError as err:
 if __name__ == "__main__":
     print("DataCollectionTools.py main called")
     db = Database()
+    card = db.getCardByTitle('Sorcerous Spyglass', date=date(2018, 9, 20))
 
-    events = getEventsDay(date(2019, 2, 24))
-    event = events[1]
-    event.setDecks(getEventData(event))
-    occ = getOccDataByEvent(event)
-
-    occurances = []
-
-    for title in occ.keys():
-        card = db.getCardByTitle(title)
-        if card!=False:
-            # TODO: Error handle this scraping on echomgt
-            # FIXME: Making a lot of redundant calls to EchoMTG
-            card.setPrice(getHistoricPricesByCard(card))
-            occurances.append(CardOccurance(card, event, occ[title],date=event.getDate()));
 
     ## Add QA Testing here

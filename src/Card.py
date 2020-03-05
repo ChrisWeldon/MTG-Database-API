@@ -30,11 +30,12 @@ class Card:
 
     Attributes:
         title: A string of title of the card.
-        price: A Pandas Dataframe of the pricing history.
+        price: A Pandas Dataframe of the paper pricing history.
+        tix: a Pandas Dataframe of the MTGO pricing history
         set: A string of the URL of the set.
         echo_id: An int of the echomtg unique identifier.
         rarity: A string of the rarity of the card "rare", "mythic", "uncommon", ...
-
+        release_date: A datetime object of the release date of the card. *Note:* Not the prerelease date. Same value as set release date.
     """
     price_data_columns =["date_unix", "datetime", "price_dollars"]
     occ_data_columns = [
@@ -74,13 +75,14 @@ class Card:
 
     def __init__(self, id=-1, title="", occ_data_path="",price_data_path="",
                 occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=price_data_columns),
-                set=None,echo_id=-1, manifest_path="", rarity=None, timeline=pd.DataFrame()):
+                set=None,echo_id=-1, manifest_path="", rarity=None, timeline=pd.DataFrame(), release_date = None):
 
         """Init of a card object."""
         assert isinstance(occ, pd.DataFrame), "non dataframe passed through occ"
         assert isinstance(price, pd.DataFrame), "non dataframe passed through price"
         self.id = id
         self.title = title
+        self.release_date = release_date
         self.occ = occ
         self.price = price
         self.price_data_path = price_data_path

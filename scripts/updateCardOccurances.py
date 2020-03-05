@@ -5,7 +5,7 @@ from src import *
 from datetime import date, timedelta
 import time
 
-def throttleWait(wait=15):
+def throttleWait(wait=30):
     print("Throttle Wait")
     time.sleep(wait)
 
@@ -73,14 +73,19 @@ if __name__ == "__main__":
 
         for title in occ.keys():
 
-            card = db.getCardByTitle(title)
+            card = db.getCardByTitle(title, date=event.date)
 
             if card!=False:
                 # TODO: Error handle this scraping on echomgt
                 # FIXME: Making a lot of redundant calls to EchoMTG
-                card.setPrice(getHistoricPricesByCard(card))
+                card.price = getPaperPriceByCard(card)
+                #card.tix = getMTGOPriceByCard(card)
 
-                occurances.append(CardOccurance(card, event, occ[title],date=event.getDate()));
+                try:
+                    occurances.append(CardOccurance(card, event, occ[title],date=event.getDate()));
+                except Exception as e:
+                    print(card)
+                    raise Exception(e)
 
         for c in occurances:
             db.addCardOccurance(c)

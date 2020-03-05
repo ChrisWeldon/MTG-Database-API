@@ -19,8 +19,6 @@ The Databse Object used to interact with a MySQL database.
     db.addCard(card)
 
 """
-
-
 class Database:
     """A Class for the Database object
 
@@ -31,7 +29,6 @@ class Database:
         cnx: a mysql-connector connection.
 
     """
-
     def __init__(self, path = '../config.json'):
         """Inits Database with specified config file. On reading of config
 
@@ -53,7 +50,6 @@ class Database:
             print(e)
             self.cnx = None
             self.config = None
-        #li.log("DatabaseInterface Initialized")
 
     def __del__(self):
         """Closes cnx connection"""
@@ -65,8 +61,6 @@ class Database:
             return True
         else:
             return False
-
-
 
     def addCardTimeline(self, card):
         """Deprecated: method adds card's timeline object to database"""
@@ -130,6 +124,13 @@ class Database:
         sys.stdout.write("]\n")
 
     def addCard(self, card):
+        # TODO: upload release date too
+        """Adds Card Model to Database.
+
+        Args:
+            card: A Card object which contains title, set, echo_id, and release_date.
+
+        """
         cursor = self.cnx.cursor()
         insert_card = ("INSERT INTO cards"
                         """(title,set_mtg, echo_id, rarity)"""
@@ -145,11 +146,22 @@ class Database:
         return id
 
     def addCards(self, cards):
+        """Adds list of Cards to database using addCard()
+
+        Args:
+            cards: an array of cards.
+        """
         for card in cards:
             self.addCard(card)
             print(str(card.echo_id) + " - " + card.title)
 
     def getCards(self):
+        # TODO: init Cards with release_date
+        """Retrieves all cards in the Cards table.
+
+        Returns:
+            Array of Card objects.
+        """
         cursor = self.cnx.cursor()
         query = ("SELECT * FROM cards")
         cursor.execute(query)
@@ -158,13 +170,30 @@ class Database:
             cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4]))
         return cards
 
-    # FIXME: Manage when cards have same title but in standard from different sets
-    # BUG: What happens when there is no card by this name?
-    def getCardByTitle(self, title):
+    def getCardByTitle(self, title, date=datetime.date.today()):
+        # RESOLVE: What happens when there is no card by this name?
+        """Retrieves one card from the database.
+
+        Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+        sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+        is always returned.
+
+        For example:
+            Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+            filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.
+
+        Args:
+            title: a string of the title of the desired card.
+            date: a datetime object to resolve multiple cards of the same name.
+
+        Returns:
+            A Card object.
+        """
         cursor = self.cnx.cursor()
-        query = ('SELECT * FROM cards WHERE `title` = "' + title +'"')
+        query = ("SELECT * FROM `cards` WHERE `title` = %s AND `release_date` <= %s ORDER BY `release_date` DESC")
+        values = (title, date)
         try:
-            cursor.execute(query, (title))
+            cursor.execute(query, values)
         except Exception as err:
             print(err)
             return False
@@ -174,9 +203,16 @@ class Database:
         except IndexError:
             return False
 
-        return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4])
+        return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4], release_date=data[2])
 
     def addEvent(self, event):
+        """Adds Event object to database
+
+        Args:
+            event: An Event object
+
+        Returns: A boolean, True if successful addition, False if failed.
+        """
         cursor = self.cnx.cursor()
         insert_tournament = ("INSERT INTO tournaments"
                             """(date, url, id)"""
@@ -191,11 +227,13 @@ class Database:
         return True
 
     def addEvents(self, events):
+        """Adds list of Event objects using addEvent()"""
         for event in events:
             self.addEvent(event)
         return True
 
     def getEvents(self):
+        """Retrieves all events in database"""
         cursor = self.cnx.cursor()
         query = ("SELECT * FROM tournaments")
         cursor.execute(query)
@@ -205,6 +243,13 @@ class Database:
         return events
 
     def getLastTimelineDate(self):
+        """Deprecated: Retrieves the date of the occurance collected
+
+        This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
+
+        Returns:
+            A datetime date object.
+        """
         cursor = self.cnx.cursor()
         query = ("""SELECT MAX(date) FROM `card_series`;""")
         try:
@@ -220,6 +265,13 @@ class Database:
         return False
 
     def getLastEventDate(self):
+        """Retrieves the date of the event collected
+
+        This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
+
+        Returns:
+            A datetime date object.
+        """
         cursor = self.cnx.cursor()
         query = ("""SELECT MAX(date) FROM `tournaments`;""")
         try:
@@ -234,8 +286,12 @@ class Database:
             return row[0]
         return False
 
-    # BUG: Duplicate Entry Handling
     def addCardOccurance(self, play):
+        """Adds a CardOccurance Object to the Database
+
+        Args:
+            play: A CardOccurance object
+        """
         assert isinstance(play, CardOccurance), "Expected instance of CardOccurance, got " + str(play)
 
         cursor = self.cnx.cursor()

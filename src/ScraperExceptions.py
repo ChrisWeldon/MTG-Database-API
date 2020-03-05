@@ -16,6 +16,7 @@ class ServerError(DataCollectionError):
         self.response_code = response_code
         self.message = message
 
+
 class ThrottleError(DataCollectionError):
     """Exception raised when webserver throttles access to docs
 
