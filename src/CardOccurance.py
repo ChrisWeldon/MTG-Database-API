@@ -13,8 +13,8 @@ class CardOccurance:
         else:
             self.date = event.date
         self.id = str(card.echo_id)+ ":" + str(event.id)+ ":" + str(self.date)
-
         self.price = self.card.price.loc[self.date]['price']
+        self.tix = self.card.tix.loc[self.date]['price']
 
     def __eq__(self, o):
         isinstance(o, CardOccurance) and self.card == o.card and self.event == o.event

@@ -137,7 +137,7 @@ def getPaperPriceByCard(card, foil=False, cutoff_date=None):
 def getMTGOPriceByCard(card, foil=False):
     assert isinstance(card, Card)
     title = card.title
-    formatted_title = title.replace(" ", "-").replace(",", "").replace("'", "").replace("//","-").lower()
+    formatted_title = title.replace(" // ", " ").replace(" ", "-").replace(",", "").replace("'", "").lower()
     url = 'https://www.goatbots.com/card/ajax_card?search_name=' + formatted_title
     page=requests.get(url)
     versions = page.json()[1]

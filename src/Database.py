@@ -167,7 +167,7 @@ class Database:
         cursor.execute(query)
         cards = []
         for row in cursor.fetchall():
-            cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4]))
+            cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2]))
         return cards
 
     def getCardByTitle(self, title, date=datetime.date.today()):
@@ -296,14 +296,14 @@ class Database:
 
         cursor = self.cnx.cursor()
         insert = ("INSERT INTO card_series"
-                        """(rowid, title,date,price,tot_occ,event_,deck_nums,
+                        """(rowid, title,date,price,tix,tot_occ,event_,deck_nums,
                         first_place,secon_place,third_place,fourt_place,
                         fifth_place,sixth_place,seven_place,eigth_place,
                         ninet_place,tenth_place,twelt_place,thtee_place,
                         fotee_place,fitee_place,sitee_place,nineo,eighto,
                         seveno,sixo,fiveo,sixone,fivetwo,eightone,seventwo,
                         sevenone,sixtwo,echo_id)"""
-                        "VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)")
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)")
 
         occ = {
             'raw':0,
@@ -337,7 +337,7 @@ class Database:
         }
         data = play.occ
         occ.update(data)
-        insert_data = (play.id, play.card.title, play.date, float(play.price), occ['raw'], str(play.event.event_url), len(play.event.decks) , occ['1st Place'],
+        insert_data = (play.id, play.card.title, play.date, float(play.price), float(play.tix), occ['raw'], str(play.event.event_url), len(play.event.decks) , occ['1st Place'],
                                 occ['2nd Place'], occ['3rd Place'], occ['5th Place'], occ['6th Place'], occ['7th Place'], occ['8th Place'],
                                 occ['9th Place'], occ['10th Place'], occ['11th Place'], occ['12th Place'], occ['13th Place'], occ['14th Place'],
                                 occ['15th Place'], occ['16th Place'],occ['(9-0)'],occ['(8-0)'],occ['(7-0)'],occ['(6-0)'],occ['(5-0)'],

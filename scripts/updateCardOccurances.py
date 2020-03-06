@@ -20,8 +20,6 @@ def concat(list1, list2):
         if e not in list1:
             list1.append(e)
 
-
-
 if __name__ == "__main__":
     db = Database()
     if(not db.getLastEventDate()):
@@ -77,9 +75,9 @@ if __name__ == "__main__":
 
             if card!=False:
                 # TODO: Error handle this scraping on echomgt
-                # FIXME: Making a lot of redundant calls to EchoMTG
+                # FIXME: Making a lot of redundant calls to EchoMTG and GoatBots
                 card.price = getPaperPriceByCard(card)
-                #card.tix = getMTGOPriceByCard(card)
+                card.tix = getMTGOPriceByCard(card)
 
                 try:
                     occurances.append(CardOccurance(card, event, occ[title],date=event.getDate()));
