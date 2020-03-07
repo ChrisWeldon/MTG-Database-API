@@ -1,6 +1,6 @@
+#!/usr/bin/env python3
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-
 from src import *
 from datetime import date, timedelta
 import time
@@ -21,12 +21,19 @@ def concat(list1, list2):
             list1.append(e)
 
 if __name__ == "__main__":
-    db = Database()
-    if(not db.getLastEventDate()):
-        dates_tocheck = daterange(date(2018, 10, 4), date.today())
-    else:
-        dates_tocheck = daterange(db.getLastEventDate(), date.today())
     # Oldest set release date 10/05/2018
+    FORMAT = 'standard'
+    START_DATE = date(2018, 10, 4)
+    print('RUNNING ON ', FORMAT)
+
+    db = Database()
+    if(not db.getLastEventDate(format=FORMAT)):
+        dates_tocheck = daterange(START_DATE, date.today())
+    else:
+        dates_tocheck = daterange(db.getLastEventDate(format=FORMAT), date.today())
+
+    # Temporary overeride while I grab missed on tournamnts.
+    dates_tocheck = daterange(START_DATE, date.today())
 
     del db
     events = []
@@ -34,7 +41,7 @@ if __name__ == "__main__":
     while len(dates_tocheck) > 0:
         print(dates_tocheck[0])
         try:
-            concat(events, getEventsDay(date = dates_tocheck[0]))
+            concat(events, getEventsDay(date = dates_tocheck[0], format=FORMAT))
         except (ServerError, ThrottleError) as err:
             print(err)
             throttleWait()
@@ -42,12 +49,19 @@ if __name__ == "__main__":
             dates_tocheck.pop(0)
 
 
-    print("GETTING EVENT DATA")
     db = Database()
+
+    # CACHED CARDS TO ELIMINATE REDUNDANT CALLS TO GOATBOTS AND ECHO
+    CARDS = []
+    print("GETTING EVENT DATA")
     while len(events)>0:
         occurances = []
         event = events[0]
         print(event)
+        if(db.eventCollected(event)):
+            del events[0]
+            print("(Collected)")
+            continue
 
         if(event.decks==None):
             try:
@@ -74,13 +88,19 @@ if __name__ == "__main__":
             card = db.getCardByTitle(title, date=event.date)
 
             if card!=False:
-                # TODO: Error handle this scraping on echomgt
-                # FIXME: Making a lot of redundant calls to EchoMTG and GoatBots
-                card.price = getPaperPriceByCard(card)
-                card.tix = getMTGOPriceByCard(card)
+
+                #Calling on cached cards
+                if card not in CARDS:
+                    card.price = getPaperPriceByCard(card)
+                    card.tix = getMTGOPriceByCard(card)
+                    CARDS.append(card)
+                else:
+                    cached = CARDS[CARDS.index(card)]
+                    card.price = cached.price
+                    card.tix  = cached.tix
 
                 try:
-                    occurances.append(CardOccurance(card, event, occ[title],date=event.getDate()));
+                    occurances.append(CardOccurance(card, event, occ[title],date=event.date));
                 except Exception as e:
                     print(card)
                     raise Exception(e)

@@ -103,9 +103,9 @@ class Card:
             self.loadPriceFromFile()
 
 
-    # Equality is based solely off id.
+    # Equality is based solely off echo_id.
     def __eq__(self, o):
-        return isinstance(o, Card) and o.id == self.id
+        return isinstance(o, Card) and o.echo_id == self.echo_id
 
     def __str__(self):
         if self.isEmpty():

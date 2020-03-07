@@ -215,9 +215,9 @@ class Database:
         """
         cursor = self.cnx.cursor()
         insert_tournament = ("INSERT INTO tournaments"
-                            """(date, url, id)"""
-                            "VALUES (%s, %s, %s)")
-        insert_values = (event.getDate(), event.getEventURL(), event.getID())
+                            """(date, url, format, id)"""
+                            "VALUES (%s, %s, %s, %s)")
+        insert_values = (event.date, event.event_url, event.format, event.id)
         try:
             cursor.execute(insert_tournament, insert_values)
             self.cnx.commit()
@@ -264,7 +264,7 @@ class Database:
             return row[0]
         return False
 
-    def getLastEventDate(self):
+    def getLastEventDate(self, format=None):
         """Retrieves the date of the event collected
 
         This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
@@ -274,6 +274,8 @@ class Database:
         """
         cursor = self.cnx.cursor()
         query = ("""SELECT MAX(date) FROM `tournaments`;""")
+        if format!= None:
+            query = ("SELECT MAX(date) FROM `tournaments` WHERE `format` = '"+format+"';")
         try:
             cursor.execute(query)
         except Exception as err:
@@ -296,14 +298,14 @@ class Database:
 
         cursor = self.cnx.cursor()
         insert = ("INSERT INTO card_series"
-                        """(rowid, title,date,price,tix,tot_occ,event_,deck_nums,
+                        """(rowid, title,date,price,tix,tot_occ,event_,format,deck_nums,
                         first_place,secon_place,third_place,fourt_place,
                         fifth_place,sixth_place,seven_place,eigth_place,
                         ninet_place,tenth_place,twelt_place,thtee_place,
                         fotee_place,fitee_place,sitee_place,nineo,eighto,
                         seveno,sixo,fiveo,sixone,fivetwo,eightone,seventwo,
                         sevenone,sixtwo,echo_id)"""
-                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)")
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)")
 
         occ = {
             'raw':0,
@@ -337,7 +339,7 @@ class Database:
         }
         data = play.occ
         occ.update(data)
-        insert_data = (play.id, play.card.title, play.date, float(play.price), float(play.tix), occ['raw'], str(play.event.event_url), len(play.event.decks) , occ['1st Place'],
+        insert_data = (play.id, play.card.title, play.date, float(play.price), float(play.tix), occ['raw'], str(play.event.event_url),play.format, len(play.event.decks) , occ['1st Place'],
                                 occ['2nd Place'], occ['3rd Place'], occ['5th Place'], occ['6th Place'], occ['7th Place'], occ['8th Place'],
                                 occ['9th Place'], occ['10th Place'], occ['11th Place'], occ['12th Place'], occ['13th Place'], occ['14th Place'],
                                 occ['15th Place'], occ['16th Place'],occ['(9-0)'],occ['(8-0)'],occ['(7-0)'],occ['(6-0)'],occ['(5-0)'],
@@ -349,6 +351,40 @@ class Database:
             print(err)
             return False
         self.cnx.commit()
+
+    def getOccurancesByCard(self, card):
+        """Retrieves a list of card plays in database based card"""
+
+        cursor = self.cnx.cursor(dictionary=True)
+        query = ("SELECT * FROM `card_series` WHERE `title` = '"+card.title+"' ORDER BY `date` DESC")
+        cursor.execute(query)
+
+        plays = []
+        for p in cursor.fetchall():
+            # Building the the Objects that CardOccurance wraps around
+            event = Event(event_url=p['event_'], format=p['format'], date=p['date'])
+
+            #Creating a subset of the result to become the CardOccurance.occ attribute
+            tuple_not_in_occ = ('title', 'date', 'price', 'tix', 'event_', 'format', 'echo_id', 'rowid');
+            occ = {k: p[k] for k in p.keys() if k not in tuple_not_in_occ}
+
+            plays.append(CardOccurance(card, event, occ=occ, price=p['price'], tix=p['tix']))
+
+        return plays
+
+    def eventCollected(self, event):
+        """Checks if event has been collected"""
+        cursor = self.cnx.cursor()
+
+
+        query = ("SELECT COUNT(1) FROM `tournaments` WHERE `id` = "+str(event.id))
+        cursor.execute(query)
+
+        if cursor.fetchone()[0] == 0:
+            return False
+        return True
+
+
 
 if __name__ == "__main__":
     from Card import Card

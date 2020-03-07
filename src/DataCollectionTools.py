@@ -32,51 +32,10 @@ def getCardsBySet(set_url="/set/THB/theros-beyond-death/", rarities=['rare', 'my
             return_cards.append(Card(echo_id=object['id'], title=object['title'], rarity=object['rarity'], set=object['set']))
     return return_cards
 
-# @param from_date: tuple of (month, day, year)
-# @param to_date: tuple of (month, day, year)
-# @return dictionary of {tournament urls : date}
-# collects the tournaments and writes them to a file as well as returning them.
-def getEventsRange(from_date = ('10', '16', '2019'), to_date = ('10', '24', '2019'), success = lambda msg : print(msg), fail = lambda msg: print(msg)):
-    url = 'https://www.mtggoldfish.com/deck_searches/create?utf8=✓&deck_search%5Bname%5D=&deck_search%5Bformat%5D=standard&deck_search%5Btypes%5D%5B%5D=&deck_search%5Btypes%5D%5B%5D=tournament&deck_search%5Bplayer%5D=&deck_search%5Bdate_range%5D='+str(from_date[0])+'%2F'+str(from_date[1])+'%2F'+str(from_date[2])+'+-+'+str(to_date[0])+'%2F'+str(to_date[1])+'%2F'+str(to_date[2])+'&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Btype%5D=maindeck&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Btype%5D=maindeck&counter=2&commit=Search'
+def getEventsDayOnePage(date = date.today(), format='standard'):
+    #FIXME sometimes there still might be multiple pages!!!
 
-    print(url)
-
-    headers = requests.utils.default_headers()
-    headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
-    page=requests.get(url,headers=headers)
-    soup=BeautifulSoup(page.content,'html.parser')
-    total_pages = int(soup.find('div', class_='pagination').findAll('a')[-2].text)
-    tourns = {}
-    page_num = 1
-    while page_num != total_pages:
-
-        print('scraping page: ', page_num)
-        table = soup.find('table', class_='table table-responsive table-striped')
-        if table == None:
-            print('page didnt recieve')
-            page=requests.get(url,headers=headers)
-            soup=BeautifulSoup(page.content,'html.parser')
-            continue
-        for row in table.findAll('tr'):
-            try:
-                id = row.findAll('td')[2].find('a')['href']
-                if id not in tourns.keys():
-                    tourns[id] = row.findAll('td')[0].text
-                    print(tourns[id])
-            except IndexError:
-                continue
-
-        url = 'https://www.mtggoldfish.com' + soup.find('a', class_='next_page')['href']
-        page=requests.get(url,headers=headers)
-        soup=BeautifulSoup(page.content,'html.parser')
-        page_num = page_num + 1
-
-    return [Event(key, date=tourns[key]) for key in tourns.keys()]
-
-
-def getEventsDay(date = date.today()):
-    url = 'https://www.mtggoldfish.com/deck_searches/create?utf8=✓&deck_search%5Bname%5D=&deck_search%5Bformat%5D=standard&deck_search%5Btypes%5D%5B%5D=&deck_search%5Btypes%5D%5B%5D=tournament&deck_search%5Bplayer%5D=&deck_search%5Bdate_range%5D='+str(date.strftime('%m'))+'%2F'+str(date.strftime('%d'))+'%2F'+str(date.strftime('%Y'))+'+-+'+str(date.strftime('%m'))+'%2F'+str(date.strftime('%d'))+'%2F'+str(date.strftime('%Y'))+'&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Btype%5D=maindeck&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Btype%5D=maindeck&counter=2&commit=Search'
-
+    url = 'https://www.mtggoldfish.com/deck_searches/create?utf8=✓&deck_search%5Bname%5D=&deck_search%5Bformat%5D='+format+'&deck_search%5Btypes%5D%5B%5D=&deck_search%5Btypes%5D%5B%5D=tournament&deck_search%5Bplayer%5D=&deck_search%5Bdate_range%5D='+str(date.strftime('%m'))+'%2F'+str(date.strftime('%d'))+'%2F'+str(date.strftime('%Y'))+'+-+'+str(date.strftime('%m'))+'%2F'+str(date.strftime('%d'))+'%2F'+str(date.strftime('%Y'))+'&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Btype%5D=maindeck&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Btype%5D=maindeck&counter=2&commit=Search'
 
     headers = requests.utils.default_headers()
     headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
@@ -91,8 +50,18 @@ def getEventsDay(date = date.today()):
         print("Throttled")
         raise ThrottleError("Throttled on MTG Goldfish")
 
+    ## Probing for potential bug, will delete later
+    try:
+        total_pages = int(soup.find('div', class_='pagination').findAll('a')[-2].text)
+        print("TOTAL PAGES: ", total_pages)
+    except Exception as e:
+        #passing silently because this block should be removed after bug discovery
+        pass
+
     tourns = {}
     table = soup.find('table', class_='table table-responsive table-striped')
+
+
     if table == None:
         return []
     for row in table.findAll('tr'):
@@ -104,7 +73,51 @@ def getEventsDay(date = date.today()):
         except IndexError:
             continue
 
-    return [Event(key, date=tourns[key]) for key in tourns.keys()]
+    return [Event(key, date=tourns[key], format=format) for key in tourns.keys()]
+
+
+def getEventsDay(date = date.today(), format='standard'):
+    #FIXME sometimes there still might be multiple pages!!!
+
+    url = 'https://www.mtggoldfish.com/deck_searches/create?utf8=✓&deck_search%5Bname%5D=&deck_search%5Bformat%5D='+format+'&deck_search%5Btypes%5D%5B%5D=&deck_search%5Btypes%5D%5B%5D=tournament&deck_search%5Bplayer%5D=&deck_search%5Bdate_range%5D='+str(date.strftime('%m'))+'%2F'+str(date.strftime('%d'))+'%2F'+str(date.strftime('%Y'))+'+-+'+str(date.strftime('%m'))+'%2F'+str(date.strftime('%d'))+'%2F'+str(date.strftime('%Y'))+'&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B0%5D%5Btype%5D=maindeck&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bcard%5D=&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Bquantity%5D=1&deck_search%5Bdeck_search_card_filters_attributes%5D%5B1%5D%5Btype%5D=maindeck&counter=2&commit=Search'
+
+    headers = requests.utils.default_headers()
+    headers.update({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
+
+    tourns = {}
+    while url!=None:
+
+        page=requests.get(url,headers=headers)
+        soup=BeautifulSoup(page.content,'html.parser')
+
+        if(page.status_code == 500):
+            print("Status Code: 500")
+            raise ServerError(page.status_code, "Server Error")
+
+        if(str(soup)==str('Throttled\n')):
+            print("Throttled")
+            raise ThrottleError("Throttled on MTG Goldfish")
+
+        table = soup.find('table', class_='table table-responsive table-striped')
+        if table == None:
+            break
+        for row in table.findAll('tr'):
+            try:
+                id = row.findAll('td')[2].find('a')['href']
+                if id not in tourns.keys():
+                    tourns[id] = row.findAll('td')[0].text
+                    print(id, " : ", tourns[id])
+            except IndexError:
+                continue
+
+        next = soup.find('a', class_='next_page')
+        if next == None:
+            url  = None
+        else:
+            url = 'https://www.mtggoldfish.com' +next['href']
+
+
+    return [Event(key, date=tourns[key], format=format) for key in tourns.keys()]
 
 # @param card - must be of type Card.
 # @return bool - True if successful, False if not

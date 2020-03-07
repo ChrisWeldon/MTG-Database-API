@@ -27,7 +27,7 @@ class Event:
         format: A str representation of format. 'standard','pioneer','modern'
     """
 
-    def __init__(self, event_url, decks=None, id=-1, date="", format=""):
+    def __init__(self, event_url, decks=None, id=-1, date="", format=None):
         """Inits Event with an event url"""
         self.event_url = event_url
         self.decks = decks
