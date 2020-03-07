@@ -372,6 +372,14 @@ class Database:
 
         return plays
 
+    def getTimeSeriesDataFrame(self, card):
+        cursor = self.cnx.cursor(dictionary=True)
+        query = ("SELECT * FROM `card_series` WHERE `title` = '"+card.title+"' ORDER BY `date` DESC")
+        cursor.execute(query)
+
+        return pd.DataFrame(cursor.fetchall())
+
+
     def eventCollected(self, event):
         """Checks if event has been collected"""
         cursor = self.cnx.cursor()
