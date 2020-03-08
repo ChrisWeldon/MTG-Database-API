@@ -27,7 +27,7 @@ class Event:
         format: A str representation of format. 'standard','pioneer','modern'
     """
 
-    def __init__(self, event_url, decks=None, id=-1, date="", format=None):
+    def __init__(self, event_url, decks=[], id=-1, date="", format=None):
         """Inits Event with an event url"""
         self.event_url = event_url
         self.decks = decks
@@ -39,7 +39,7 @@ class Event:
 
     def __str__(self):
         """Converts to printable string"""
-        return self.event_url +" : "+self.date
+        return self.event_url +" : "+ datetime.strftime(self.date, "%Y-%m-%d")
 
     def __eq__(self, o):
         """Overides == operator : compares based on Event.id"""

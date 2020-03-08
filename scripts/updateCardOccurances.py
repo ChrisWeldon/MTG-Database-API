@@ -33,7 +33,7 @@ if __name__ == "__main__":
         dates_tocheck = daterange(db.getLastEventDate(format=FORMAT), date.today())
 
     # Temporary overeride while I grab missed on tournamnts.
-    dates_tocheck = daterange(START_DATE, date.today())
+    #dates_tocheck = daterange(START_DATE, date.today())
 
     del db
     events = []

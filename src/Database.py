@@ -234,12 +234,12 @@ class Database:
 
     def getEvents(self):
         """Retrieves all events in database"""
-        cursor = self.cnx.cursor()
+        cursor = self.cnx.cursor(dictionary=True)
         query = ("SELECT * FROM tournaments")
         cursor.execute(query)
         events = []
         for row in cursor.fetchall():
-            events.append(Event(row[1], id=row[2], date=row[0]))
+            events.append(Event(row['url'], id=row['id'], date=row['date'], format=row['format']))
         return events
 
     def getLastTimelineDate(self):
@@ -372,13 +372,17 @@ class Database:
 
         return plays
 
-    def getTimeSeriesDataFrame(self, card):
+    def getTimeSeriesDataFrame(self, card, format=None):
         cursor = self.cnx.cursor(dictionary=True)
-        query = ("SELECT * FROM `card_series` WHERE `title` = '"+card.title+"' ORDER BY `date` DESC")
+
+        if format != None:
+            query = ("SELECT * FROM `card_series` WHERE `title` = '"+card.title+"' AND `format`='"+format+"' ORDER BY `date` DESC")
+        else:
+            query = ("SELECT * FROM `card_series` WHERE `title` = '"+card.title+"' ORDER BY `date` DESC")
+
         cursor.execute(query)
 
         return pd.DataFrame(cursor.fetchall())
-
 
     def eventCollected(self, event):
         """Checks if event has been collected"""
@@ -392,6 +396,21 @@ class Database:
             return False
         return True
 
+    def allPlaysRecorded(self, card):
+        play_count_query = ("SELECT COUNT(*) FROM `card_series` WHERE `title` =  '"+card.title+"' ")
+        event_count_query = ("SELECT COUNT(*) FROM `tournaments` WHERE 'date' >= '"+datetime.datetime.strftime(card.release_date, '%Y-%m-%d') +"'")
+
+        cursor = self.cnx.cursor()
+        cursor.execute(play_count_query)
+        play_count = cursor.fetchone()[0]
+
+        cursor = self.cnx.cursor()
+        cursor.execute(event_count_query)
+        event_count = cursor.fetchone()[0]
+
+        if(play_count>event_count):
+            print("WARNING play count > event_count!!!!")
+        return(play_count >= event_count)
 
 
 if __name__ == "__main__":

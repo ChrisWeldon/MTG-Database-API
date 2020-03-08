@@ -31,7 +31,7 @@ class Card:
     Attributes:
         title: A string of title of the card.
         price: A Pandas Dataframe of the paper pricing history.
-        tix: a Pandas Dataframe of the MTGO pricing history
+        tix: A Pandas Dataframe of the MTGO pricing history
         set: A string of the URL of the set.
         echo_id: An int of the echomtg unique identifier.
         rarity: A string of the rarity of the card "rare", "mythic", "uncommon", ...
@@ -74,7 +74,7 @@ class Card:
         '(6-2)']
 
     def __init__(self, id=-1, title="", occ_data_path="",price_data_path="",
-                occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=price_data_columns),
+                occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=['date','price']),tix=pd.DataFrame(columns=['date','price']),
                 set=None,echo_id=-1, manifest_path="", rarity=None, timeline=pd.DataFrame(), release_date = None):
 
         """Init of a card object."""
@@ -85,6 +85,7 @@ class Card:
         self.release_date = release_date
         self.occ = occ
         self.price = price
+        self.tix = tix
         self.price_data_path = price_data_path
         self.occ_data_path = occ_data_path
         self.manifest_path = manifest_path
@@ -108,10 +109,7 @@ class Card:
         return isinstance(o, Card) and o.echo_id == self.echo_id
 
     def __str__(self):
-        if self.isEmpty():
-            return str(self.echo_id) + "-" + str(self.title) + "-EMPTY"
-        else:
-            return str(self.echo_id) + "-" + str(self.title)
+        return str(self.echo_id) + "-" + str(self.title)
 
     def setPrice(self, price):
         assert isinstance(price, pd.DataFrame), "price must be instance of Dataframe"
