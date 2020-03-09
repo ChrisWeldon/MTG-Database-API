@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from datetime import date
+from src.DatatypeExceptions import *
 """A module containing the CardOccurance datatype definition.
 
 The CardOccurance class/model representation of an appearance of a card in an MTG event.
@@ -45,10 +46,22 @@ class CardOccurance:
         # pulls the price and tix of card out of the cards pricing timeseries dataframe.
         self.price = price
         self.tix = tix
+
         if price < 0:
-            self.price = self.card.price.loc[self.date]['price']
+            try:
+                self.price = self.card.price.loc[self.date]['price']
+            except KeyError as e:
+                print(e)
+                print("Price at date : ", self.date, " unavailable.")
+
         if tix < 0:
-            self.tix = self.card.tix.loc[self.date]['price']
+            try:
+                self.tix = self.card.tix.loc[self.date]['price']
+            except KeyError as e:
+                print(e)
+                print("tix at date : ", self.date, " unavailable.")
+        if self.price<0 and self.tix<0:
+            raise DatePricingExcption("No Pricing History")
 
     def __eq__(self, o):
         """Overrides the == operator to establish equality based on the card and the event"""
