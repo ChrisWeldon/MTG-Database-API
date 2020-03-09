@@ -17,15 +17,17 @@ if __name__ == '__main__':
     db = Database()
     events=db.getEvents();
     cards= db.getCards();
-
+    print(len(cards) , " Total Cards")
+    count = 0
     for c in cards:
-        print(c)
+        count = count+1
+        print(c, " : ", count, "/", len(cards))
         if db.allPlaysRecorded(c):
             continue
         c.tix = getMTGOPriceByCard(c)
         c.price = getPaperPriceByCard(c)
         for e in events:
-            if e.date < e.release_date:
+            if e.date < c.release_date:
                 continue
             play = CardOccurance(c,e, {})
             db.addCardOccurance(play)

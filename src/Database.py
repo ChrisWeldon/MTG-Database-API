@@ -397,8 +397,8 @@ class Database:
         return True
 
     def allPlaysRecorded(self, card):
-        play_count_query = ("SELECT COUNT(*) FROM `card_series` WHERE `title` =  '"+card.title+"' ")
-        event_count_query = ("SELECT COUNT(*) FROM `tournaments` WHERE 'date' >= '"+datetime.datetime.strftime(card.release_date, '%Y-%m-%d') +"'")
+        play_count_query = ('SELECT COUNT(*) FROM `card_series` WHERE `title` =  "'+card.title+'"')
+        event_count_query = ('SELECT COUNT(*) FROM `tournaments` WHERE `date` >= "'+datetime.datetime.strftime(card.release_date, '%Y-%m-%d') +'"')
 
         cursor = self.cnx.cursor()
         cursor.execute(play_count_query)
@@ -417,8 +417,16 @@ if __name__ == "__main__":
     from Card import Card
     db = Database()
     print(db.getLastEventDate())
+    count = 0
+    cards = db.getCards()
+    for card in cards:
+        if(db.allPlaysRecorded(card)):
+            count = count+1
+            print(card.title)
+        else:
+            break
 
-
+    print(count, "/", len(cards))
 try:
     from src.Card import Card
     from src.Event import Event
