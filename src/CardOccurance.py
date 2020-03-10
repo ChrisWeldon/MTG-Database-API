@@ -47,20 +47,20 @@ class CardOccurance:
         self.price = price
         self.tix = tix
 
-        if price < 0:
+        if price==-1:
             try:
                 self.price = self.card.price.loc[self.date]['price']
             except KeyError as e:
                 print(e)
                 print("Price at date : ", self.date, " unavailable.")
 
-        if tix < 0:
+        if tix ==-1:
             try:
                 self.tix = self.card.tix.loc[self.date]['price']
             except KeyError as e:
                 print(e)
                 print("tix at date : ", self.date, " unavailable.")
-        if self.price<0 and self.tix<0:
+        if self.price==-1 and self.tix==-1:
             raise DatePricingError("No Pricing History")
 
     def __eq__(self, o):
