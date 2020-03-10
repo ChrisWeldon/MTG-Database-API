@@ -4,7 +4,7 @@ class CardOccuranceError(Exception):
     """Base class for all CardOccurance Errors"""
     pass
 
-class DatePricingExcption(CardOccuranceError):
+class DatePricingError(CardOccuranceError):
     """Exception raised when Card
 
     Attributes:

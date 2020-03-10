@@ -61,7 +61,7 @@ class CardOccurance:
                 print(e)
                 print("tix at date : ", self.date, " unavailable.")
         if self.price<0 and self.tix<0:
-            raise DatePricingExcption("No Pricing History")
+            raise DatePricingError("No Pricing History")
 
     def __eq__(self, o):
         """Overrides the == operator to establish equality based on the card and the event"""

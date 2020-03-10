@@ -29,5 +29,9 @@ if __name__ == '__main__':
         for e in events:
             if e.date < c.release_date:
                 continue
-            play = CardOccurance(c,e, {})
+            try:
+                play = CardOccurance(c,e, {})
+            except DatePricingError as e:
+                print(e)
+                continue
             db.addCardOccurance(play)
