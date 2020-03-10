@@ -1,14 +1,42 @@
+#!/usr/bin/env python3
 import os, csv, json
 import pandas as pd
 import numpy as np
 
+"""A module containing the Event datatype definition.
 
-#Datatype object to represent a Card,
-#Card.timeline contains complete timeline of occurances and price (tournement dates not included)
-#Card.occ contains dataframe of occurances
-#Card.price contains dataframe of pricing history
+The Card class/model representation of an mtg card.
 
+    Typical usage example:
+
+    from Card import Card #or if outside package
+    from src import Card
+
+    c = Card(title='Blue Eyes White Dragon',set = '/url/to/set', echo_id = '1234', rarity='rare')
+    c.id #1234
+    Database().addCard(c)
+"""
 class Card:
+    """Card Datatype
+
+    The Card Class is used to represent one card in MTG. The class is also used as a Database model for one card.
+    This card does not represent any particular moment in time. A card class, should represent the full extend of the card's life
+    in the MTG Game given.
+
+    This Card Class is chock full of deprecated methods and attributes. Documentation is on hold for this class
+    because it needs to be completely overhauled.
+
+    Deprecated Attributes are not incuded in Documentation.
+
+    Attributes:
+        title: A string of title of the card.
+        price: A Pandas Dataframe of the paper pricing history.
+        tix: A Pandas Dataframe of the MTGO pricing history
+        set: A string of the URL of the set.
+        echo_id: An int of the echomtg unique identifier.
+        rarity: A string of the rarity of the card "rare", "mythic", "uncommon", ...
+        release_date: A datetime object of the release date of the card. *Note:* Not the prerelease date. Same value as set release date.
+    """
     price_data_columns =["date_unix", "datetime", "price_dollars"]
     occ_data_columns = [
         'card',
@@ -46,14 +74,18 @@ class Card:
         '(6-2)']
 
     def __init__(self, id=-1, title="", occ_data_path="",price_data_path="",
-                occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=price_data_columns),
-                set=None,echo_id=-1, manifest_path="", rarity=None, timeline=pd.DataFrame()):
+                occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=['date','price']),tix=pd.DataFrame(columns=['date','price']),
+                set=None,echo_id=-1, manifest_path="", rarity=None, timeline=pd.DataFrame(), release_date = None):
+
+        """Init of a card object."""
         assert isinstance(occ, pd.DataFrame), "non dataframe passed through occ"
         assert isinstance(price, pd.DataFrame), "non dataframe passed through price"
         self.id = id
         self.title = title
+        self.release_date = release_date
         self.occ = occ
         self.price = price
+        self.tix = tix
         self.price_data_path = price_data_path
         self.occ_data_path = occ_data_path
         self.manifest_path = manifest_path
@@ -71,22 +103,20 @@ class Card:
         if price.empty and price_data_path != "": # Allows for Initialization from only paths
             self.loadPriceFromFile()
 
-        if not price.empty and not occ.empty:
-            self.assembleTimeline()
 
-    # Equality is based solely off id.
+    # Equality is based solely off echo_id.
     def __eq__(self, o):
-        return isinstance(o, Card) and o.id == self.id
+        return isinstance(o, Card) and o.echo_id == self.echo_id
 
     def __str__(self):
-        if self.isEmpty():
-            return str(self.echo_id) + "-" + str(self.title) + "-EMPTY"
-        else:
-            return str(self.echo_id) + "-" + str(self.title)
+        return str(self.echo_id) + "-" + str(self.title)
 
     def setPrice(self, price):
         assert isinstance(price, pd.DataFrame), "price must be instance of Dataframe"
         self.price = price
+
+    def getPrice(self):
+        return self.price
 
     def setOcc(self, occ):
         assert isinstance(occ, pd.DataFrame)
@@ -95,6 +125,9 @@ class Card:
     def isEmpty(self):
         # return self.occ.empty or self.price.empty # Missing either Occurence data or pricing data.
         return self.timeline.empty
+
+    def getID(self):
+        return self.echo_id
 
     # Loads price from data collected file and overwrites price_data with loaded data
     # THIS CAME FROM THE NOTEBOOK
