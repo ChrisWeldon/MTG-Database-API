@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 from datetime import date
-from src.DatatypeExceptions import *
+try:
+    from src.DatatypeExceptions import *
+except ModuleNotFoundError as e:
+    from DatatypeExceptions import *
 """A module containing the CardOccurance datatype definition.
 
 The CardOccurance class/model representation of an appearance of a card in an MTG event.
