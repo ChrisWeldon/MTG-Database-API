@@ -34,7 +34,7 @@ class CardOccurance:
         price: A float of the paper cost of the card the day of the event.
         tix. A float of the MTGO cost of the card the day of the event.
     """
-    def __init__(self, card, event, occ, date=None, price=-1, tix=-1):
+    def __init__(self, card, event, occ, date=None):
         """Initialization of the Card with Card, Event, and occ data mandatory"""
         self.card = card
         self.event = event
@@ -46,46 +46,7 @@ class CardOccurance:
             self.date = event.date
         self.id = str(card.echo_id)+ ":" + str(event.id)+ ":" + str(self.date)
 
-        # pulls the price and tix of card out of the cards pricing timeseries dataframe.
-        self.price = price
-        self.tix = tix
-
-        if price==-1:
-            try:
-                self.price = self.card.price.loc[self.date]['price']
-            except KeyError as e:
-                print(e)
-                print("Price at date : ", self.date, " unavailable.")
-
-        if tix ==-1:
-            try:
-                self.tix = self.card.tix.loc[self.date]['price']
-            except KeyError as e:
-                print(e)
-                print("tix at date : ", self.date, " unavailable.")
-        if self.price==-1 and self.tix==-1:
-            raise DatePricingError("No Pricing History")
 
     def __eq__(self, o):
         """Overrides the == operator to establish equality based on the card and the event"""
         isinstance(o, CardOccurance) and self.card == o.card and self.event == o.event
-
-    def getCard(self):
-        """Deprecated"""
-        return self.card
-
-    def getEvent(self):
-        """Deprecated"""
-        return self.event
-
-    def getOcc(self):
-        """Deprecated"""
-        return self.occ
-
-    def getPrice(self):
-        """Deprecated"""
-        return self.card.getPrice().loc[self.getDate()]['price']
-
-    def getDate(self):
-        """Deprecated"""
-        return self.date

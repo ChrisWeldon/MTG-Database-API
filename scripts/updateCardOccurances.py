@@ -63,7 +63,7 @@ if __name__ == "__main__":
             print("(Collected)")
             continue
 
-        if(event.decks==None):
+        if(event.decks==[]):
             try:
                 decks = getEventData(event)
             except ThrottleError as err:
@@ -88,16 +88,6 @@ if __name__ == "__main__":
             card = db.getCardByTitle(title, date=event.date)
 
             if card!=False:
-
-                #Calling on cached cards
-                if card not in CARDS:
-                    card.price = getPaperPriceByCard(card)
-                    card.tix = getMTGOPriceByCard(card)
-                    CARDS.append(card)
-                else:
-                    cached = CARDS[CARDS.index(card)]
-                    card.price = cached.price
-                    card.tix  = cached.tix
 
                 try:
                     occurances.append(CardOccurance(card, event, occ[title],date=event.date));

@@ -1,3 +1,4 @@
+from src.CardPrice import *
 from src.Card import Card
 from src.Database import Database
 from src.Event import Event

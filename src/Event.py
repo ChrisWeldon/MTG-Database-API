@@ -39,7 +39,8 @@ class Event:
 
     def __str__(self):
         """Converts to printable string"""
-        return self.event_url +" : "+ datetime.strftime(self.date, "%Y-%m-%d")
+        #return self.event_url +" : "+ datetime.strftime(self.date, "%Y-%m-%d")
+        return self.event_url +" : "+ self.date
 
     def __eq__(self, o):
         """Overides == operator : compares based on Event.id"""

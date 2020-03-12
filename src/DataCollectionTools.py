@@ -305,8 +305,15 @@ except ModuleNotFoundError as err:
 
 if __name__ == "__main__":
     print("DataCollectionTools.py main called")
+    from CardPrice import CardPrice
     db = Database()
-    card = db.getCardByTitle('Sorcerous Spyglass', date=date(2018, 9, 20))
+    card = db.getCardByTitle('Teferi, Time Raveler')
+    card.price = getPaperPriceByCard(card)
+    card.tix = getMTGOPriceByCard(card)
+
+    for p in card.CardPrices():
+        db.addCardPrice(p)
+
 
 
     ## Add QA Testing here
