@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from datetime import date
 
 """A module containing the CardOccurance datatype definition.
