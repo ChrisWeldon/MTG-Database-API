@@ -23,7 +23,7 @@ def concat(list1, list2):
 if __name__ == "__main__":
     # Oldest set release date 10/05/2018
     FORMAT = 'standard'
-    START_DATE = date(2018, 10, 4)
+    START_DATE = date(2019, 10, 4)
     print('RUNNING ON ', FORMAT)
 
     db = Database()
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         dates_tocheck = daterange(db.getLastEventDate(format=FORMAT), date.today())
 
     # Temporary overeride while I grab missed on tournamnts.
-    #dates_tocheck = daterange(START_DATE, date.today())
+    dates_tocheck = daterange(START_DATE, date.today())
 
     del db
     events = []
@@ -58,10 +58,10 @@ if __name__ == "__main__":
         occurances = []
         event = events[0]
         print(event)
-        if(db.eventCollected(event)):
-            del events[0]
-            print("(Collected)")
-            continue
+        # if(db.eventCollected(event)):
+        #     del events[0]
+        #     print("(Collected)")
+        #     continue
 
         if(event.decks==[]):
             try:

@@ -7,6 +7,7 @@ import numpy as np
 import json, csv
 from datetime import date
 import time
+from fake_useragent import UserAgent
 
 # @param set_url: string representing url of set
 # @return array of Card objects: card are effectively empty aside from the manifest data
@@ -75,7 +76,6 @@ def getEventsDayOnePage(date = date.today(), format='standard'):
 
     return [Event(key, date=tourns[key], format=format) for key in tourns.keys()]
 
-
 def getEventsDay(date = date.today(), format='standard'):
     #FIXME sometimes there still might be multiple pages!!!
 
@@ -119,10 +119,6 @@ def getEventsDay(date = date.today(), format='standard'):
 
     return [Event(key, date=tourns[key], format=format) for key in tourns.keys()]
 
-# @param card - must be of type Card.
-# @return bool - True if successful, False if not
-# @description - Scrapes pricing data for echo_id and formats correctly. calls Card.setPrice() with scraped data.
-# return probably needs to be more usable.
 def getPaperPriceByCard(card, foil=False, cutoff_date=None):
     assert isinstance(card, Card)
     if not foil:
@@ -147,12 +143,16 @@ def getPaperPriceByCard(card, foil=False, cutoff_date=None):
     df = df.ffill()
     return df
 
-def getMTGOPriceByCard(card, foil=False):
+def getMTGOPriceByCard(card, foil=False, proxies={}, headers= requests.utils.default_headers()):
     assert isinstance(card, Card)
     title = card.title
     formatted_title = title.replace(" // ", " ").replace(" ", "-").replace(",", "").replace("'", "").lower()
     url = 'https://www.goatbots.com/card/ajax_card?search_name=' + formatted_title
-    page=requests.get(url)
+
+    page=requests.get(url, headers = headers, proxies=proxies)
+    print(page.status_code)
+    if(page.status_code == 403):
+        raise ForbiddenError("Goatbots revolked access to pricing history")
     versions = page.json()[1]
 
     #v[0] is the first entry a card versions pricing array, v[i][0] is the date in str
@@ -176,8 +176,6 @@ def getMTGOPriceByCard(card, foil=False):
     df = df.ffill()
     return df
 
-# @param event - is object of type Event
-# @return - dict of cards with occurance data, False if failed,
 def getOccDataByEvent(event, deck_max = 16):
     if not isinstance(event, Event):
         return False
@@ -308,11 +306,7 @@ if __name__ == "__main__":
     from CardPrice import CardPrice
     db = Database()
     card = db.getCardByTitle('Teferi, Time Raveler')
-    card.price = getPaperPriceByCard(card)
     card.tix = getMTGOPriceByCard(card)
-
-    for p in card.CardPrices():
-        db.addCardPrice(p)
 
 
 

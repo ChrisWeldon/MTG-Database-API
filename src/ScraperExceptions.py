@@ -24,7 +24,7 @@ class ForbiddenError(DataCollectionError):
         message: explanation of error
     """
 
-    def __init__(self, response_code, message):
+    def __init__(self, message, response_code=403):
         self.response_code = response_code
         self.message = message
 

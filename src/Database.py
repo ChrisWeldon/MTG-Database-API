@@ -94,16 +94,17 @@ class Database:
             self.addCard(card)
             print(str(card.echo_id) + " - " + card.title)
 
-    def getCards(self):
-        # TODO: init Cards with release_date
+    def getCards(self, from_date= datetime.date(2017, 9, 28)):
         """Retrieves all cards in the Cards table.
 
         Returns:
             Array of Card objects.
         """
         cursor = self.cnx.cursor()
-        query = ("SELECT * FROM cards")
-        cursor.execute(query)
+        query = ("SELECT * FROM `cards` "
+                " WHERE rotation_date is NULL OR rotation_date >= %s ")
+        vals = (from_date,)
+        cursor.execute(query,vals)
         cards = []
         for row in cursor.fetchall():
             cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2], rotation_date=row[3]))
@@ -227,7 +228,6 @@ class Database:
             return row[0]
         return False
 
-    ##TODO CardPrice
     def addCardOccurance(self, play):
         """Adds a CardOccurance Object to the Database
 
@@ -291,7 +291,6 @@ class Database:
             print(err)
             return False
         self.cnx.commit()
-
 
     def addCardPrice(self, cardprice):
         assert isinstance(cardprice, CardPrice), "Expected instance of CardPrice, got " + str(play)
@@ -403,6 +402,13 @@ class Database:
         if(play_count>event_count):
             print("WARNING play count > event_count!!!!")
         return(play_count >= event_count)
+
+    def getLastCardPriceByCard(self, card):
+        query = ('SELECT max(`date`) FROM `price_series` WHERE `title` = "'+card.title+'"')
+        cursor = self.cnx.cursor()
+        cursor.execute(query)
+        result = cursor.fetchone()[0]
+        return result if result != None else None
 
 
 if __name__ == "__main__":

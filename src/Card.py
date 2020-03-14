@@ -113,9 +113,12 @@ class Card:
     def dateparse(time_unix):
         return datetime.utcfromtimestamp(int(time_unix)/1000).strftime('%Y-%m-%d %H:%M:%S')
 
-    def CardPrices(self):
-        start = self.release_date
-        end = date.today() if self.rotation_date == None else self.rotation_date
+    def CardPrices(self, start=None, end=None):
+
+        if start == None:
+            start = card.release_date
+        if end == None:
+            end=date.today()
 
         prices = []
         for day in daterange(start, end):
