@@ -19,7 +19,7 @@ def concat(list1, list2):
         if e not in list1:
             list1.append(e)
 
-if __name__ == "__main__":
+def updateCardOccurances(format='standard'):
     # Oldest set release date 10/05/2018
     FORMAT = 'standard'
     START_DATE = date(2019, 10, 4)
@@ -98,3 +98,7 @@ if __name__ == "__main__":
             db.addCardOccurance(c)
         db.addEvent(events[0])
         del events[0]
+
+if __name__ == "__main__":
+    updateCardOccurances(format='standard')
+    updateCardOccurances(format='pioneer')
