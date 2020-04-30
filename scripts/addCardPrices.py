@@ -1,21 +1,21 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+from datetime import date, timedelta
+import time
+import requests, json, time
+from urllib.request import Request, urlopen
+from requests.exceptions import SSLError, ProxyError
+
 from mtgapi.common.Card import Card
 from mtgapi.common.CardPrice import CardPrice
 from mtgapi.common.Event import Event
 from mtgapi.common.CardOccurance import CardOccurance
 from mtgapi.common.Database import Database
 from mtgapi.common.exceptions.ScraperExceptions import ServerError, ThrottleError
-
-from datetime import date, timedelta
-import time
-import requests, json, time
-from mtgapi.data.ProxyRotator import ProxyRotation
-from mtgapi.data.DataCollectionTools import getMTGOPriceByCard
-from mtgapi.common.Card import Card
 from mtgapi.common.exceptions.ScraperExceptions import ForbiddenError
-from urllib.request import Request, urlopen
-from requests.exceptions import SSLError, ProxyError
+
+from mtgapi.data.ProxyRotator import ProxyRotation
+from mtgapi.data.DataCollectionTools import getMTGOPriceByCard, getPaperPriceByCard
 
 def throttleWait(wait=30):
     print("Throttle Wait")
