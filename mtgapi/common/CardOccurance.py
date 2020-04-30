@@ -1,4 +1,5 @@
 from datetime import date
+import json
 from mtgapi.common.exceptions.DatatypeExceptions import DatePricingError
 
 """A module containing the CardOccurance datatype definition.
@@ -43,6 +44,15 @@ class CardOccurance:
             self.date = event.date
         self.id = str(card.echo_id)+ ":" + str(event.id)+ ":" + str(self.date)
 
+
+    def __repr__(self):
+        """ Provides a json based represenation of the CardOccurance object """
+
+        object = {
+            "event": self.event.__repr__(),
+            "occ": self.occ
+        }
+        return object
 
     def __eq__(self, o):
         """Overrides the == operator to establish equality based on the card and the event"""

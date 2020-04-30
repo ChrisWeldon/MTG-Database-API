@@ -1,9 +1,7 @@
-import os, csv, json
+import os, csv, json, sys
 import pandas as pd
 import numpy as np
-from datetime import date
-from datetime import timedelta
-import sys
+from datetime import timedelta, date, datetime
 from mtgapi.common.CardPrice import CardPrice
 """A module containing the Event datatype definition.
 
@@ -99,6 +97,16 @@ class Card:
         self.echo_id = echo_id
         self.rarity = rarity
 
+    def __repr__(self):
+        object = {
+            'id': self.echo_id,
+            'title': self.title,
+            'release_date': datetime.strftime(self.release_date, "%Y-%m-%d") if self.release_date!=None else None,
+            'rotation_date': datetime.strftime(self.rotation_date, "%Y-%m-%d") if self.rotation_date!=None else None,
+            'set': self.set,
+            'rarity':self.rarity
+        }
+        return object
 
 
     def __eq__(self, o):

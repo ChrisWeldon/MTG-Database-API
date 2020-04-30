@@ -1,5 +1,6 @@
 from datetime import date
 from datetime import datetime
+import json
 """A module containing the Event datatype definition.
 
 The Event class/model representation of an mtg tournement.
@@ -45,6 +46,16 @@ class Event:
     def __eq__(self, o):
         """Overides == operator : compares based on Event.id"""
         return isinstance(o, Event) and self.id == o.id
+
+    def __repr__(self):
+        object = {
+            "id":self.id,
+            "event_url" :self.event_url,
+            "format": self.format,
+            "date": datetime.strftime(self.date, "%Y-%m-%d"),
+            "decks": self.decks,
+        }
+        return object
 
     def getEventURL(self):
         """Deprecated: Getter for event_url"""

@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
-
 import sys, os, json
+sys.path.insert(0, "/var/www/MTG_Database/mtgapi")
 from mtgapi.common.Card import Card
 from mtgapi.common.Database import Database
 from mtgapi.common.CardPrice import CardPrice
