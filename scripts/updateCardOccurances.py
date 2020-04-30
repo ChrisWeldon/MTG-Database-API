@@ -1,5 +1,11 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+from mtgapi.common.Card import Card
+from mtgapi.common.CardPrice import CardPrice
+from mtgapi.common.Event import Event
+from mtgapi.common.CardOccurance import CardOccurance
+from mtgapi.common.Database import Database
+from mtgapi.common.exceptions.ScraperExceptions import ServerError, ThrottleError
 from src import *
 from datetime import date, timedelta
 import time
@@ -21,7 +27,11 @@ def concat(list1, list2):
 
 if __name__ == "__main__":
     # Oldest set release date 10/05/2018
-    FORMAT = 'standard'
+    if len(sys.argv) == 1 or (sys.argv[1]!='standard' and sys.argv[1]!='pioneer'):
+        FORMAT = 'standard'
+    else:
+        FORMAT = sys.argv[1]
+
     START_DATE = date(2019, 10, 4)
     print('RUNNING ON ', FORMAT)
 

@@ -1,0 +1,3 @@
+#!/Users/chrisevans/Projects/MTG_Database/env/bin/python3.7
+from numba.pycc import main
+main()

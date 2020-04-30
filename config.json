@@ -1,0 +1,11 @@
+{
+  "database": {
+      "database_name": "mtg-time-series",
+      "dev_database_name" : "mtg-time-series_dev",
+      "user":"chris",
+      "password":"Chris)98",
+      "host":"beybladematch.com"
+    },
+  "path": "/usr/bin/CSGOLabeled_Database_Builder/logs/",
+  "dev": "True"
+}

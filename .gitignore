@@ -1,8 +1,3 @@
-/data/*
-config.json
-/scripts/*.json
-main.py
-Scraper.py
-Scraper.pyc
-tournies_standard_aug19-oct17.json
 .DS_Store
+/notebooks/
+/notebooks/*

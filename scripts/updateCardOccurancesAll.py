@@ -1,6 +1,14 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-from src import *
+from mtgapi.common.Card import Card
+from mtgapi.common.CardPrice import CardPrice
+from mtgapi.common.Event import Event
+from mtgapi.common.CardOccurance import CardOccurance
+from mtgapi.common.Database import Database
+from mtgapi.common.exceptions.ScraperExceptions import ServerError, ThrottleError
+
+from mtgapi.data.DataCollectionTools import getEventsDay, getEventData, getOccDataByEvent
+
 from datetime import date, timedelta
 import time
 
@@ -25,7 +33,7 @@ def updateCardOccurances(format='standard'):
     START_DATE = date(2019, 10, 4)
     print('RUNNING ON ', FORMAT)
 
-    db = Database()
+    db = Database(path='config.json')
     if(not db.getLastEventDate(format=FORMAT)):
         dates_tocheck = daterange(START_DATE, date.today())
     else:
@@ -48,8 +56,7 @@ def updateCardOccurances(format='standard'):
             dates_tocheck.pop(0)
 
 
-    db = Database()
-
+    db = Database(path='config.json')
     # CACHED CARDS TO ELIMINATE REDUNDANT CALLS TO GOATBOTS AND ECHO
     CARDS = []
     print("GETTING EVENT DATA")
