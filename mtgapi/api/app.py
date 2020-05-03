@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 import sys, os, json
-sys.path.insert(0, "/var/www/MTG_Database/mtgapi")
 from mtgapi.common.Card import Card
 from mtgapi.common.Database import Database
 from mtgapi.common.CardPrice import CardPrice
@@ -36,3 +35,6 @@ def get_plays(card_name):
         repr_plays.append(p.__repr__())
 
     return json.dumps(repr_plays)
+
+if __name__=="__main__":
+    app.run(host='0.0.0.0')
