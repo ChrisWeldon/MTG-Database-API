@@ -2,7 +2,7 @@ import os, csv, json, sys
 import pandas as pd
 import numpy as np
 from datetime import timedelta, date, datetime
-from mtgapi.common.CardPrice import CardPrice
+from common.CardPrice import CardPrice
 """A module containing the Event datatype definition.
 
 The Card class/model representation of an mtg card.

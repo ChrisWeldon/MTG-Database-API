@@ -5,11 +5,11 @@ import sys, json, os
 import numpy as np
 import pandas as pd
 import math
-from mtgapi.common.Card import Card
-from mtgapi.common.CardPrice import CardPrice
-from mtgapi.common.Event import Event
-from mtgapi.common.CardOccurance import CardOccurance
-from mtgapi.common.exceptions.DatatypeExceptions import DatePricingError
+from common.Card import Card
+from common.CardPrice import CardPrice
+from common.Event import Event
+from common.CardOccurance import CardOccurance
+from common.exceptions.DatatypeExceptions import DatePricingError
 
 """A Module containing the Database Class
 

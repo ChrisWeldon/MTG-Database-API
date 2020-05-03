@@ -1,6 +1,6 @@
 from datetime import date
 import json
-from mtgapi.common.exceptions.DatatypeExceptions import DatePricingError
+from common.exceptions.DatatypeExceptions import DatePricingError
 
 """A module containing the CardOccurance datatype definition.
 
