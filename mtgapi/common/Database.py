@@ -5,6 +5,7 @@ import sys, json, os
 import numpy as np
 import pandas as pd
 import math
+import common
 from common.Card import Card
 from common.CardPrice import CardPrice
 from common.Event import Event
