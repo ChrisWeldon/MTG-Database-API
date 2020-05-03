@@ -1,16 +1,14 @@
 import mysql.connector
 from mysql.connector.errors import *
-import datetime
-import sys, json, os
+import sys, json, os, math, datetime
 import numpy as np
 import pandas as pd
-import math
-import common
-from common.Card import Card
-from common.CardPrice import CardPrice
-from common.Event import Event
-from common.CardOccurance import CardOccurance
-from common.exceptions.DatatypeExceptions import DatePricingError
+
+from .Card import Card
+from .CardPrice import CardPrice
+from .Event import Event
+from .CardOccurance import CardOccurance
+from .exceptions.DatatypeExceptions import DatePricingError
 
 """A Module containing the Database Class
 
@@ -443,10 +441,3 @@ class Database:
         cursor.execute(query)
         result = cursor.fetchone()[0]
         return result if result != None else None
-
-
-if __name__ == "__main__":
-    from Card import Card
-    db = Database()
-    print(db.getLastEventDate())
-    card = db.getCardByTitle('Sorcerous Spyglass')
