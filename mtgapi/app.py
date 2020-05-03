@@ -1,10 +1,10 @@
 from flask import Flask, jsonify
 import sys, os, json
-from common.Card import Card
-from common.Database import Database
-from common.CardPrice import CardPrice
-from common.CardOccurance import CardOccurance
-from common.Event import Event
+from .common.Card import Card
+from .common.Database import Database
+from .common.CardPrice import CardPrice
+from .common.CardOccurance import CardOccurance
+from .common.Event import Event
 
 app = Flask(__name__)
 

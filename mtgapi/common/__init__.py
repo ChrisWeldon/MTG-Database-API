@@ -5,5 +5,5 @@ from .CardOccurance import CardOccurance
 from .CardPrice import CardPrice
 from .Database import Database
 from .Event import Event
-from .exceptions.DatatypeExceptions import *
-from .exceptions.ScraperExceptions import *
+from .DatatypeExceptions import *
+from .ScraperExceptions import *

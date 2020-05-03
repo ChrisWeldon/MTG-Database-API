@@ -1,5 +1,5 @@
 from datetime import date
-from .exceptions.DatatypeExceptions import DatePricingError
+from .DatatypeExceptions import DatePricingError
 
 """A module containing the CardOccurance datatype definition.
 

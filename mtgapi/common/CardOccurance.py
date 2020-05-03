@@ -1,6 +1,6 @@
 from datetime import date
 import json
-from .exceptions.DatatypeExceptions import DatePricingError
+from .DatatypeExceptions import DatePricingError
 
 """A module containing the CardOccurance datatype definition.
 

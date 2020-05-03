@@ -8,7 +8,7 @@ from .Card import Card
 from .CardPrice import CardPrice
 from .Event import Event
 from .CardOccurance import CardOccurance
-from .exceptions.DatatypeExceptions import DatePricingError
+from .DatatypeExceptions import DatePricingError
 
 """A Module containing the Database Class
 
