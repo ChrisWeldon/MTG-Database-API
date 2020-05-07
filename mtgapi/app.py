@@ -7,6 +7,7 @@ from mtgapi.common.CardOccurance import CardOccurance
 from mtgapi.common.Event import Event
 
 app = Flask(__name__)
+cpath = 'mtgapi/config_api.json'
 
 @app.route('/')
 def hello_world():
@@ -14,7 +15,7 @@ def hello_world():
 
 @app.route('/card/<card_name>')
 def get_card(card_name):
-    db = Database(path='config_api.json')
+    db = Database(path=cpath)
     card = db.getCardByTitle(card_name)
     if(card==False):
         return "Card Does not exist"
@@ -23,7 +24,7 @@ def get_card(card_name):
 
 @app.route('/plays/<card_name>')
 def get_plays(card_name):
-    db = Database(path='config_api.json')
+    db = Database(path=cpath)
     card = db.getCardByTitle(card_name)
     if(card==False):
         return "Card Does not exist"

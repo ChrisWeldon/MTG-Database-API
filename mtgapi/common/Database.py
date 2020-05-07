@@ -51,7 +51,8 @@ class Database:
                 self.config = json_data
             self.cnx = mysql.connector.connect(user=self.config["database"]["user"], password=self.config["database"]["password"],
                                           host=self.config["database"]["host"],
-                                          database= (self.config["database"]["dev_database_name"] if self.config["dev"]=="True" else self.config["database"]["database_name"]))
+                                          database= (self.config["database"]["dev_database_name"] if self.config["dev"]=="True" else self.config["database"]["database_name"]),
+                                          use_pure=self.config['database']['use_pure']=="True")
 
         except Exception as e:
             # TODO: throw custom exception for error on initial
