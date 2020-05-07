@@ -109,3 +109,4 @@ class Event:
     def getCardOccurances(self):
         """Deprecated: getter of card_occurances"""
         return self.card_occurances
+
