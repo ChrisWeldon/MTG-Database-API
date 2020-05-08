@@ -10,7 +10,7 @@ import time
 from fake_useragent import UserAgent
 from mtgapi.common.Event import Event
 from mtgapi.common.Card import Card
-from mtgapi.common.exceptions.ScraperExceptions import ForbiddenError
+from mtgapi.common.ScraperExceptions import ForbiddenError
 
 # @param set_url: string representing url of set
 # @return array of Card objects: card are effectively empty aside from the manifest data

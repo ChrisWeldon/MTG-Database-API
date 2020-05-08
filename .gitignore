@@ -2,3 +2,6 @@
 /notebooks/
 /notebooks/*
 /env/
+/mtgapi/config_api.json
+/scripts/config_script.json
+config.json

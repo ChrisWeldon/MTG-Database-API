@@ -182,16 +182,6 @@ class Database:
             self.addEvent(event)
         return True
 
-    def getEvents(self):
-        """Retrieves all events in database"""
-        cursor = self.cnx.cursor(dictionary=True)
-        query = ("SELECT * FROM tournaments")
-        cursor.execute(query)
-        events = []
-        for row in cursor.fetchall():
-            events.append(Event(row['url'], id=row['id'], date=row['date'], format=row['format']))
-        return events
-
     def getLastTimelineDate(self):
         """Deprecated: Retrieves the date of the occurance collected
 
@@ -442,3 +432,31 @@ class Database:
         cursor.execute(query)
         result = cursor.fetchone()[0]
         return result if result != None else None
+
+    def searchCards(self, string):
+        query = ('SELECT * FROM `cards` WHERE `title` LIKE "%'+string+'%"')
+        cursor = self.cnx.cursor()
+        cursor.execute(query)
+        cards =[]
+        for row in cursor.fetchall():
+            cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2], rotation_date=row[3]))
+        return cards
+
+    def searchDate(self, string):
+
+        cursor = self.cnx.cursor(dictionary=True)
+        query = ("SELECT * FROM `card_series` WHERE `date` = '"+string+"' ORDER BY `date` DESC")
+        cursor.execute(query)
+
+        plays = []
+        for p in cursor.fetchall():
+            # Building the the Objects that CardOccurance wraps around
+            event = Event(event_url=p['event_'], format=p['format'], date=p['date'])
+
+            #Creating a subset of the result to become the CardOccurance.occ attribute
+            tuple_not_in_occ = ('title', 'date', 'price', 'tix', 'event_', 'format', 'echo_id', 'rowid');
+            occ = {k: p[k] for k in p.keys() if k not in tuple_not_in_occ}
+
+            #TODO append occurance
+
+        return plays

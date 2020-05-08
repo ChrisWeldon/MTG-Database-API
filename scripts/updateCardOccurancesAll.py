@@ -5,7 +5,7 @@ from mtgapi.common.CardPrice import CardPrice
 from mtgapi.common.Event import Event
 from mtgapi.common.CardOccurance import CardOccurance
 from mtgapi.common.Database import Database
-from mtgapi.common.exceptions.ScraperExceptions import ServerError, ThrottleError
+from mtgapi.common.ScraperExceptions import ServerError, ThrottleError
 
 from mtgapi.data.DataCollectionTools import getEventsDay, getEventData, getOccDataByEvent
 
@@ -33,7 +33,7 @@ def updateCardOccurances(format='standard'):
     START_DATE = date(2019, 10, 4)
     print('RUNNING ON ', FORMAT)
 
-    db = Database(path='config.json')
+    db = Database(path='./scripts/config_script.json')
     if(not db.getLastEventDate(format=FORMAT)):
         dates_tocheck = daterange(START_DATE, date.today())
     else:

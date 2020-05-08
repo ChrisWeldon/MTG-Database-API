@@ -4,7 +4,8 @@
       "dev_database_name" : "mtg-time-series_dev",
       "user":"chris",
       "password":"Chris)98",
-      "host":"beybladematch.com"
+      "host":"beybladematch.com",
+      "use_pure": "False"
     },
   "path": "/usr/bin/CSGOLabeled_Database_Builder/logs/",
   "dev": "True"
