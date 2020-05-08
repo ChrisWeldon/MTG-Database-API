@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, g
 import sys, os, json
 from mtgapi.common.Card import Card
 from mtgapi.common.Database import Database
@@ -10,6 +10,17 @@ from flask import url_for, redirect, abort
 app = Flask(__name__)
 cpath = 'mtgapi/config_api.json'
 
+def get_db():
+    if 'db' not in g:
+        g.db = Database(path=cpath)
+    return g.db
+
+@app.teardown_appcontext
+def close_db(e=None):
+    db = g.pop('db', None)
+    if db is not None:
+        del(db)
+
 @app.route('/')
 def hello_world():
     return '<p>API for Magic the Gathering occurance data in tournaments. Visit <a href="/about">about</a> for license.</p>'
@@ -20,18 +31,16 @@ def get_about():
 
 @app.route('/card/<card_name>')
 def get_card(card_name):
-    db = Database(path=cpath)
+    db = get_db()
     card = db.getCardByTitle(card_name)
     if(card==False):
         return "Card Does not exist"
 
     return json.dumps(card.__repr__())
 
-
 @app.route('/cards/')
 def get_cards():
-    db = Database(path=cpath)
-    # TODO db.getCardsBySet(set)
+    db = get_db()
     cards = db.getCards()
     repr_cards = []
     for c in cards:
@@ -40,7 +49,7 @@ def get_cards():
 
 @app.route('/events/')
 def get_events():
-    db = Database(path=cpath)
+    db = get_db()
     events = db.getEvents()
     repr_events = []
     for e in events:
@@ -49,11 +58,10 @@ def get_events():
 
 @app.route('/plays/<card_name>')
 def get_plays(card_name):
-    db = Database(path=cpath)
+    db = get_db()
     card = db.getCardByTitle(card_name)
     if(card==False):
         return "Card Does not exist"
-
     plays = db.getOccurancesByCard(card)
 
     repr_plays = []
@@ -62,9 +70,28 @@ def get_plays(card_name):
 
     return json.dumps(repr_plays)
 
+
+
+@app.route('/df/plays/<card_name>/<format>')
+def get_dfplays(card_name, format):
+    if(format=="None"):
+        format = None
+    db = get_db()
+    card = db.getCardByTitle(card_name)
+    if(card==False):
+        return "Card Does not exist"
+    plays = db.getCardSeriesDataFrame(card, format=None)
+
+    return plays.to_json(orient='split')
+
+@app.route('/df/plays/<card_name>/')
+def get_dfplays_none(card_name):
+    return redirect(url_for('get_dfplays', card_name=card_name, format='None'))
+
+
 @app.route('/search/<type>/<string>')
 def search(type, string):
-    db = Database(path=cpath)
+    db = get_db()
     if(type=="cards"):
         results = db.searchCards(string)
     else:
@@ -74,10 +101,6 @@ def search(type, string):
     for r in results:
         repr_results.append(r.__repr__())
     return json.dumps(repr_results)
-
-@app.route('/error')
-def error_test():
-    abort(404)
 
 
 if __name__=="__main__":

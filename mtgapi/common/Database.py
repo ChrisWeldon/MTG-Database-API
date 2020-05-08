@@ -434,6 +434,7 @@ class Database:
         return result if result != None else None
 
     def searchCards(self, string):
+
         query = ('SELECT * FROM `cards` WHERE `title` LIKE "%'+string+'%"')
         cursor = self.cnx.cursor()
         cursor.execute(query)
@@ -443,7 +444,6 @@ class Database:
         return cards
 
     def searchDate(self, string):
-
         cursor = self.cnx.cursor(dictionary=True)
         query = ("SELECT * FROM `card_series` WHERE `date` = '"+string+"' ORDER BY `date` DESC")
         cursor.execute(query)
