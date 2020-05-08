@@ -5,7 +5,7 @@ from mtgapi.common.Database import Database
 from mtgapi.common.CardPrice import CardPrice
 from mtgapi.common.CardOccurance import CardOccurance
 from mtgapi.common.Event import Event
-from flask import url_for, redirect
+from flask import url_for, redirect, abort
 
 app = Flask(__name__)
 cpath = 'mtgapi/config_api.json'
@@ -74,6 +74,11 @@ def search(type, string):
     for r in results:
         repr_results.append(r.__repr__())
     return json.dumps(repr_results)
+
+@app.route('/error')
+def error_test():
+    abort(404)
+
 
 if __name__=="__main__":
     app.run(host='0.0.0.0')
