@@ -80,9 +80,9 @@ def get_dfplays(card_name, format):
     card = db.getCardByTitle(card_name)
     if(card==False):
         return "Card Does not exist"
-    plays = db.getCardSeriesDataFrame(card, format=None)
+    plays = db.getCardSeriesDataFrame(card, format=format)
 
-    return plays.to_json(orient='split')
+    return plays.to_json(orient='columns')
 
 @app.route('/df/plays/<card_name>/')
 def get_dfplays_none(card_name):
