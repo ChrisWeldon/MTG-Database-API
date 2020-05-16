@@ -399,7 +399,7 @@ class Database:
         cursor = self.cnx.cursor(dictionary=True)
 
         if format != None:
-            query = ("SELECT * FROM `card_series` WHERE `title` = '"+card.title+"' AND `format`='"+format+"' ORDER BY `date` DESC")
+            query = ("SELECT * FROM `card_series` WHERE `echo_id` = '"+str(card.echo_id)+"' AND `format`='"+format+"' ORDER BY `date` DESC")
         else:
             query = ("SELECT * FROM `card_series` WHERE `title` = '"+card.title+"' ORDER BY `date` DESC")
 
