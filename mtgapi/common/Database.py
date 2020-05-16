@@ -122,7 +122,7 @@ class Database:
 
     def getCardByTitle(self, title, date=datetime.date.today()):
         # RESOLVE: What happens when there is no card by this name?
-        """Retrieves one card from the database.
+        """Retrieves one card from the database by title.
 
         Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
         sets) then the date arg is used to reconcile which age of card is required. The most recent version available
@@ -142,6 +142,40 @@ class Database:
         cursor = self.cnx.cursor()
         query = ("SELECT * FROM `cards` WHERE `title` = %s AND `release_date` <= %s ORDER BY `release_date` DESC")
         values = (title, date)
+        try:
+            cursor.execute(query, values)
+        except Exception as err:
+            print(err)
+            return False
+
+        try:
+            data = cursor.fetchall()[0]
+        except IndexError:
+            return False
+
+        return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4], release_date=data[2])
+
+    def getCardByID(self, id, date=datetime.date.today()):
+        """Retrieves one card from the database by ECHO ID.
+
+        Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+        sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+        is always returned.
+
+        For example:
+            Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+            filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.
+
+        Args:
+            title: a string of the title of the desired card.
+            date: a datetime object to resolve multiple cards of the same name.
+
+        Returns:
+            A Card object.
+        """
+        cursor = self.cnx.cursor()
+        query = ("SELECT * FROM `cards` WHERE `echo_id` = %s AND `release_date` <= %s ORDER BY `release_date` DESC")
+        values = (id, date)
         try:
             cursor.execute(query, values)
         except Exception as err:

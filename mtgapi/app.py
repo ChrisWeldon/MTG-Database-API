@@ -72,21 +72,21 @@ def get_plays(card_name):
 
 
 
-@app.route('/df/plays/<card_name>/<format>')
-def get_dfplays(card_name, format):
+@app.route('/df/plays/<card_id>/<format>')
+def get_dfplays(card_id, format):
     if(format=="None"):
         format = None
     db = get_db()
-    card = db.getCardByTitle(card_name)
+    card = db.getCardByID(card_id)
     if(card==False):
         return "Card Does not exist"
     plays = db.getCardSeriesDataFrame(card, format=format)
 
     return plays.to_json(orient='columns')
 
-@app.route('/df/plays/<card_name>/')
-def get_dfplays_none(card_name):
-    return redirect(url_for('get_dfplays', card_name=card_name, format='None'))
+@app.route('/df/plays/<card_id>/')
+def get_dfplays_none(card_id):
+    return redirect(url_for('get_dfplays', card_id=card_id, format='None'))
 
 
 @app.route('/search/<type>/<string>')
