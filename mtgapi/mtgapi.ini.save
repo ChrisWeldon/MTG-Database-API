@@ -1,0 +1,11 @@
+[uwsgi]
+pythonpath = /srv/MTG_Database/env/lib/python3.7
+vertualenv = /srv/MTG_Database/env
+master = true
+processes = 5
+
+http-socket = :5000
+chmod-socket = 660
+vacuum = true
+
+die-on-term = true
