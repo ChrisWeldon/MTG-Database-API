@@ -101,7 +101,7 @@ def get_dfplays(card_id, format):
     occ_series = pd.merge(events, format_occ, how='left', left_index=True, right_index=True).fillna(0)
     occ_series = occ_series.drop(['url','format','id'], axis=1)
 
-    return occ_series.iloc.to_json(orient='columns')
+    return occ_series.to_json(orient='columns')
 
 @app.route('/df/plays/<card_id>/')
 def get_dfplays_none(card_id):
