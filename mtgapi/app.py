@@ -6,6 +6,7 @@ from mtgapi.common.CardPrice import CardPrice
 from mtgapi.common.CardOccurance import CardOccurance
 from mtgapi.common.Event import Event
 from flask import url_for, redirect, abort
+import pandas as pd
 
 app = Flask(__name__)
 cpath = 'mtgapi/config_api.json'
@@ -14,6 +15,7 @@ def get_db():
     if 'db' not in g:
         g.db = Database(path=cpath)
     return g.db
+
 
 @app.teardown_appcontext
 def close_db(e=None):
@@ -74,15 +76,32 @@ def get_plays(card_name):
 
 @app.route('/df/plays/<card_id>/<format>')
 def get_dfplays(card_id, format):
+
+    def max_decks(num):
+            if num>16:
+                return 16
+            else:
+                return num
+
     if(format=="None"):
         format = None
     db = get_db()
     card = db.getCardByID(card_id)
     if(card==False):
         return "Card Does not exist"
-    plays = db.getCardSeriesDataFrame(card, format=format)
 
-    return plays.to_json(orient='columns')
+    plays = db.getCardSeriesDataFrame(card, format=format)
+    plays['deck_nums'] = plays['deck_nums'].apply(max_decks)
+
+    events = db.getTournamentSeriesDataFrame(format=format)
+    events = events.set_index('date').groupby('date').min()
+    format_occ = plays[['date', 'tot_occ', 'deck_nums']].set_index('date').groupby('date').sum()
+    format_occ['norm_occ']  = format_occ['tot_occ']/format_occ['deck_nums']
+
+    occ_series = pd.merge(events, format_occ, how='left', left_index=True, right_index=True).fillna(0)
+    occ_series = occ_series.drop(['url','format','id'], axis=1)
+
+    return occ_series.iloc[::-1].to_json(orient='columns')
 
 @app.route('/df/plays/<card_id>/')
 def get_dfplays_none(card_id):
