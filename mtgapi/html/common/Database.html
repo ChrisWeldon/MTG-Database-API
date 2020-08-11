@@ -1,0 +1,1818 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.4" />
+<title>common.Database API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>common.Database</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import mysql.connector
+from mysql.connector.errors import *
+import sys, json, os, math, datetime
+import numpy as np
+import pandas as pd
+
+from .Card import Card
+from .CardPrice import CardPrice
+from .Event import Event
+from .CardOccurance import CardOccurance
+from .DatatypeExceptions import DatePricingError
+
+&#34;&#34;&#34;A Module containing the Database Class
+
+The Database Object used to interact with a MySQL database.
+
+
+    Terms:
+        format:
+    Typical usage example:
+
+    from Data import Database #or if outside package
+    from src import Database
+
+    db = Database()
+    card = db.getCardByTitle(&#34;Blue Eyes White Dragon&#34;)
+    db.addCard(card)
+
+&#34;&#34;&#34;
+class Database:
+    &#34;&#34;&#34;A Class for the Database object
+
+    Database is used as an object which interacts with a MySQL database. Check GITHUB page for schema details on MySQL database.
+
+    Attributes:
+        config: path to file containing database connection information
+        cnx: a mysql-connector connection.
+
+    &#34;&#34;&#34;
+    def __init__(self, path = &#39;../config.json&#39;):
+        &#34;&#34;&#34;Inits Database with specified config file. On reading of config
+
+        Args:
+            path: a string &#39;/path/to/config.json&#39;
+
+        &#34;&#34;&#34;
+        try:
+            with open(path, &#39;r&#39;) as json_file:
+                text = json_file.read()
+                json_data = json.loads(text)
+                self.config = json_data
+            self.cnx = mysql.connector.connect(user=self.config[&#34;database&#34;][&#34;user&#34;], password=self.config[&#34;database&#34;][&#34;password&#34;],
+                                          host=self.config[&#34;database&#34;][&#34;host&#34;],
+                                          database= (self.config[&#34;database&#34;][&#34;dev_database_name&#34;] if self.config[&#34;dev&#34;]==&#34;True&#34; else self.config[&#34;database&#34;][&#34;database_name&#34;]),
+                                          use_pure=self.config[&#39;database&#39;][&#39;use_pure&#39;]==&#34;True&#34;)
+
+        except Exception as e:
+            # TODO: throw custom exception for error on initial
+            print(e)
+            print(&#34;Config File Not Found!&#34;);
+            self.cnx = None
+            self.config = None
+
+    def __del__(self):
+        &#34;&#34;&#34;Closes cnx connection&#34;&#34;&#34;
+        self.cnx.close()
+
+    def isConnected(self):
+        &#34;&#34;&#34;Returns if connection is connected&#34;&#34;&#34;
+        if(self.cnx != None):
+            return True
+        else:
+            return False
+
+    def addCard(self, card):
+        # TODO: upload release date too
+        &#34;&#34;&#34;Adds Card Model to Database.
+
+        Args:
+            card: A Card object which contains title, set, echo_id, and release_date.
+
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        insert_card = (&#34;INSERT INTO cards&#34;
+                        &#34;&#34;&#34;(title,set_mtg, echo_id, rarity)&#34;&#34;&#34;
+                        &#34;VALUES (%s, %s, %s, %s)&#34;)
+        insert_card_data = (card.title, card.set, card.echo_id, card.rarity)
+        try:
+            cursor.execute(insert_card, insert_card_data)
+            self.cnx.commit()
+        except Exception as err:
+            print(err)
+            return False
+        id = cursor.lastrowid
+        return id
+
+    def addCards(self, cards):
+        &#34;&#34;&#34;Adds list of Cards to database using addCard()
+
+        Args:
+            cards: an array of cards.
+        &#34;&#34;&#34;
+        for card in cards:
+            self.addCard(card)
+            print(str(card.echo_id) + &#34; - &#34; + card.title)
+
+    def getCards(self, from_date= datetime.date(2017, 9, 28)):
+        &#34;&#34;&#34;Retrieves all cards in the Cards table.
+
+        Returns:
+            Array of Card objects.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;SELECT * FROM `cards` &#34;
+                &#34; WHERE rotation_date is NULL OR rotation_date &gt;= %s &#34;)
+        vals = (from_date,)
+        cursor.execute(query,vals)
+        cards = []
+        for row in cursor.fetchall():
+            cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2], rotation_date=row[3]))
+        return cards
+
+    def getCardByTitle(self, title, date=datetime.date.today()):
+        # RESOLVE: What happens when there is no card by this name?
+        &#34;&#34;&#34;Retrieves one card from the database by title.
+
+        Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+        sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+        is always returned.
+
+        For example:
+            Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+            filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.
+
+        Args:
+            title: a string of the title of the desired card.
+            date: a datetime object to resolve multiple cards of the same name.
+
+        Returns:
+            A Card object.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;SELECT * FROM `cards` WHERE `title` = %s AND `release_date` &lt;= %s ORDER BY `release_date` DESC&#34;)
+        values = (title, date)
+        try:
+            cursor.execute(query, values)
+        except Exception as err:
+            print(err)
+            return False
+
+        try:
+            data = cursor.fetchall()[0]
+        except IndexError:
+            return False
+
+        return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4], release_date=data[2])
+
+    def getCardByID(self, id, date=datetime.date.today()):
+        &#34;&#34;&#34;Retrieves one card from the database by ECHO ID.
+
+        Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+        sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+        is always returned.
+
+        For example:
+            Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+            filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.
+
+        Args:
+            title: a string of the title of the desired card.
+            date: a datetime object to resolve multiple cards of the same name.
+
+        Returns:
+            A Card object.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;SELECT * FROM `cards` WHERE `echo_id` = %s AND `release_date` &lt;= %s ORDER BY `release_date` DESC&#34;)
+        values = (id, date)
+        try:
+            cursor.execute(query, values)
+        except Exception as err:
+            print(err)
+            return False
+
+        try:
+            data = cursor.fetchall()[0]
+        except IndexError:
+            return False
+
+        return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4], release_date=data[2])
+
+    def addEvent(self, event):
+        &#34;&#34;&#34;Adds Event object to database
+
+        Args:
+            event: An Event object
+
+        Returns: A boolean, True if successful addition, False if failed.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        insert_tournament = (&#34;INSERT INTO tournaments&#34;
+                            &#34;&#34;&#34;(date, url, format, id)&#34;&#34;&#34;
+                            &#34;VALUES (%s, %s, %s, %s)&#34;)
+        insert_values = (event.date, event.event_url, event.format, event.id)
+        try:
+            cursor.execute(insert_tournament, insert_values)
+            self.cnx.commit()
+        except Exception as err:
+            print(err)
+            return False
+        return True
+
+    def addEvents(self, events):
+        &#34;&#34;&#34;Adds list of Event objects using addEvent()&#34;&#34;&#34;
+        for event in events:
+            self.addEvent(event)
+        return True
+
+    def getLastTimelineDate(self):
+        &#34;&#34;&#34;Deprecated: Retrieves the date of the occurance collected
+
+        This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
+
+        Returns:
+            A datetime date object.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;&#34;&#34;SELECT MAX(date) FROM `card_series`;&#34;&#34;&#34;)
+        try:
+            cursor.execute(query)
+        except Exception as err:
+            print(err)
+            return False
+
+        for row in cursor.fetchall():
+            if row[0]==None:
+                return False
+            return row[0]
+        return False
+
+    def getLastEventDate(self, format=None):
+        &#34;&#34;&#34;Retrieves the date of the event collected
+
+        This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
+
+        Returns:
+            A datetime date object.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;&#34;&#34;SELECT MAX(date) FROM `tournaments`;&#34;&#34;&#34;)
+        if format!= None:
+            query = (&#34;SELECT MAX(date) FROM `tournaments` WHERE `format` = &#39;&#34;+format+&#34;&#39;;&#34;)
+        try:
+            cursor.execute(query)
+        except Exception as err:
+            print(err)
+            return False
+
+        for row in cursor.fetchall():
+            if row[0]==None:
+                return False
+            return row[0]
+        return False
+
+    def addCardOccurance(self, play):
+        &#34;&#34;&#34;Adds a CardOccurance Object to the Database
+
+        Args:
+            play: A CardOccurance object
+        &#34;&#34;&#34;
+        assert isinstance(play, CardOccurance), &#34;Expected instance of CardOccurance, got &#34; + str(play)
+
+        cursor = self.cnx.cursor()
+        insert = (&#34;INSERT INTO card_series&#34;
+                        &#34;&#34;&#34;(rowid, title,date,tot_occ,event_,format,deck_nums,
+                        first_place,secon_place,third_place,fourt_place,
+                        fifth_place,sixth_place,seven_place,eigth_place,
+                        ninet_place,tenth_place,twelt_place,thtee_place,
+                        fotee_place,fitee_place,sitee_place,nineo,eighto,
+                        seveno,sixo,fiveo,sixone,fivetwo,eightone,seventwo,
+                        sevenone,sixtwo,echo_id)&#34;&#34;&#34;
+                        &#34;VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)&#34;)
+
+        occ = {
+            &#39;raw&#39;:0,
+            &#39;1st Place&#39;:0,
+            &#39;2nd Place&#39;:0,
+            &#39;3rd Place&#39;:0,
+            &#39;4th Place&#39;:0,
+            &#39;5th Place&#39;:0,
+            &#39;6th Place&#39;:0,
+            &#39;7th Place&#39;:0,
+            &#39;8th Place&#39;:0,
+            &#39;9th Place&#39;:0,
+            &#39;10th Place&#39;:0,
+            &#39;11th Place&#39;:0,
+            &#39;12th Place&#39;:0,
+            &#39;13th Place&#39;:0,
+            &#39;14th Place&#39;:0,
+            &#39;15th Place&#39;:0,
+            &#39;16th Place&#39;:0,
+            &#39;(9-0)&#39;: 0,
+            &#39;(8-0)&#39;: 0,
+            &#39;(7-0)&#39;: 0,
+            &#39;(6-0)&#39;: 0,
+            &#39;(5-0)&#39;: 0,
+            &#39;(6-1)&#39;: 0,
+            &#39;(5-2)&#39;: 0,
+            &#39;(8-1)&#39;: 0,
+            &#39;(7-2)&#39;: 0,
+            &#39;(7-1)&#39;: 0,
+            &#39;(6-2)&#39;: 0
+        }
+        data = play.occ
+        occ.update(data)
+        insert_data = (play.id, play.card.title, play.date, occ[&#39;raw&#39;], str(play.event.event_url),play.format, len(play.event.decks) , occ[&#39;1st Place&#39;],
+                                occ[&#39;2nd Place&#39;], occ[&#39;3rd Place&#39;], occ[&#39;5th Place&#39;], occ[&#39;6th Place&#39;], occ[&#39;7th Place&#39;], occ[&#39;8th Place&#39;],
+                                occ[&#39;9th Place&#39;], occ[&#39;10th Place&#39;], occ[&#39;11th Place&#39;], occ[&#39;12th Place&#39;], occ[&#39;13th Place&#39;], occ[&#39;14th Place&#39;],
+                                occ[&#39;15th Place&#39;], occ[&#39;16th Place&#39;],occ[&#39;(9-0)&#39;],occ[&#39;(8-0)&#39;],occ[&#39;(7-0)&#39;],occ[&#39;(6-0)&#39;],occ[&#39;(5-0)&#39;],
+                                occ[&#39;(6-1)&#39;],occ[&#39;(5-2)&#39;],occ[&#39;(8-1)&#39;],occ[&#39;(7-2)&#39;],occ[&#39;(7-1)&#39;],occ[&#39;(6-2)&#39;],play.card.echo_id)
+
+        try:
+            cursor.execute(insert, insert_data)
+        except IntegrityError as err:
+            print(err)
+            return False
+        self.cnx.commit()
+
+    def addCardPrice(self, cardprice):
+        &#34;&#34;&#34; Adds CardPrice object to the database.
+
+        Args:
+            cardprice: An instance of a CardPrice object to be serialized and added.
+
+        Returns:
+            A boolean describing success of database addition.
+        &#34;&#34;&#34;
+
+        assert isinstance(cardprice, CardPrice), &#34;Expected instance of CardPrice, got &#34; + str(play)
+
+        cursor = self.cnx.cursor()
+        insert = (&#34;INSERT INTO price_series&#34;
+                &#34;&#34;&#34;(date, title, price, tix, rowid, echo_id)&#34;&#34;&#34;
+                &#34;VALUES (%s, %s, %s, %s, %s, %s)&#34;)
+        rowid= str(cardprice.card.echo_id) + &#34;:&#34; + str(cardprice.date)
+        cpp = float(cardprice.price) if cardprice.price != None else None
+        cpt = float(cardprice.tix) if cardprice.tix != None else None
+        insert_data = (cardprice.date, cardprice.card.title, cpp, cpt, rowid, cardprice.card.echo_id)
+
+        try:
+            cursor.execute(insert, insert_data)
+        except IntegrityError as err:
+            print(err)
+            return False
+        self.cnx.commit()
+        return True
+
+    def addCardPrices(self, cardprices):
+        &#34;&#34;&#34; Adds and array of cardprices&#34;&#34;&#34;
+        for p in cardprices:
+            self.addCardPrice(p)
+
+    def getCardPriceByDate(self, card, date):
+        &#34;&#34;&#34; Retrieves a the price of a card at a specific date
+
+        Args:
+            card: Card object containing data about the desired card price.
+            date: datetime of the desired price.
+        &#34;&#34;&#34;
+
+        cursor = self.cnx.cursor(dictionary=True)
+        query = (&#34;SELECT * FROM `price_series` WHERE `title` = %s AND `date` = %s&#34;)
+        data = (card.title, date)
+        cursor.execute(query, data)
+        return cursor.fetchone()
+
+    def getOccurancesByCard(self, card):
+        &#34;&#34;&#34;Retrieves a list of CardOccurance in database based on card&#34;&#34;&#34;
+
+        cursor = self.cnx.cursor(dictionary=True)
+        query = (&#34;SELECT * FROM `card_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` DESC&#34;)
+        cursor.execute(query)
+
+        plays = []
+        for p in cursor.fetchall():
+            # Building the the Objects that CardOccurance wraps around
+            event = Event(event_url=p[&#39;event_&#39;], format=p[&#39;format&#39;], date=p[&#39;date&#39;])
+
+            #Creating a subset of the result to become the CardOccurance.occ attribute
+            tuple_not_in_occ = (&#39;title&#39;, &#39;date&#39;, &#39;price&#39;, &#39;tix&#39;, &#39;event_&#39;, &#39;format&#39;, &#39;echo_id&#39;, &#39;rowid&#39;);
+            occ = {k: p[k] for k in p.keys() if k not in tuple_not_in_occ}
+
+            plays.append(CardOccurance(card, event, occ=occ))
+
+        return plays
+
+    def getCardSeriesDataFrame(self, card, format=None):
+        &#34;&#34;&#34; Returns a pandas dataframe of card plays by card&#34;&#34;&#34;
+        cursor = self.cnx.cursor(dictionary=True)
+
+        if format != None:
+            query = (&#34;SELECT * FROM `card_series` WHERE `echo_id` = &#39;&#34;+str(card.echo_id)+&#34;&#39; AND `format`=&#39;&#34;+format+&#34;&#39; ORDER BY `date` DESC&#34;)
+        else:
+            query = (&#34;SELECT * FROM `card_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` DESC&#34;)
+
+        cursor.execute(query)
+
+        return pd.DataFrame(cursor.fetchall())
+
+    def getPriceSeriesDataFrame(self, card):
+        &#34;&#34;&#34; Returns a pandas dataframe of prices by card&#34;&#34;&#34;
+        cursor = self.cnx.cursor(dictionary=True)
+
+        query = (&#34;SELECT * FROM `price_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` ASC&#34;)
+
+        cursor.execute(query)
+
+        return pd.DataFrame(cursor.fetchall())
+
+    def getTournamentSeriesDataFrame(self, format=None):
+        &#34;&#34;&#34; Returns a pandas dataframe of all events based on MTG event format&#34;&#34;&#34;
+        cursor = self.cnx.cursor(dictionary=True)
+
+        if format != None:
+            query = (&#34;SELECT * FROM `tournaments` WHERE `format`=&#39;&#34;+format+&#34;&#39; ORDER BY `date` DESC&#34;)
+        else:
+            query = (&#34;SELECT * FROM `tournaments` WHERE 1 ORDER BY `date` DESC&#34;)
+
+        cursor.execute(query)
+
+        return pd.DataFrame(cursor.fetchall())
+
+    def eventCollected(self, event):
+        &#34;&#34;&#34;Checks if event has been collected&#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+
+
+        query = (&#34;SELECT COUNT(1) FROM `tournaments` WHERE `id` = &#34;+str(event.id))
+        cursor.execute(query)
+
+        if cursor.fetchone()[0] == 0:
+            return False
+        return True
+
+    def allPlaysRecorded(self, card):
+        &#34;&#34;&#34; Returns boolean if all plays for a card have been recorded into the database&#34;&#34;&#34;
+        play_count_query = (&#39;SELECT COUNT(*) FROM `card_series` WHERE `title` =  &#34;&#39;+card.title+&#39;&#34;&#39;)
+        event_count_query = (&#39;SELECT COUNT(*) FROM `tournaments` WHERE `date` &gt;= &#34;&#39;+datetime.datetime.strftime(card.release_date, &#39;%Y-%m-%d&#39;) +&#39;&#34;&#39;)
+
+        cursor = self.cnx.cursor()
+        cursor.execute(play_count_query)
+        play_count = cursor.fetchone()[0]
+
+        cursor = self.cnx.cursor()
+        cursor.execute(event_count_query)
+        event_count = cursor.fetchone()[0]
+
+        if(play_count&gt;event_count):
+            print(&#34;WARNING play count &gt; event_count!!!!&#34;)
+        return(play_count &gt;= event_count)
+
+    def getLastCardPriceByCard(self, card):
+        &#34;&#34;&#34; Returns last price collected for card&#34;&#34;&#34;
+        query = (&#39;SELECT max(`date`) FROM `price_series` WHERE `title` = &#34;&#39;+card.title+&#39;&#34;&#39;)
+        cursor = self.cnx.cursor()
+        cursor.execute(query)
+        result = cursor.fetchone()[0]
+        return result if result != None else None
+
+    def searchCards(self, string):
+
+        query = (&#39;SELECT * FROM `cards` WHERE `title` LIKE &#34;%&#39;+string+&#39;%&#34;&#39;)
+        cursor = self.cnx.cursor()
+        cursor.execute(query)
+        cards =[]
+        for row in cursor.fetchall():
+            cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2], rotation_date=row[3]))
+        return cards
+
+    def searchDate(self, string):
+        cursor = self.cnx.cursor(dictionary=True)
+        query = (&#34;SELECT * FROM `card_series` WHERE `date` = &#39;&#34;+string+&#34;&#39; ORDER BY `date` DESC&#34;)
+        cursor.execute(query)
+
+        plays = []
+        for p in cursor.fetchall():
+            # Building the the Objects that CardOccurance wraps around
+            event = Event(event_url=p[&#39;event_&#39;], format=p[&#39;format&#39;], date=p[&#39;date&#39;])
+
+            #Creating a subset of the result to become the CardOccurance.occ attribute
+            tuple_not_in_occ = (&#39;title&#39;, &#39;date&#39;, &#39;price&#39;, &#39;tix&#39;, &#39;event_&#39;, &#39;format&#39;, &#39;echo_id&#39;, &#39;rowid&#39;);
+            occ = {k: p[k] for k in p.keys() if k not in tuple_not_in_occ}
+
+            #TODO append occurance
+
+        return plays</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="common.Database.Database"><code class="flex name class">
+<span>class <span class="ident">Database</span></span>
+<span>(</span><span>path='../config.json')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A Class for the Database object</p>
+<p>Database is used as an object which interacts with a MySQL database. Check GITHUB page for schema details on MySQL database.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>config</code></strong></dt>
+<dd>path to file containing database connection information</dd>
+<dt><strong><code>cnx</code></strong></dt>
+<dd>a mysql-connector connection.</dd>
+</dl>
+<p>Inits Database with specified config file. On reading of config</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong></dt>
+<dd>a string '/path/to/config.json'</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Database:
+    &#34;&#34;&#34;A Class for the Database object
+
+    Database is used as an object which interacts with a MySQL database. Check GITHUB page for schema details on MySQL database.
+
+    Attributes:
+        config: path to file containing database connection information
+        cnx: a mysql-connector connection.
+
+    &#34;&#34;&#34;
+    def __init__(self, path = &#39;../config.json&#39;):
+        &#34;&#34;&#34;Inits Database with specified config file. On reading of config
+
+        Args:
+            path: a string &#39;/path/to/config.json&#39;
+
+        &#34;&#34;&#34;
+        try:
+            with open(path, &#39;r&#39;) as json_file:
+                text = json_file.read()
+                json_data = json.loads(text)
+                self.config = json_data
+            self.cnx = mysql.connector.connect(user=self.config[&#34;database&#34;][&#34;user&#34;], password=self.config[&#34;database&#34;][&#34;password&#34;],
+                                          host=self.config[&#34;database&#34;][&#34;host&#34;],
+                                          database= (self.config[&#34;database&#34;][&#34;dev_database_name&#34;] if self.config[&#34;dev&#34;]==&#34;True&#34; else self.config[&#34;database&#34;][&#34;database_name&#34;]),
+                                          use_pure=self.config[&#39;database&#39;][&#39;use_pure&#39;]==&#34;True&#34;)
+
+        except Exception as e:
+            # TODO: throw custom exception for error on initial
+            print(e)
+            print(&#34;Config File Not Found!&#34;);
+            self.cnx = None
+            self.config = None
+
+    def __del__(self):
+        &#34;&#34;&#34;Closes cnx connection&#34;&#34;&#34;
+        self.cnx.close()
+
+    def isConnected(self):
+        &#34;&#34;&#34;Returns if connection is connected&#34;&#34;&#34;
+        if(self.cnx != None):
+            return True
+        else:
+            return False
+
+    def addCard(self, card):
+        # TODO: upload release date too
+        &#34;&#34;&#34;Adds Card Model to Database.
+
+        Args:
+            card: A Card object which contains title, set, echo_id, and release_date.
+
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        insert_card = (&#34;INSERT INTO cards&#34;
+                        &#34;&#34;&#34;(title,set_mtg, echo_id, rarity)&#34;&#34;&#34;
+                        &#34;VALUES (%s, %s, %s, %s)&#34;)
+        insert_card_data = (card.title, card.set, card.echo_id, card.rarity)
+        try:
+            cursor.execute(insert_card, insert_card_data)
+            self.cnx.commit()
+        except Exception as err:
+            print(err)
+            return False
+        id = cursor.lastrowid
+        return id
+
+    def addCards(self, cards):
+        &#34;&#34;&#34;Adds list of Cards to database using addCard()
+
+        Args:
+            cards: an array of cards.
+        &#34;&#34;&#34;
+        for card in cards:
+            self.addCard(card)
+            print(str(card.echo_id) + &#34; - &#34; + card.title)
+
+    def getCards(self, from_date= datetime.date(2017, 9, 28)):
+        &#34;&#34;&#34;Retrieves all cards in the Cards table.
+
+        Returns:
+            Array of Card objects.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;SELECT * FROM `cards` &#34;
+                &#34; WHERE rotation_date is NULL OR rotation_date &gt;= %s &#34;)
+        vals = (from_date,)
+        cursor.execute(query,vals)
+        cards = []
+        for row in cursor.fetchall():
+            cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2], rotation_date=row[3]))
+        return cards
+
+    def getCardByTitle(self, title, date=datetime.date.today()):
+        # RESOLVE: What happens when there is no card by this name?
+        &#34;&#34;&#34;Retrieves one card from the database by title.
+
+        Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+        sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+        is always returned.
+
+        For example:
+            Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+            filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.
+
+        Args:
+            title: a string of the title of the desired card.
+            date: a datetime object to resolve multiple cards of the same name.
+
+        Returns:
+            A Card object.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;SELECT * FROM `cards` WHERE `title` = %s AND `release_date` &lt;= %s ORDER BY `release_date` DESC&#34;)
+        values = (title, date)
+        try:
+            cursor.execute(query, values)
+        except Exception as err:
+            print(err)
+            return False
+
+        try:
+            data = cursor.fetchall()[0]
+        except IndexError:
+            return False
+
+        return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4], release_date=data[2])
+
+    def getCardByID(self, id, date=datetime.date.today()):
+        &#34;&#34;&#34;Retrieves one card from the database by ECHO ID.
+
+        Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+        sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+        is always returned.
+
+        For example:
+            Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+            filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.
+
+        Args:
+            title: a string of the title of the desired card.
+            date: a datetime object to resolve multiple cards of the same name.
+
+        Returns:
+            A Card object.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;SELECT * FROM `cards` WHERE `echo_id` = %s AND `release_date` &lt;= %s ORDER BY `release_date` DESC&#34;)
+        values = (id, date)
+        try:
+            cursor.execute(query, values)
+        except Exception as err:
+            print(err)
+            return False
+
+        try:
+            data = cursor.fetchall()[0]
+        except IndexError:
+            return False
+
+        return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4], release_date=data[2])
+
+    def addEvent(self, event):
+        &#34;&#34;&#34;Adds Event object to database
+
+        Args:
+            event: An Event object
+
+        Returns: A boolean, True if successful addition, False if failed.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        insert_tournament = (&#34;INSERT INTO tournaments&#34;
+                            &#34;&#34;&#34;(date, url, format, id)&#34;&#34;&#34;
+                            &#34;VALUES (%s, %s, %s, %s)&#34;)
+        insert_values = (event.date, event.event_url, event.format, event.id)
+        try:
+            cursor.execute(insert_tournament, insert_values)
+            self.cnx.commit()
+        except Exception as err:
+            print(err)
+            return False
+        return True
+
+    def addEvents(self, events):
+        &#34;&#34;&#34;Adds list of Event objects using addEvent()&#34;&#34;&#34;
+        for event in events:
+            self.addEvent(event)
+        return True
+
+    def getLastTimelineDate(self):
+        &#34;&#34;&#34;Deprecated: Retrieves the date of the occurance collected
+
+        This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
+
+        Returns:
+            A datetime date object.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;&#34;&#34;SELECT MAX(date) FROM `card_series`;&#34;&#34;&#34;)
+        try:
+            cursor.execute(query)
+        except Exception as err:
+            print(err)
+            return False
+
+        for row in cursor.fetchall():
+            if row[0]==None:
+                return False
+            return row[0]
+        return False
+
+    def getLastEventDate(self, format=None):
+        &#34;&#34;&#34;Retrieves the date of the event collected
+
+        This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
+
+        Returns:
+            A datetime date object.
+        &#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+        query = (&#34;&#34;&#34;SELECT MAX(date) FROM `tournaments`;&#34;&#34;&#34;)
+        if format!= None:
+            query = (&#34;SELECT MAX(date) FROM `tournaments` WHERE `format` = &#39;&#34;+format+&#34;&#39;;&#34;)
+        try:
+            cursor.execute(query)
+        except Exception as err:
+            print(err)
+            return False
+
+        for row in cursor.fetchall():
+            if row[0]==None:
+                return False
+            return row[0]
+        return False
+
+    def addCardOccurance(self, play):
+        &#34;&#34;&#34;Adds a CardOccurance Object to the Database
+
+        Args:
+            play: A CardOccurance object
+        &#34;&#34;&#34;
+        assert isinstance(play, CardOccurance), &#34;Expected instance of CardOccurance, got &#34; + str(play)
+
+        cursor = self.cnx.cursor()
+        insert = (&#34;INSERT INTO card_series&#34;
+                        &#34;&#34;&#34;(rowid, title,date,tot_occ,event_,format,deck_nums,
+                        first_place,secon_place,third_place,fourt_place,
+                        fifth_place,sixth_place,seven_place,eigth_place,
+                        ninet_place,tenth_place,twelt_place,thtee_place,
+                        fotee_place,fitee_place,sitee_place,nineo,eighto,
+                        seveno,sixo,fiveo,sixone,fivetwo,eightone,seventwo,
+                        sevenone,sixtwo,echo_id)&#34;&#34;&#34;
+                        &#34;VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)&#34;)
+
+        occ = {
+            &#39;raw&#39;:0,
+            &#39;1st Place&#39;:0,
+            &#39;2nd Place&#39;:0,
+            &#39;3rd Place&#39;:0,
+            &#39;4th Place&#39;:0,
+            &#39;5th Place&#39;:0,
+            &#39;6th Place&#39;:0,
+            &#39;7th Place&#39;:0,
+            &#39;8th Place&#39;:0,
+            &#39;9th Place&#39;:0,
+            &#39;10th Place&#39;:0,
+            &#39;11th Place&#39;:0,
+            &#39;12th Place&#39;:0,
+            &#39;13th Place&#39;:0,
+            &#39;14th Place&#39;:0,
+            &#39;15th Place&#39;:0,
+            &#39;16th Place&#39;:0,
+            &#39;(9-0)&#39;: 0,
+            &#39;(8-0)&#39;: 0,
+            &#39;(7-0)&#39;: 0,
+            &#39;(6-0)&#39;: 0,
+            &#39;(5-0)&#39;: 0,
+            &#39;(6-1)&#39;: 0,
+            &#39;(5-2)&#39;: 0,
+            &#39;(8-1)&#39;: 0,
+            &#39;(7-2)&#39;: 0,
+            &#39;(7-1)&#39;: 0,
+            &#39;(6-2)&#39;: 0
+        }
+        data = play.occ
+        occ.update(data)
+        insert_data = (play.id, play.card.title, play.date, occ[&#39;raw&#39;], str(play.event.event_url),play.format, len(play.event.decks) , occ[&#39;1st Place&#39;],
+                                occ[&#39;2nd Place&#39;], occ[&#39;3rd Place&#39;], occ[&#39;5th Place&#39;], occ[&#39;6th Place&#39;], occ[&#39;7th Place&#39;], occ[&#39;8th Place&#39;],
+                                occ[&#39;9th Place&#39;], occ[&#39;10th Place&#39;], occ[&#39;11th Place&#39;], occ[&#39;12th Place&#39;], occ[&#39;13th Place&#39;], occ[&#39;14th Place&#39;],
+                                occ[&#39;15th Place&#39;], occ[&#39;16th Place&#39;],occ[&#39;(9-0)&#39;],occ[&#39;(8-0)&#39;],occ[&#39;(7-0)&#39;],occ[&#39;(6-0)&#39;],occ[&#39;(5-0)&#39;],
+                                occ[&#39;(6-1)&#39;],occ[&#39;(5-2)&#39;],occ[&#39;(8-1)&#39;],occ[&#39;(7-2)&#39;],occ[&#39;(7-1)&#39;],occ[&#39;(6-2)&#39;],play.card.echo_id)
+
+        try:
+            cursor.execute(insert, insert_data)
+        except IntegrityError as err:
+            print(err)
+            return False
+        self.cnx.commit()
+
+    def addCardPrice(self, cardprice):
+        &#34;&#34;&#34; Adds CardPrice object to the database.
+
+        Args:
+            cardprice: An instance of a CardPrice object to be serialized and added.
+
+        Returns:
+            A boolean describing success of database addition.
+        &#34;&#34;&#34;
+
+        assert isinstance(cardprice, CardPrice), &#34;Expected instance of CardPrice, got &#34; + str(play)
+
+        cursor = self.cnx.cursor()
+        insert = (&#34;INSERT INTO price_series&#34;
+                &#34;&#34;&#34;(date, title, price, tix, rowid, echo_id)&#34;&#34;&#34;
+                &#34;VALUES (%s, %s, %s, %s, %s, %s)&#34;)
+        rowid= str(cardprice.card.echo_id) + &#34;:&#34; + str(cardprice.date)
+        cpp = float(cardprice.price) if cardprice.price != None else None
+        cpt = float(cardprice.tix) if cardprice.tix != None else None
+        insert_data = (cardprice.date, cardprice.card.title, cpp, cpt, rowid, cardprice.card.echo_id)
+
+        try:
+            cursor.execute(insert, insert_data)
+        except IntegrityError as err:
+            print(err)
+            return False
+        self.cnx.commit()
+        return True
+
+    def addCardPrices(self, cardprices):
+        &#34;&#34;&#34; Adds and array of cardprices&#34;&#34;&#34;
+        for p in cardprices:
+            self.addCardPrice(p)
+
+    def getCardPriceByDate(self, card, date):
+        &#34;&#34;&#34; Retrieves a the price of a card at a specific date
+
+        Args:
+            card: Card object containing data about the desired card price.
+            date: datetime of the desired price.
+        &#34;&#34;&#34;
+
+        cursor = self.cnx.cursor(dictionary=True)
+        query = (&#34;SELECT * FROM `price_series` WHERE `title` = %s AND `date` = %s&#34;)
+        data = (card.title, date)
+        cursor.execute(query, data)
+        return cursor.fetchone()
+
+    def getOccurancesByCard(self, card):
+        &#34;&#34;&#34;Retrieves a list of CardOccurance in database based on card&#34;&#34;&#34;
+
+        cursor = self.cnx.cursor(dictionary=True)
+        query = (&#34;SELECT * FROM `card_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` DESC&#34;)
+        cursor.execute(query)
+
+        plays = []
+        for p in cursor.fetchall():
+            # Building the the Objects that CardOccurance wraps around
+            event = Event(event_url=p[&#39;event_&#39;], format=p[&#39;format&#39;], date=p[&#39;date&#39;])
+
+            #Creating a subset of the result to become the CardOccurance.occ attribute
+            tuple_not_in_occ = (&#39;title&#39;, &#39;date&#39;, &#39;price&#39;, &#39;tix&#39;, &#39;event_&#39;, &#39;format&#39;, &#39;echo_id&#39;, &#39;rowid&#39;);
+            occ = {k: p[k] for k in p.keys() if k not in tuple_not_in_occ}
+
+            plays.append(CardOccurance(card, event, occ=occ))
+
+        return plays
+
+    def getCardSeriesDataFrame(self, card, format=None):
+        &#34;&#34;&#34; Returns a pandas dataframe of card plays by card&#34;&#34;&#34;
+        cursor = self.cnx.cursor(dictionary=True)
+
+        if format != None:
+            query = (&#34;SELECT * FROM `card_series` WHERE `echo_id` = &#39;&#34;+str(card.echo_id)+&#34;&#39; AND `format`=&#39;&#34;+format+&#34;&#39; ORDER BY `date` DESC&#34;)
+        else:
+            query = (&#34;SELECT * FROM `card_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` DESC&#34;)
+
+        cursor.execute(query)
+
+        return pd.DataFrame(cursor.fetchall())
+
+    def getPriceSeriesDataFrame(self, card):
+        &#34;&#34;&#34; Returns a pandas dataframe of prices by card&#34;&#34;&#34;
+        cursor = self.cnx.cursor(dictionary=True)
+
+        query = (&#34;SELECT * FROM `price_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` ASC&#34;)
+
+        cursor.execute(query)
+
+        return pd.DataFrame(cursor.fetchall())
+
+    def getTournamentSeriesDataFrame(self, format=None):
+        &#34;&#34;&#34; Returns a pandas dataframe of all events based on MTG event format&#34;&#34;&#34;
+        cursor = self.cnx.cursor(dictionary=True)
+
+        if format != None:
+            query = (&#34;SELECT * FROM `tournaments` WHERE `format`=&#39;&#34;+format+&#34;&#39; ORDER BY `date` DESC&#34;)
+        else:
+            query = (&#34;SELECT * FROM `tournaments` WHERE 1 ORDER BY `date` DESC&#34;)
+
+        cursor.execute(query)
+
+        return pd.DataFrame(cursor.fetchall())
+
+    def eventCollected(self, event):
+        &#34;&#34;&#34;Checks if event has been collected&#34;&#34;&#34;
+        cursor = self.cnx.cursor()
+
+
+        query = (&#34;SELECT COUNT(1) FROM `tournaments` WHERE `id` = &#34;+str(event.id))
+        cursor.execute(query)
+
+        if cursor.fetchone()[0] == 0:
+            return False
+        return True
+
+    def allPlaysRecorded(self, card):
+        &#34;&#34;&#34; Returns boolean if all plays for a card have been recorded into the database&#34;&#34;&#34;
+        play_count_query = (&#39;SELECT COUNT(*) FROM `card_series` WHERE `title` =  &#34;&#39;+card.title+&#39;&#34;&#39;)
+        event_count_query = (&#39;SELECT COUNT(*) FROM `tournaments` WHERE `date` &gt;= &#34;&#39;+datetime.datetime.strftime(card.release_date, &#39;%Y-%m-%d&#39;) +&#39;&#34;&#39;)
+
+        cursor = self.cnx.cursor()
+        cursor.execute(play_count_query)
+        play_count = cursor.fetchone()[0]
+
+        cursor = self.cnx.cursor()
+        cursor.execute(event_count_query)
+        event_count = cursor.fetchone()[0]
+
+        if(play_count&gt;event_count):
+            print(&#34;WARNING play count &gt; event_count!!!!&#34;)
+        return(play_count &gt;= event_count)
+
+    def getLastCardPriceByCard(self, card):
+        &#34;&#34;&#34; Returns last price collected for card&#34;&#34;&#34;
+        query = (&#39;SELECT max(`date`) FROM `price_series` WHERE `title` = &#34;&#39;+card.title+&#39;&#34;&#39;)
+        cursor = self.cnx.cursor()
+        cursor.execute(query)
+        result = cursor.fetchone()[0]
+        return result if result != None else None
+
+    def searchCards(self, string):
+
+        query = (&#39;SELECT * FROM `cards` WHERE `title` LIKE &#34;%&#39;+string+&#39;%&#34;&#39;)
+        cursor = self.cnx.cursor()
+        cursor.execute(query)
+        cards =[]
+        for row in cursor.fetchall():
+            cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2], rotation_date=row[3]))
+        return cards
+
+    def searchDate(self, string):
+        cursor = self.cnx.cursor(dictionary=True)
+        query = (&#34;SELECT * FROM `card_series` WHERE `date` = &#39;&#34;+string+&#34;&#39; ORDER BY `date` DESC&#34;)
+        cursor.execute(query)
+
+        plays = []
+        for p in cursor.fetchall():
+            # Building the the Objects that CardOccurance wraps around
+            event = Event(event_url=p[&#39;event_&#39;], format=p[&#39;format&#39;], date=p[&#39;date&#39;])
+
+            #Creating a subset of the result to become the CardOccurance.occ attribute
+            tuple_not_in_occ = (&#39;title&#39;, &#39;date&#39;, &#39;price&#39;, &#39;tix&#39;, &#39;event_&#39;, &#39;format&#39;, &#39;echo_id&#39;, &#39;rowid&#39;);
+            occ = {k: p[k] for k in p.keys() if k not in tuple_not_in_occ}
+
+            #TODO append occurance
+
+        return plays</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="common.Database.Database.addCard"><code class="name flex">
+<span>def <span class="ident">addCard</span></span>(<span>self, card)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds Card Model to Database.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>card</code></strong></dt>
+<dd>A Card object which contains title, set, echo_id, and release_date.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addCard(self, card):
+    # TODO: upload release date too
+    &#34;&#34;&#34;Adds Card Model to Database.
+
+    Args:
+        card: A Card object which contains title, set, echo_id, and release_date.
+
+    &#34;&#34;&#34;
+    cursor = self.cnx.cursor()
+    insert_card = (&#34;INSERT INTO cards&#34;
+                    &#34;&#34;&#34;(title,set_mtg, echo_id, rarity)&#34;&#34;&#34;
+                    &#34;VALUES (%s, %s, %s, %s)&#34;)
+    insert_card_data = (card.title, card.set, card.echo_id, card.rarity)
+    try:
+        cursor.execute(insert_card, insert_card_data)
+        self.cnx.commit()
+    except Exception as err:
+        print(err)
+        return False
+    id = cursor.lastrowid
+    return id</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.addCardOccurance"><code class="name flex">
+<span>def <span class="ident">addCardOccurance</span></span>(<span>self, play)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds a CardOccurance Object to the Database</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>play</code></strong></dt>
+<dd>A CardOccurance object</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addCardOccurance(self, play):
+    &#34;&#34;&#34;Adds a CardOccurance Object to the Database
+
+    Args:
+        play: A CardOccurance object
+    &#34;&#34;&#34;
+    assert isinstance(play, CardOccurance), &#34;Expected instance of CardOccurance, got &#34; + str(play)
+
+    cursor = self.cnx.cursor()
+    insert = (&#34;INSERT INTO card_series&#34;
+                    &#34;&#34;&#34;(rowid, title,date,tot_occ,event_,format,deck_nums,
+                    first_place,secon_place,third_place,fourt_place,
+                    fifth_place,sixth_place,seven_place,eigth_place,
+                    ninet_place,tenth_place,twelt_place,thtee_place,
+                    fotee_place,fitee_place,sitee_place,nineo,eighto,
+                    seveno,sixo,fiveo,sixone,fivetwo,eightone,seventwo,
+                    sevenone,sixtwo,echo_id)&#34;&#34;&#34;
+                    &#34;VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s,%s)&#34;)
+
+    occ = {
+        &#39;raw&#39;:0,
+        &#39;1st Place&#39;:0,
+        &#39;2nd Place&#39;:0,
+        &#39;3rd Place&#39;:0,
+        &#39;4th Place&#39;:0,
+        &#39;5th Place&#39;:0,
+        &#39;6th Place&#39;:0,
+        &#39;7th Place&#39;:0,
+        &#39;8th Place&#39;:0,
+        &#39;9th Place&#39;:0,
+        &#39;10th Place&#39;:0,
+        &#39;11th Place&#39;:0,
+        &#39;12th Place&#39;:0,
+        &#39;13th Place&#39;:0,
+        &#39;14th Place&#39;:0,
+        &#39;15th Place&#39;:0,
+        &#39;16th Place&#39;:0,
+        &#39;(9-0)&#39;: 0,
+        &#39;(8-0)&#39;: 0,
+        &#39;(7-0)&#39;: 0,
+        &#39;(6-0)&#39;: 0,
+        &#39;(5-0)&#39;: 0,
+        &#39;(6-1)&#39;: 0,
+        &#39;(5-2)&#39;: 0,
+        &#39;(8-1)&#39;: 0,
+        &#39;(7-2)&#39;: 0,
+        &#39;(7-1)&#39;: 0,
+        &#39;(6-2)&#39;: 0
+    }
+    data = play.occ
+    occ.update(data)
+    insert_data = (play.id, play.card.title, play.date, occ[&#39;raw&#39;], str(play.event.event_url),play.format, len(play.event.decks) , occ[&#39;1st Place&#39;],
+                            occ[&#39;2nd Place&#39;], occ[&#39;3rd Place&#39;], occ[&#39;5th Place&#39;], occ[&#39;6th Place&#39;], occ[&#39;7th Place&#39;], occ[&#39;8th Place&#39;],
+                            occ[&#39;9th Place&#39;], occ[&#39;10th Place&#39;], occ[&#39;11th Place&#39;], occ[&#39;12th Place&#39;], occ[&#39;13th Place&#39;], occ[&#39;14th Place&#39;],
+                            occ[&#39;15th Place&#39;], occ[&#39;16th Place&#39;],occ[&#39;(9-0)&#39;],occ[&#39;(8-0)&#39;],occ[&#39;(7-0)&#39;],occ[&#39;(6-0)&#39;],occ[&#39;(5-0)&#39;],
+                            occ[&#39;(6-1)&#39;],occ[&#39;(5-2)&#39;],occ[&#39;(8-1)&#39;],occ[&#39;(7-2)&#39;],occ[&#39;(7-1)&#39;],occ[&#39;(6-2)&#39;],play.card.echo_id)
+
+    try:
+        cursor.execute(insert, insert_data)
+    except IntegrityError as err:
+        print(err)
+        return False
+    self.cnx.commit()</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.addCardPrice"><code class="name flex">
+<span>def <span class="ident">addCardPrice</span></span>(<span>self, cardprice)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds CardPrice object to the database.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>cardprice</code></strong></dt>
+<dd>An instance of a CardPrice object to be serialized and added.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A boolean describing success of database addition.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addCardPrice(self, cardprice):
+    &#34;&#34;&#34; Adds CardPrice object to the database.
+
+    Args:
+        cardprice: An instance of a CardPrice object to be serialized and added.
+
+    Returns:
+        A boolean describing success of database addition.
+    &#34;&#34;&#34;
+
+    assert isinstance(cardprice, CardPrice), &#34;Expected instance of CardPrice, got &#34; + str(play)
+
+    cursor = self.cnx.cursor()
+    insert = (&#34;INSERT INTO price_series&#34;
+            &#34;&#34;&#34;(date, title, price, tix, rowid, echo_id)&#34;&#34;&#34;
+            &#34;VALUES (%s, %s, %s, %s, %s, %s)&#34;)
+    rowid= str(cardprice.card.echo_id) + &#34;:&#34; + str(cardprice.date)
+    cpp = float(cardprice.price) if cardprice.price != None else None
+    cpt = float(cardprice.tix) if cardprice.tix != None else None
+    insert_data = (cardprice.date, cardprice.card.title, cpp, cpt, rowid, cardprice.card.echo_id)
+
+    try:
+        cursor.execute(insert, insert_data)
+    except IntegrityError as err:
+        print(err)
+        return False
+    self.cnx.commit()
+    return True</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.addCardPrices"><code class="name flex">
+<span>def <span class="ident">addCardPrices</span></span>(<span>self, cardprices)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds and array of cardprices</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addCardPrices(self, cardprices):
+    &#34;&#34;&#34; Adds and array of cardprices&#34;&#34;&#34;
+    for p in cardprices:
+        self.addCardPrice(p)</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.addCards"><code class="name flex">
+<span>def <span class="ident">addCards</span></span>(<span>self, cards)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds list of Cards to database using addCard()</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>cards</code></strong></dt>
+<dd>an array of cards.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addCards(self, cards):
+    &#34;&#34;&#34;Adds list of Cards to database using addCard()
+
+    Args:
+        cards: an array of cards.
+    &#34;&#34;&#34;
+    for card in cards:
+        self.addCard(card)
+        print(str(card.echo_id) + &#34; - &#34; + card.title)</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.addEvent"><code class="name flex">
+<span>def <span class="ident">addEvent</span></span>(<span>self, event)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds Event object to database</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>event</code></strong></dt>
+<dd>An Event object</dd>
+</dl>
+<p>Returns: A boolean, True if successful addition, False if failed.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addEvent(self, event):
+    &#34;&#34;&#34;Adds Event object to database
+
+    Args:
+        event: An Event object
+
+    Returns: A boolean, True if successful addition, False if failed.
+    &#34;&#34;&#34;
+    cursor = self.cnx.cursor()
+    insert_tournament = (&#34;INSERT INTO tournaments&#34;
+                        &#34;&#34;&#34;(date, url, format, id)&#34;&#34;&#34;
+                        &#34;VALUES (%s, %s, %s, %s)&#34;)
+    insert_values = (event.date, event.event_url, event.format, event.id)
+    try:
+        cursor.execute(insert_tournament, insert_values)
+        self.cnx.commit()
+    except Exception as err:
+        print(err)
+        return False
+    return True</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.addEvents"><code class="name flex">
+<span>def <span class="ident">addEvents</span></span>(<span>self, events)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds list of Event objects using addEvent()</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addEvents(self, events):
+    &#34;&#34;&#34;Adds list of Event objects using addEvent()&#34;&#34;&#34;
+    for event in events:
+        self.addEvent(event)
+    return True</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.allPlaysRecorded"><code class="name flex">
+<span>def <span class="ident">allPlaysRecorded</span></span>(<span>self, card)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns boolean if all plays for a card have been recorded into the database</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def allPlaysRecorded(self, card):
+    &#34;&#34;&#34; Returns boolean if all plays for a card have been recorded into the database&#34;&#34;&#34;
+    play_count_query = (&#39;SELECT COUNT(*) FROM `card_series` WHERE `title` =  &#34;&#39;+card.title+&#39;&#34;&#39;)
+    event_count_query = (&#39;SELECT COUNT(*) FROM `tournaments` WHERE `date` &gt;= &#34;&#39;+datetime.datetime.strftime(card.release_date, &#39;%Y-%m-%d&#39;) +&#39;&#34;&#39;)
+
+    cursor = self.cnx.cursor()
+    cursor.execute(play_count_query)
+    play_count = cursor.fetchone()[0]
+
+    cursor = self.cnx.cursor()
+    cursor.execute(event_count_query)
+    event_count = cursor.fetchone()[0]
+
+    if(play_count&gt;event_count):
+        print(&#34;WARNING play count &gt; event_count!!!!&#34;)
+    return(play_count &gt;= event_count)</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.eventCollected"><code class="name flex">
+<span>def <span class="ident">eventCollected</span></span>(<span>self, event)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if event has been collected</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def eventCollected(self, event):
+    &#34;&#34;&#34;Checks if event has been collected&#34;&#34;&#34;
+    cursor = self.cnx.cursor()
+
+
+    query = (&#34;SELECT COUNT(1) FROM `tournaments` WHERE `id` = &#34;+str(event.id))
+    cursor.execute(query)
+
+    if cursor.fetchone()[0] == 0:
+        return False
+    return True</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getCardByID"><code class="name flex">
+<span>def <span class="ident">getCardByID</span></span>(<span>self, id, date=datetime.date(2020, 8, 11))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves one card from the database by ECHO ID.</p>
+<p>Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+is always returned.</p>
+<p>For example:
+Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>title</code></strong></dt>
+<dd>a string of the title of the desired card.</dd>
+<dt><strong><code>date</code></strong></dt>
+<dd>a datetime object to resolve multiple cards of the same name.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A Card object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCardByID(self, id, date=datetime.date.today()):
+    &#34;&#34;&#34;Retrieves one card from the database by ECHO ID.
+
+    Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+    sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+    is always returned.
+
+    For example:
+        Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+        filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.
+
+    Args:
+        title: a string of the title of the desired card.
+        date: a datetime object to resolve multiple cards of the same name.
+
+    Returns:
+        A Card object.
+    &#34;&#34;&#34;
+    cursor = self.cnx.cursor()
+    query = (&#34;SELECT * FROM `cards` WHERE `echo_id` = %s AND `release_date` &lt;= %s ORDER BY `release_date` DESC&#34;)
+    values = (id, date)
+    try:
+        cursor.execute(query, values)
+    except Exception as err:
+        print(err)
+        return False
+
+    try:
+        data = cursor.fetchall()[0]
+    except IndexError:
+        return False
+
+    return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4], release_date=data[2])</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getCardByTitle"><code class="name flex">
+<span>def <span class="ident">getCardByTitle</span></span>(<span>self, title, date=datetime.date(2020, 8, 11))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves one card from the database by title.</p>
+<p>Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+is always returned.</p>
+<p>For example:
+Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>title</code></strong></dt>
+<dd>a string of the title of the desired card.</dd>
+<dt><strong><code>date</code></strong></dt>
+<dd>a datetime object to resolve multiple cards of the same name.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A Card object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCardByTitle(self, title, date=datetime.date.today()):
+    # RESOLVE: What happens when there is no card by this name?
+    &#34;&#34;&#34;Retrieves one card from the database by title.
+
+    Retrieves a card from the cards table. If multiple cards are queried (IE two of the same card from different
+    sets) then the date arg is used to reconcile which age of card is required. The most recent version available
+    is always returned.
+
+    For example:
+        Sorcerous Spyglass returns two cards, one from Ixilan and Eldrain. By passing in a date (date of event) we can further
+        filter our results. If the event occured before the release of Eldrain then the Ixilan version is return.
+
+    Args:
+        title: a string of the title of the desired card.
+        date: a datetime object to resolve multiple cards of the same name.
+
+    Returns:
+        A Card object.
+    &#34;&#34;&#34;
+    cursor = self.cnx.cursor()
+    query = (&#34;SELECT * FROM `cards` WHERE `title` = %s AND `release_date` &lt;= %s ORDER BY `release_date` DESC&#34;)
+    values = (title, date)
+    try:
+        cursor.execute(query, values)
+    except Exception as err:
+        print(err)
+        return False
+
+    try:
+        data = cursor.fetchall()[0]
+    except IndexError:
+        return False
+
+    return Card(title=data[0], set=data[1], echo_id=data[5], rarity=data[4], release_date=data[2])</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getCardPriceByDate"><code class="name flex">
+<span>def <span class="ident">getCardPriceByDate</span></span>(<span>self, card, date)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves a the price of a card at a specific date</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>card</code></strong></dt>
+<dd>Card object containing data about the desired card price.</dd>
+<dt><strong><code>date</code></strong></dt>
+<dd>datetime of the desired price.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCardPriceByDate(self, card, date):
+    &#34;&#34;&#34; Retrieves a the price of a card at a specific date
+
+    Args:
+        card: Card object containing data about the desired card price.
+        date: datetime of the desired price.
+    &#34;&#34;&#34;
+
+    cursor = self.cnx.cursor(dictionary=True)
+    query = (&#34;SELECT * FROM `price_series` WHERE `title` = %s AND `date` = %s&#34;)
+    data = (card.title, date)
+    cursor.execute(query, data)
+    return cursor.fetchone()</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getCardSeriesDataFrame"><code class="name flex">
+<span>def <span class="ident">getCardSeriesDataFrame</span></span>(<span>self, card, format=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a pandas dataframe of card plays by card</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCardSeriesDataFrame(self, card, format=None):
+    &#34;&#34;&#34; Returns a pandas dataframe of card plays by card&#34;&#34;&#34;
+    cursor = self.cnx.cursor(dictionary=True)
+
+    if format != None:
+        query = (&#34;SELECT * FROM `card_series` WHERE `echo_id` = &#39;&#34;+str(card.echo_id)+&#34;&#39; AND `format`=&#39;&#34;+format+&#34;&#39; ORDER BY `date` DESC&#34;)
+    else:
+        query = (&#34;SELECT * FROM `card_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` DESC&#34;)
+
+    cursor.execute(query)
+
+    return pd.DataFrame(cursor.fetchall())</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getCards"><code class="name flex">
+<span>def <span class="ident">getCards</span></span>(<span>self, from_date=datetime.date(2017, 9, 28))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves all cards in the Cards table.</p>
+<h2 id="returns">Returns</h2>
+<p>Array of Card objects.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCards(self, from_date= datetime.date(2017, 9, 28)):
+    &#34;&#34;&#34;Retrieves all cards in the Cards table.
+
+    Returns:
+        Array of Card objects.
+    &#34;&#34;&#34;
+    cursor = self.cnx.cursor()
+    query = (&#34;SELECT * FROM `cards` &#34;
+            &#34; WHERE rotation_date is NULL OR rotation_date &gt;= %s &#34;)
+    vals = (from_date,)
+    cursor.execute(query,vals)
+    cards = []
+    for row in cursor.fetchall():
+        cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2], rotation_date=row[3]))
+    return cards</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getLastCardPriceByCard"><code class="name flex">
+<span>def <span class="ident">getLastCardPriceByCard</span></span>(<span>self, card)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns last price collected for card</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getLastCardPriceByCard(self, card):
+    &#34;&#34;&#34; Returns last price collected for card&#34;&#34;&#34;
+    query = (&#39;SELECT max(`date`) FROM `price_series` WHERE `title` = &#34;&#39;+card.title+&#39;&#34;&#39;)
+    cursor = self.cnx.cursor()
+    cursor.execute(query)
+    result = cursor.fetchone()[0]
+    return result if result != None else None</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getLastEventDate"><code class="name flex">
+<span>def <span class="ident">getLastEventDate</span></span>(<span>self, format=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the date of the event collected</p>
+<p>This method is useful for when there is weekly/daily collection so a script can pickup where it left off.</p>
+<h2 id="returns">Returns</h2>
+<p>A datetime date object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getLastEventDate(self, format=None):
+    &#34;&#34;&#34;Retrieves the date of the event collected
+
+    This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
+
+    Returns:
+        A datetime date object.
+    &#34;&#34;&#34;
+    cursor = self.cnx.cursor()
+    query = (&#34;&#34;&#34;SELECT MAX(date) FROM `tournaments`;&#34;&#34;&#34;)
+    if format!= None:
+        query = (&#34;SELECT MAX(date) FROM `tournaments` WHERE `format` = &#39;&#34;+format+&#34;&#39;;&#34;)
+    try:
+        cursor.execute(query)
+    except Exception as err:
+        print(err)
+        return False
+
+    for row in cursor.fetchall():
+        if row[0]==None:
+            return False
+        return row[0]
+    return False</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getLastTimelineDate"><code class="name flex">
+<span>def <span class="ident">getLastTimelineDate</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deprecated: Retrieves the date of the occurance collected</p>
+<p>This method is useful for when there is weekly/daily collection so a script can pickup where it left off.</p>
+<h2 id="returns">Returns</h2>
+<p>A datetime date object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getLastTimelineDate(self):
+    &#34;&#34;&#34;Deprecated: Retrieves the date of the occurance collected
+
+    This method is useful for when there is weekly/daily collection so a script can pickup where it left off.
+
+    Returns:
+        A datetime date object.
+    &#34;&#34;&#34;
+    cursor = self.cnx.cursor()
+    query = (&#34;&#34;&#34;SELECT MAX(date) FROM `card_series`;&#34;&#34;&#34;)
+    try:
+        cursor.execute(query)
+    except Exception as err:
+        print(err)
+        return False
+
+    for row in cursor.fetchall():
+        if row[0]==None:
+            return False
+        return row[0]
+    return False</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getOccurancesByCard"><code class="name flex">
+<span>def <span class="ident">getOccurancesByCard</span></span>(<span>self, card)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves a list of CardOccurance in database based on card</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getOccurancesByCard(self, card):
+    &#34;&#34;&#34;Retrieves a list of CardOccurance in database based on card&#34;&#34;&#34;
+
+    cursor = self.cnx.cursor(dictionary=True)
+    query = (&#34;SELECT * FROM `card_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` DESC&#34;)
+    cursor.execute(query)
+
+    plays = []
+    for p in cursor.fetchall():
+        # Building the the Objects that CardOccurance wraps around
+        event = Event(event_url=p[&#39;event_&#39;], format=p[&#39;format&#39;], date=p[&#39;date&#39;])
+
+        #Creating a subset of the result to become the CardOccurance.occ attribute
+        tuple_not_in_occ = (&#39;title&#39;, &#39;date&#39;, &#39;price&#39;, &#39;tix&#39;, &#39;event_&#39;, &#39;format&#39;, &#39;echo_id&#39;, &#39;rowid&#39;);
+        occ = {k: p[k] for k in p.keys() if k not in tuple_not_in_occ}
+
+        plays.append(CardOccurance(card, event, occ=occ))
+
+    return plays</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getPriceSeriesDataFrame"><code class="name flex">
+<span>def <span class="ident">getPriceSeriesDataFrame</span></span>(<span>self, card)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a pandas dataframe of prices by card</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getPriceSeriesDataFrame(self, card):
+    &#34;&#34;&#34; Returns a pandas dataframe of prices by card&#34;&#34;&#34;
+    cursor = self.cnx.cursor(dictionary=True)
+
+    query = (&#34;SELECT * FROM `price_series` WHERE `title` = &#39;&#34;+card.title+&#34;&#39; ORDER BY `date` ASC&#34;)
+
+    cursor.execute(query)
+
+    return pd.DataFrame(cursor.fetchall())</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.getTournamentSeriesDataFrame"><code class="name flex">
+<span>def <span class="ident">getTournamentSeriesDataFrame</span></span>(<span>self, format=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a pandas dataframe of all events based on MTG event format</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getTournamentSeriesDataFrame(self, format=None):
+    &#34;&#34;&#34; Returns a pandas dataframe of all events based on MTG event format&#34;&#34;&#34;
+    cursor = self.cnx.cursor(dictionary=True)
+
+    if format != None:
+        query = (&#34;SELECT * FROM `tournaments` WHERE `format`=&#39;&#34;+format+&#34;&#39; ORDER BY `date` DESC&#34;)
+    else:
+        query = (&#34;SELECT * FROM `tournaments` WHERE 1 ORDER BY `date` DESC&#34;)
+
+    cursor.execute(query)
+
+    return pd.DataFrame(cursor.fetchall())</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.isConnected"><code class="name flex">
+<span>def <span class="ident">isConnected</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns if connection is connected</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def isConnected(self):
+    &#34;&#34;&#34;Returns if connection is connected&#34;&#34;&#34;
+    if(self.cnx != None):
+        return True
+    else:
+        return False</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.searchCards"><code class="name flex">
+<span>def <span class="ident">searchCards</span></span>(<span>self, string)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def searchCards(self, string):
+
+    query = (&#39;SELECT * FROM `cards` WHERE `title` LIKE &#34;%&#39;+string+&#39;%&#34;&#39;)
+    cursor = self.cnx.cursor()
+    cursor.execute(query)
+    cards =[]
+    for row in cursor.fetchall():
+        cards.append(Card(title=row[0],set = row[1], echo_id = row[5], rarity=row[4], release_date=row[2], rotation_date=row[3]))
+    return cards</code></pre>
+</details>
+</dd>
+<dt id="common.Database.Database.searchDate"><code class="name flex">
+<span>def <span class="ident">searchDate</span></span>(<span>self, string)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def searchDate(self, string):
+    cursor = self.cnx.cursor(dictionary=True)
+    query = (&#34;SELECT * FROM `card_series` WHERE `date` = &#39;&#34;+string+&#34;&#39; ORDER BY `date` DESC&#34;)
+    cursor.execute(query)
+
+    plays = []
+    for p in cursor.fetchall():
+        # Building the the Objects that CardOccurance wraps around
+        event = Event(event_url=p[&#39;event_&#39;], format=p[&#39;format&#39;], date=p[&#39;date&#39;])
+
+        #Creating a subset of the result to become the CardOccurance.occ attribute
+        tuple_not_in_occ = (&#39;title&#39;, &#39;date&#39;, &#39;price&#39;, &#39;tix&#39;, &#39;event_&#39;, &#39;format&#39;, &#39;echo_id&#39;, &#39;rowid&#39;);
+        occ = {k: p[k] for k in p.keys() if k not in tuple_not_in_occ}
+
+        #TODO append occurance
+
+    return plays</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="common" href="index.html">common</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="common.Database.Database" href="#common.Database.Database">Database</a></code></h4>
+<ul class="">
+<li><code><a title="common.Database.Database.addCard" href="#common.Database.Database.addCard">addCard</a></code></li>
+<li><code><a title="common.Database.Database.addCardOccurance" href="#common.Database.Database.addCardOccurance">addCardOccurance</a></code></li>
+<li><code><a title="common.Database.Database.addCardPrice" href="#common.Database.Database.addCardPrice">addCardPrice</a></code></li>
+<li><code><a title="common.Database.Database.addCardPrices" href="#common.Database.Database.addCardPrices">addCardPrices</a></code></li>
+<li><code><a title="common.Database.Database.addCards" href="#common.Database.Database.addCards">addCards</a></code></li>
+<li><code><a title="common.Database.Database.addEvent" href="#common.Database.Database.addEvent">addEvent</a></code></li>
+<li><code><a title="common.Database.Database.addEvents" href="#common.Database.Database.addEvents">addEvents</a></code></li>
+<li><code><a title="common.Database.Database.allPlaysRecorded" href="#common.Database.Database.allPlaysRecorded">allPlaysRecorded</a></code></li>
+<li><code><a title="common.Database.Database.eventCollected" href="#common.Database.Database.eventCollected">eventCollected</a></code></li>
+<li><code><a title="common.Database.Database.getCardByID" href="#common.Database.Database.getCardByID">getCardByID</a></code></li>
+<li><code><a title="common.Database.Database.getCardByTitle" href="#common.Database.Database.getCardByTitle">getCardByTitle</a></code></li>
+<li><code><a title="common.Database.Database.getCardPriceByDate" href="#common.Database.Database.getCardPriceByDate">getCardPriceByDate</a></code></li>
+<li><code><a title="common.Database.Database.getCardSeriesDataFrame" href="#common.Database.Database.getCardSeriesDataFrame">getCardSeriesDataFrame</a></code></li>
+<li><code><a title="common.Database.Database.getCards" href="#common.Database.Database.getCards">getCards</a></code></li>
+<li><code><a title="common.Database.Database.getLastCardPriceByCard" href="#common.Database.Database.getLastCardPriceByCard">getLastCardPriceByCard</a></code></li>
+<li><code><a title="common.Database.Database.getLastEventDate" href="#common.Database.Database.getLastEventDate">getLastEventDate</a></code></li>
+<li><code><a title="common.Database.Database.getLastTimelineDate" href="#common.Database.Database.getLastTimelineDate">getLastTimelineDate</a></code></li>
+<li><code><a title="common.Database.Database.getOccurancesByCard" href="#common.Database.Database.getOccurancesByCard">getOccurancesByCard</a></code></li>
+<li><code><a title="common.Database.Database.getPriceSeriesDataFrame" href="#common.Database.Database.getPriceSeriesDataFrame">getPriceSeriesDataFrame</a></code></li>
+<li><code><a title="common.Database.Database.getTournamentSeriesDataFrame" href="#common.Database.Database.getTournamentSeriesDataFrame">getTournamentSeriesDataFrame</a></code></li>
+<li><code><a title="common.Database.Database.isConnected" href="#common.Database.Database.isConnected">isConnected</a></code></li>
+<li><code><a title="common.Database.Database.searchCards" href="#common.Database.Database.searchCards">searchCards</a></code></li>
+<li><code><a title="common.Database.Database.searchDate" href="#common.Database.Database.searchDate">searchDate</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.4</a>.</p>
+</footer>
+</body>
+</html>

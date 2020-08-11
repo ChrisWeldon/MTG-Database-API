@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.4" />
+<title>common.Card API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>common.Card</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os, csv, json, sys
+import pandas as pd
+import numpy as np
+from datetime import timedelta, date, datetime
+from .CardPrice import CardPrice
+&#34;&#34;&#34;A module containing the Event datatype definition.
+
+The Card class/model representation of an mtg card.
+
+    Typical usage example:
+
+    from Card import Card #or if outside package
+    from src import Card
+
+    c = Card(title=&#39;Blue Eyes White Dragon&#39;,set = &#39;/url/to/set&#39;, echo_id = &#39;1234&#39;, rarity=&#39;rare&#39;)
+    c.id #1234
+    Database().addCard(c)
+&#34;&#34;&#34;
+
+def daterange(first, last):
+    dates = []
+    for n in range(int ((last - first).days)+1):
+        dates.append(first + timedelta(n))
+    return dates
+
+class Card:
+    &#34;&#34;&#34;Card Datatype
+
+    The Card Class is used to represent one card in MTG. The class is also used as a Database model for one card.
+    This card does not represent any particular moment in time. A card class, should represent the full extend of the card&#39;s life
+    in the MTG Game given.
+
+    This Card Class is chock full of deprecated methods and attributes. Documentation is on hold for this class
+    because it needs to be completely overhauled.
+
+    Deprecated Attributes are not incuded in Documentation.
+
+    Attributes:
+        title: A string of title of the card.
+        price: A Pandas Dataframe of the paper pricing history.
+        tix: A Pandas Dataframe of the MTGO pricing history
+        set: A string of the URL of the set.
+        echo_id: An int of the echomtg unique identifier.
+        rarity: A string of the rarity of the card &#34;rare&#34;, &#34;mythic&#34;, &#34;uncommon&#34;, ...
+        release_date: A datetime object of the release date of the card. *Note:* Not the prerelease date. Same value as set release date.
+    &#34;&#34;&#34;
+    price_data_columns =[&#34;date_unix&#34;, &#34;datetime&#34;, &#34;price_dollars&#34;]
+    occ_data_columns = [
+        &#39;card&#39;,
+        &#39;date&#39;,
+        &#39;date_unix&#39;,
+        &#39;raw&#39;,
+        &#39;event&#39;,
+        &#39;deck_nums&#39;,
+        &#39;1st Place&#39;,
+        &#39;2nd Place&#39;,
+        &#39;3rd Place&#39;,
+        &#39;4th Place&#39;,
+        &#39;5th Place&#39;,
+        &#39;6th Place&#39;,
+        &#39;7th Place&#39;,
+        &#39;8th Place&#39;,
+        &#39;9th Place&#39;,
+        &#39;10th Place&#39;,
+        &#39;11th Place&#39;,
+        &#39;12th Place&#39;,
+        &#39;13th Place&#39;,
+        &#39;14th Place&#39;,
+        &#39;15th Place&#39;,
+        &#39;16th Place&#39;,
+        &#39;(9-0)&#39;,
+        &#39;(8-0)&#39;,
+        &#39;(7-0)&#39;,
+        &#39;(6-0)&#39;,
+        &#39;(5-0)&#39;,
+        &#39;(6-1)&#39;,
+        &#39;(5-2)&#39;,
+        &#39;(8-1)&#39;,
+        &#39;(7-2)&#39;,
+        &#39;(7-1)&#39;,
+        &#39;(6-2)&#39;]
+
+    def __init__(self, id=-1, title=&#34;&#34;, occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=[&#39;date&#39;,&#39;price&#39;]),tix=pd.DataFrame(columns=[&#39;date&#39;,&#39;price&#39;]),
+                set=None,echo_id=-1,rarity=None, release_date = None, rotation_date=None):
+
+        &#34;&#34;&#34;Init of a card object.&#34;&#34;&#34;
+        assert isinstance(occ, pd.DataFrame), &#34;non dataframe passed through occ&#34;
+        assert isinstance(price, pd.DataFrame), &#34;non dataframe passed through price&#34;
+        self.id = id
+        self.title = title
+        self.release_date = release_date
+        self.rotation_date = rotation_date
+        self.occ = occ
+        self.price = price
+        self.tix = tix
+        self.set = set
+        self.echo_id = echo_id
+        self.rarity = rarity
+
+    def __repr__(self):
+        object = {
+            &#39;id&#39;: self.echo_id,
+            &#39;title&#39;: self.title,
+            &#39;release_date&#39;: datetime.strftime(self.release_date, &#34;%Y-%m-%d&#34;) if self.release_date!=None else None,
+            &#39;rotation_date&#39;: datetime.strftime(self.rotation_date, &#34;%Y-%m-%d&#34;) if self.rotation_date!=None else None,
+            &#39;set&#39;: self.set,
+            &#39;rarity&#39;:self.rarity
+        }
+        return object
+
+
+    def __eq__(self, o):
+        &#34;&#34;&#34; Returns True or False based on echo_id&#34;&#34;&#34;
+        return isinstance(o, Card) and o.echo_id == self.echo_id
+
+    def __str__(self):
+        &#34;&#34;&#34; Returns readable string of card.
+        Important for logging and such.&#34;&#34;&#34;
+        return str(self.echo_id) + &#34;-&#34; + str(self.title)
+
+    def isEmpty(self):
+        &#34;&#34;&#34; Deprecated from other versions&#34;&#34;&#34;
+        #TODO
+        return False;
+
+    def dateparse(time_unix):
+        &#34;&#34;&#34; Converts unix timestamp into string&#34;&#34;&#34;
+        return datetime.utcfromtimestamp(int(time_unix)/1000).strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)
+
+    def CardPrices(self, start=None, end=None):
+        &#34;&#34;&#34; Returns an of array of CardPrice objects from the start and end dates.
+
+        Args:
+            start: a datetime indicating the start of desired CardPrice retrieval.
+            end: a datetime indication the end of desired CardPrice retrieval
+        &#34;&#34;&#34;
+        if start == None:
+            start = card.release_date
+        if end == None:
+            end=date.today()
+
+        prices = []
+        for day in daterange(start, end):
+            try:
+                prices.append(CardPrice(self, day))
+            except DatePricingError as e:
+                print(&#34;No Price info on day &#34;, day)
+        return prices</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="common.Card.daterange"><code class="name flex">
+<span>def <span class="ident">daterange</span></span>(<span>first, last)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def daterange(first, last):
+    dates = []
+    for n in range(int ((last - first).days)+1):
+        dates.append(first + timedelta(n))
+    return dates</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="common.Card.Card"><code class="flex name class">
+<span>class <span class="ident">Card</span></span>
+<span>(</span><span>id=-1, title='', occ=Empty DataFrame
+Columns: [card, date, date_unix, raw, event, deck_nums, 1st Place, 2nd Place, 3rd Place, 4th Place, 5th Place, 6th Place, 7th Place, 8th Place, 9th Place, 10th Place, 11th Place, 12th Place, 13th Place, 14th Place, 15th Place, 16th Place, (9-0), (8-0), (7-0), (6-0), (5-0), (6-1), (5-2), (8-1), (7-2), (7-1), (6-2)]
+Index: [], price=Empty DataFrame
+Columns: [date, price]
+Index: [], tix=Empty DataFrame
+Columns: [date, price]
+Index: [], set=None, echo_id=-1, rarity=None, release_date=None, rotation_date=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Card Datatype</p>
+<p>The Card Class is used to represent one card in MTG. The class is also used as a Database model for one card.
+This card does not represent any particular moment in time. A card class, should represent the full extend of the card's life
+in the MTG Game given.</p>
+<p>This Card Class is chock full of deprecated methods and attributes. Documentation is on hold for this class
+because it needs to be completely overhauled.</p>
+<p>Deprecated Attributes are not incuded in Documentation.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>title</code></strong></dt>
+<dd>A string of title of the card.</dd>
+<dt><strong><code>price</code></strong></dt>
+<dd>A Pandas Dataframe of the paper pricing history.</dd>
+<dt><strong><code>tix</code></strong></dt>
+<dd>A Pandas Dataframe of the MTGO pricing history</dd>
+<dt><strong><code>set</code></strong></dt>
+<dd>A string of the URL of the set.</dd>
+<dt><strong><code>echo_id</code></strong></dt>
+<dd>An int of the echomtg unique identifier.</dd>
+<dt><strong><code>rarity</code></strong></dt>
+<dd>A string of the rarity of the card "rare", "mythic", "uncommon", &hellip;</dd>
+<dt><strong><code>release_date</code></strong></dt>
+<dd>A datetime object of the release date of the card. <em>Note:</em> Not the prerelease date. Same value as set release date.</dd>
+</dl>
+<p>Init of a card object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Card:
+    &#34;&#34;&#34;Card Datatype
+
+    The Card Class is used to represent one card in MTG. The class is also used as a Database model for one card.
+    This card does not represent any particular moment in time. A card class, should represent the full extend of the card&#39;s life
+    in the MTG Game given.
+
+    This Card Class is chock full of deprecated methods and attributes. Documentation is on hold for this class
+    because it needs to be completely overhauled.
+
+    Deprecated Attributes are not incuded in Documentation.
+
+    Attributes:
+        title: A string of title of the card.
+        price: A Pandas Dataframe of the paper pricing history.
+        tix: A Pandas Dataframe of the MTGO pricing history
+        set: A string of the URL of the set.
+        echo_id: An int of the echomtg unique identifier.
+        rarity: A string of the rarity of the card &#34;rare&#34;, &#34;mythic&#34;, &#34;uncommon&#34;, ...
+        release_date: A datetime object of the release date of the card. *Note:* Not the prerelease date. Same value as set release date.
+    &#34;&#34;&#34;
+    price_data_columns =[&#34;date_unix&#34;, &#34;datetime&#34;, &#34;price_dollars&#34;]
+    occ_data_columns = [
+        &#39;card&#39;,
+        &#39;date&#39;,
+        &#39;date_unix&#39;,
+        &#39;raw&#39;,
+        &#39;event&#39;,
+        &#39;deck_nums&#39;,
+        &#39;1st Place&#39;,
+        &#39;2nd Place&#39;,
+        &#39;3rd Place&#39;,
+        &#39;4th Place&#39;,
+        &#39;5th Place&#39;,
+        &#39;6th Place&#39;,
+        &#39;7th Place&#39;,
+        &#39;8th Place&#39;,
+        &#39;9th Place&#39;,
+        &#39;10th Place&#39;,
+        &#39;11th Place&#39;,
+        &#39;12th Place&#39;,
+        &#39;13th Place&#39;,
+        &#39;14th Place&#39;,
+        &#39;15th Place&#39;,
+        &#39;16th Place&#39;,
+        &#39;(9-0)&#39;,
+        &#39;(8-0)&#39;,
+        &#39;(7-0)&#39;,
+        &#39;(6-0)&#39;,
+        &#39;(5-0)&#39;,
+        &#39;(6-1)&#39;,
+        &#39;(5-2)&#39;,
+        &#39;(8-1)&#39;,
+        &#39;(7-2)&#39;,
+        &#39;(7-1)&#39;,
+        &#39;(6-2)&#39;]
+
+    def __init__(self, id=-1, title=&#34;&#34;, occ = pd.DataFrame(columns=occ_data_columns), price=pd.DataFrame(columns=[&#39;date&#39;,&#39;price&#39;]),tix=pd.DataFrame(columns=[&#39;date&#39;,&#39;price&#39;]),
+                set=None,echo_id=-1,rarity=None, release_date = None, rotation_date=None):
+
+        &#34;&#34;&#34;Init of a card object.&#34;&#34;&#34;
+        assert isinstance(occ, pd.DataFrame), &#34;non dataframe passed through occ&#34;
+        assert isinstance(price, pd.DataFrame), &#34;non dataframe passed through price&#34;
+        self.id = id
+        self.title = title
+        self.release_date = release_date
+        self.rotation_date = rotation_date
+        self.occ = occ
+        self.price = price
+        self.tix = tix
+        self.set = set
+        self.echo_id = echo_id
+        self.rarity = rarity
+
+    def __repr__(self):
+        object = {
+            &#39;id&#39;: self.echo_id,
+            &#39;title&#39;: self.title,
+            &#39;release_date&#39;: datetime.strftime(self.release_date, &#34;%Y-%m-%d&#34;) if self.release_date!=None else None,
+            &#39;rotation_date&#39;: datetime.strftime(self.rotation_date, &#34;%Y-%m-%d&#34;) if self.rotation_date!=None else None,
+            &#39;set&#39;: self.set,
+            &#39;rarity&#39;:self.rarity
+        }
+        return object
+
+
+    def __eq__(self, o):
+        &#34;&#34;&#34; Returns True or False based on echo_id&#34;&#34;&#34;
+        return isinstance(o, Card) and o.echo_id == self.echo_id
+
+    def __str__(self):
+        &#34;&#34;&#34; Returns readable string of card.
+        Important for logging and such.&#34;&#34;&#34;
+        return str(self.echo_id) + &#34;-&#34; + str(self.title)
+
+    def isEmpty(self):
+        &#34;&#34;&#34; Deprecated from other versions&#34;&#34;&#34;
+        #TODO
+        return False;
+
+    def dateparse(time_unix):
+        &#34;&#34;&#34; Converts unix timestamp into string&#34;&#34;&#34;
+        return datetime.utcfromtimestamp(int(time_unix)/1000).strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)
+
+    def CardPrices(self, start=None, end=None):
+        &#34;&#34;&#34; Returns an of array of CardPrice objects from the start and end dates.
+
+        Args:
+            start: a datetime indicating the start of desired CardPrice retrieval.
+            end: a datetime indication the end of desired CardPrice retrieval
+        &#34;&#34;&#34;
+        if start == None:
+            start = card.release_date
+        if end == None:
+            end=date.today()
+
+        prices = []
+        for day in daterange(start, end):
+            try:
+                prices.append(CardPrice(self, day))
+            except DatePricingError as e:
+                print(&#34;No Price info on day &#34;, day)
+        return prices</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="common.Card.Card.occ_data_columns"><code class="name">var <span class="ident">occ_data_columns</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="common.Card.Card.price_data_columns"><code class="name">var <span class="ident">price_data_columns</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="common.Card.Card.CardPrices"><code class="name flex">
+<span>def <span class="ident">CardPrices</span></span>(<span>self, start=None, end=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns an of array of CardPrice objects from the start and end dates.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>start</code></strong></dt>
+<dd>a datetime indicating the start of desired CardPrice retrieval.</dd>
+<dt><strong><code>end</code></strong></dt>
+<dd>a datetime indication the end of desired CardPrice retrieval</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def CardPrices(self, start=None, end=None):
+    &#34;&#34;&#34; Returns an of array of CardPrice objects from the start and end dates.
+
+    Args:
+        start: a datetime indicating the start of desired CardPrice retrieval.
+        end: a datetime indication the end of desired CardPrice retrieval
+    &#34;&#34;&#34;
+    if start == None:
+        start = card.release_date
+    if end == None:
+        end=date.today()
+
+    prices = []
+    for day in daterange(start, end):
+        try:
+            prices.append(CardPrice(self, day))
+        except DatePricingError as e:
+            print(&#34;No Price info on day &#34;, day)
+    return prices</code></pre>
+</details>
+</dd>
+<dt id="common.Card.Card.dateparse"><code class="name flex">
+<span>def <span class="ident">dateparse</span></span>(<span>time_unix)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts unix timestamp into string</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dateparse(time_unix):
+    &#34;&#34;&#34; Converts unix timestamp into string&#34;&#34;&#34;
+    return datetime.utcfromtimestamp(int(time_unix)/1000).strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)</code></pre>
+</details>
+</dd>
+<dt id="common.Card.Card.isEmpty"><code class="name flex">
+<span>def <span class="ident">isEmpty</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deprecated from other versions</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def isEmpty(self):
+    &#34;&#34;&#34; Deprecated from other versions&#34;&#34;&#34;
+    #TODO
+    return False;</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="common" href="index.html">common</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="common.Card.daterange" href="#common.Card.daterange">daterange</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="common.Card.Card" href="#common.Card.Card">Card</a></code></h4>
+<ul class="">
+<li><code><a title="common.Card.Card.CardPrices" href="#common.Card.Card.CardPrices">CardPrices</a></code></li>
+<li><code><a title="common.Card.Card.dateparse" href="#common.Card.Card.dateparse">dateparse</a></code></li>
+<li><code><a title="common.Card.Card.isEmpty" href="#common.Card.Card.isEmpty">isEmpty</a></code></li>
+<li><code><a title="common.Card.Card.occ_data_columns" href="#common.Card.Card.occ_data_columns">occ_data_columns</a></code></li>
+<li><code><a title="common.Card.Card.price_data_columns" href="#common.Card.Card.price_data_columns">price_data_columns</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.4</a>.</p>
+</footer>
+</body>
+</html>
