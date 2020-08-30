@@ -25,7 +25,8 @@ def close_db(e=None):
 
 @app.route('/')
 def hello_world():
-    return '<p>API for Magic the Gathering occurance data in tournaments. Visit <a href="/about">about</a> for license.</p>'
+    return '''<p>API for Magic the Gathering occurance data in tournaments. The documentation can be found on <a href="https://github.com/ChrisWeldon/MTG-Database-API">Github</a>.
+                Visit <a href="/about">about</a> for license.</p>'''
 
 @app.route('/about')
 def get_about():
