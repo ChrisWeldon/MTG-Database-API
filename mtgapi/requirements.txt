@@ -40,6 +40,6 @@ urllib3==1.25.3
 urwid==2.0.1
 virtualenv==16.7.2
 virtualenv-clone==0.5.3
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 youtube-dl==2019.7.12
 yTermPlayer==1.2.2
